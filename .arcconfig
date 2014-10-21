@@ -1,0 +1,9 @@
+{
+    "phabricator.uri": "https://phabricator.ericstern.com",
+    "unit.engine": "Firehed\\Arctools\\PHPUnitTestEngine",
+    "unit.phpunit.binary": "vendor/bin/phpunit",
+    "phpunit.config": "phpunit.xml.dist",
+    "load": [
+        "vendor/firehed/arctools"
+    ]
+}

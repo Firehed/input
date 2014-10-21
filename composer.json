@@ -1,0 +1,29 @@
+{
+    "name": "firehed/input",
+    "description": "PHP Input Handling Tools",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric Stern",
+            "email": "eric@ericstern.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Firehed\\Input\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type":"vcs",
+            "url":"git@git.ericstern.com:arctools.git"
+        }
+
+    ],
+    "require": {
+        "firehed/arctools": "*@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.3"
+    }
+}
