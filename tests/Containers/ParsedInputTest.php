@@ -3,11 +3,15 @@
 namespace Firehed\Input\Containers;
 
 use Firehed\Input\Objects\InputObject;
+use Firehed\Input\Interfaces\SanitizerProviderInterface;
 
 /**
  * @coversDefaultClass Firehed\Input\Containers\ParsedInput
  */
-class ParsedInputTest extends \PHPUnit_Framework_TestCase {
+class ParsedInputTest extends \PHPUnit_Framework_TestCase
+    implements SanitizerProviderInterface {
+
+    private $filters = [];
 
     // ----(Constructor)--------------------------------------------------------
 
@@ -27,7 +31,8 @@ class ParsedInputTest extends \PHPUnit_Framework_TestCase {
      */
     public function testSanitizeRejectsNonSanitizers() {
         $parsed = new ParsedInput([]);
-        $parsed->sanitize(['notAnObject']);
+        $this->filters = ['this is not an object'];
+        $parsed->sanitize($this);
     } // testSanitizeRejectsNonSanitizers
 
     /**
@@ -48,7 +53,8 @@ class ParsedInputTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($parsed['dirty'],
             "Bad data was in ValidInput object");
 
-        $ret = $parsed->sanitize([$sanitizer]);
+        $this->filters = [$sanitizer];
+        $ret = $parsed->sanitize($this);
         $this->assertInstanceOf('Firehed\Input\Containers\SanitizedInput',
             $ret,
             'A SanitizedInput object should be returned');
@@ -128,5 +134,9 @@ class ParsedInputTest extends \PHPUnit_Framework_TestCase {
         $obj['foo'] = 'bar';
     } // testSetThrows
 
+    // ----(SanitizerProviderInterface)----------------------------------------
+    public function getSanitizationFilters() {
+        return $this->filters;
+    } // getSanitizationFilters
 
 }

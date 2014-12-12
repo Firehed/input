@@ -6,6 +6,8 @@ use DomainException;
 use BadMethodCallException;
 use UnexpectedValueException;
 
+use Firehed\Input\Interfaces\SanitizerProviderInterface;
+
 class ParsedInput extends RawInput implements \ArrayAccess {
 
     public function __construct(array $data) {
@@ -33,11 +35,12 @@ class ParsedInput extends RawInput implements \ArrayAccess {
     } // addData
 
     /**
-     * @param array<Firehed\Input\Interfaces\SanitizerInterface> Sanitizers
+     * @param Firehed\Input\Interfaces\SanitizerProviderInterface
      * @return Firehed\Input\Containers\SanitizedInput
      * @throws Firehed\Input\Exceptions\InputException
      */
-    public function sanitize(array $sanitizers) {
+    public function sanitize(SanitizerProviderInterface $provider) {
+        $sanitizers = $provider->getSanitizationFilters();
         assert_instances_of($sanitizers, 'Firehed\Input\Interfaces\SanitizerInterface');
         foreach ($sanitizers as $sanitizer) {
             $this->setData($sanitizer->sanitize($this->getData()));

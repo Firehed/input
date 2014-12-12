@@ -5,8 +5,11 @@ namespace Firehed\Input\Objects;
 use Firehed\Input\Containers\ParsedInput;
 use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Interfaces\ValidationInterface;
+use Firehed\Input\Interfaces\SanitizerProviderInterface;
 
-abstract class Structure extends InputObject implements ValidationInterface {
+abstract class Structure extends InputObject
+    implements ValidationInterface,
+    SanitizerProviderInterface {
 
     private $validated;
 
@@ -17,7 +20,7 @@ abstract class Structure extends InputObject implements ValidationInterface {
         $parsed = new ParsedInput($value);
         try {
             $this->validated = $parsed
-                ->sanitize([]) // Sanitized already, tis is safe
+                ->sanitize($this)
                 ->validate($this);
             return true;
         }
@@ -25,6 +28,11 @@ abstract class Structure extends InputObject implements ValidationInterface {
             return false;
         }
     } // validate
+
+    // Sanitized already, this is safe
+    final public function getSanitizationFilters() {
+        return [];
+    } // getSanitizationFilters
 
     public function evaluate() {
         // Performs validation
