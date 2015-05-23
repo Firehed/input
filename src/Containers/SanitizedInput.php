@@ -66,28 +66,6 @@ class SanitizedInput extends ParsedInput {
             }
         } unset($key, $input);
 
-        if (!$validator instanceof URIValidationInterface) {
-            continue;
-        }
-        foreach ($validator->getURIInputs() as $key => $input) {
-            if (!isset($data[$key]) && !array_key_exists($key, $data)) {
-                $missing[] = $key;
-                continue;
-            }
-
-            try {
-                $clean_out[$key] = $input->setValue($data[$key])
-                    ->evaluate();
-                unset($data[$key]);
-                $resolved[$key] = true;
-            }
-            catch (UnexpectedValueException $e) {
-                $invalid[] = $key;
-            }
-        } unset($key, $input); // getURIInputs
-
-
-
         if ($missing) {
             throw new InputException(InputException::MISSING_VALUES, $missing);
         }
