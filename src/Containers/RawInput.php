@@ -17,10 +17,9 @@ class RawInput {
     } // __construct
 
     public function parse(ParserInterface $parser) {
-        return new ParsedInput($this
-            ->setData($parser->parse($this->data))
-            ->setIsParsed(true)
-            ->getData());
+        $this->setData($parser->parse($this->getData()))
+            ->setIsParsed(true);
+        return new ParsedInput($this->getData());
     } // parse
 
     // Not final so it can be mocked; do not extend
