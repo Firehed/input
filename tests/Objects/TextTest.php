@@ -3,15 +3,15 @@
 namespace Firehed\Input\Objects;
 
 /**
- * @coversDefaultClass Firehed\Input\Objects\String
+ * @coversDefaultClass Firehed\Input\Objects\Text
  * @covers ::<protected>
  * @covers ::<private>
  */
-class StringTest extends \PHPUnit_Framework_TestCase {
+class TextTest extends \PHPUnit_Framework_TestCase {
 
     private $string;
     public function setUp() {
-        $this->string = new String;
+        $this->text = new Text;
     } // setUp
 
     // Used by:
@@ -82,7 +82,7 @@ class StringTest extends \PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      */
     public function testInvalidMax($value) {
-        $this->string->setMax($value);
+        $this->text->setMax($value);
     } // testInvalidMax
 
     /**
@@ -91,8 +91,8 @@ class StringTest extends \PHPUnit_Framework_TestCase {
      * @dataProvider validRangeValues
      */
     public function testValidMax($value) {
-        $this->assertSame($this->string,
-            $this->string->setMax($value),
+        $this->assertSame($this->text,
+            $this->text->setMax($value),
             'setMax should be chainable when called with a valid value');
     } // testValidMax
 
@@ -102,7 +102,7 @@ class StringTest extends \PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      */
     public function testInvalidMin($value) {
-        $this->string->setMin($value);
+        $this->text->setMin($value);
     } // testInvalidMin
 
     /**
@@ -111,8 +111,8 @@ class StringTest extends \PHPUnit_Framework_TestCase {
      * @dataProvider validRangeValues
      */
     public function testValidMin($value) {
-        $this->assertSame($this->string,
-            $this->string->setMin($value),
+        $this->assertSame($this->text,
+            $this->text->setMin($value),
             'setMin should be chainable when called with a valid value');
     } // testValidMin
 
@@ -123,7 +123,7 @@ class StringTest extends \PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      */
     public function testIncompatibleMaxAfterMin() {
-        $this->string->setMin(5)
+        $this->text->setMin(5)
             ->setMax(4);
     } // testIncompatibleMaxAfterMin
 
@@ -133,7 +133,7 @@ class StringTest extends \PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      */
     public function testIncompatibleMinAfterMax() {
-        $this->string->setMax(4)
+        $this->text->setMax(4)
             ->setMin(5);
     } // testIncompatibleMinAfterMax
 
@@ -143,8 +143,8 @@ class StringTest extends \PHPUnit_Framework_TestCase {
      * @dataProvider validRangePairs
      */
     public function testValidMaxMinCombinations($max, $min) {
-        $this->assertSame($this->string,
-            $this->string->setMax($max)->setMin($min),
+        $this->assertSame($this->text,
+            $this->text->setMax($max)->setMin($min),
             'Specified max and min should have been compatible');
     } // testValidMaxMinCombinations
 
@@ -153,15 +153,15 @@ class StringTest extends \PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      */
     public function testMaxOfZeroIsDisallowed() {
-        $this->string->setMax(0);
+        $this->text->setMax(0);
     } // testMaxOfZeroIsDisallowed
 
     /**
      * @covers ::setMin
      */
     public function testMinOfZeroIsAllowed() {
-        $this->assertSame($this->string,
-            $this->string->setMin(0),
+        $this->assertSame($this->text,
+            $this->text->setMin(0),
             'SetMin should allow 0');
     } // testMinOfZeroIsAllowed
 
@@ -173,14 +173,14 @@ class StringTest extends \PHPUnit_Framework_TestCase {
      */
     public function testValidate($min, $max, $value, $isValid) {
         if ($min !== null) {
-            $this->string->setMin($min);
+            $this->text->setMin($min);
         }
         if ($max !== null) {
-            $this->string->setMax($max);
+            $this->text->setMax($max);
         }
-        $this->string->setValue($value);
+        $this->text->setValue($value);
         $this->assertSame($isValid,
-            $this->string->isValid(),
+            $this->text->isValid(),
             'Validation did not match expected output');
     } // testValidate
 

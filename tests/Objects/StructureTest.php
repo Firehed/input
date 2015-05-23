@@ -16,7 +16,7 @@ class StructureTest extends \PHPUnit_Framework_TestCase {
         $structure = $this->getMockForAbstractClass('Firehed\Input\Objects\Structure');
         $structure->expects($this->atLeastOnce())
             ->method('getRequiredInputs')
-            ->will($this->returnValue(['string' => new String]));
+            ->will($this->returnValue(['string' => new Text()]));
         $structure->expects($this->atLeastOnce())
             ->method('getOptionalInputs')
             ->will($this->returnValue([]));
@@ -34,7 +34,7 @@ class StructureTest extends \PHPUnit_Framework_TestCase {
         $structure = $this->getMockForAbstractClass('Firehed\Input\Objects\Structure');
         $structure->expects($this->atLeastOnce())
             ->method('getRequiredInputs')
-            ->will($this->returnValue(['string' => new String]));
+            ->will($this->returnValue(['string' => new Text()]));
         $structure->expects($this->atLeastOnce())
             ->method('getOptionalInputs')
             ->will($this->returnValue([]));

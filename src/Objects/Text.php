@@ -4,7 +4,7 @@ namespace Firehed\Input\Objects;
 
 use InvalidArgumentException;
 
-class String extends InputObject {
+class Text extends InputObject {
 
     private $min = null;
     private $max = null;
