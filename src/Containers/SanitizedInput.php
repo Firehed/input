@@ -29,99 +29,64 @@ class SanitizedInput extends ParsedInput {
         $missing = [];
         $invalid = [];
 
-        $resolved = [];
 
-        do {
-            $has_dependencies = false;
-
-            foreach ($validator->getRequiredInputs() as $key => $input) {
-                // Optimization: skip evaluation if already complete
-                if (isset($resolved[$key])) {
-                    continue;
-                }
-                if ($input->hasUnresolvedDependencies()) {
-                    $has_dependencies = true;
-                    continue;
-                }
-
-                if (!isset($data[$key]) && !array_key_exists($key, $data)) {
-                    $missing[] = $key;
-                    continue;
-                }
-
-                try {
-                    $clean_out[$key] = $input->setValue($data[$key])
-                        ->evaluate();
-                    unset($data[$key]);
-                    $resolved[$key] = true;
-                }
-                catch (UnexpectedValueException $e) {
-                    $invalid[] = $key;
-                }
-            } unset($key, $input);
-
-            foreach ($validator->getOptionalInputs() as $key => $input) {
-                // Optimization: skip evaluation if already complete
-                if (isset($resolved[$key])) {
-                    continue;
-                }
-
-                if ($input->hasUnresolvedDependencies()) {
-                    $has_dependencies = true;
-                    continue;
-                }
-                if (isset($data[$key])) {
-                    try {
-                        $clean_out[$key] = $input->setValue($data[$key])
-                            ->evaluate();
-                        unset($data[$key]);
-                        $resolved[$key] = true;
-                    }
-                    catch (UnexpectedValueException $e) {
-                        $invalid[] = $key;
-                    }
-                }
-                else {
-                    // Somehow, there should be a concept of "use default
-                    // value" (null unless overridden) so that optional inputs
-                    // can correctly be resolved as dependencies
-                    $clean_out[$key] = null;
-                    unset($data[$key]); // in case of literal null value
-                    $resolved[$key] = true;
-                }
-            } unset($key, $input);
-
-            if (!$validator instanceof URIValidationInterface) {
+        foreach ($validator->getRequiredInputs() as $key => $input) {
+            if (!isset($data[$key]) && !array_key_exists($key, $data)) {
+                $missing[] = $key;
                 continue;
             }
-            foreach ($validator->getURIInputs() as $key => $input) {
-                // Optimization: skip evaluation if already complete
-                if (isset($resolved[$key])) {
-                    continue;
-                }
 
-                if ($input->hasUnresolvedDependencies()) {
-                    $has_dependencies = true;
-                    continue;
-                }
-                if (!isset($data[$key]) && !array_key_exists($key, $data)) {
-                    $missing[] = $key;
-                    continue;
-                }
+            try {
+                $clean_out[$key] = $input->setValue($data[$key])
+                    ->evaluate();
+                unset($data[$key]);
+            }
+            catch (UnexpectedValueException $e) {
+                $invalid[] = $key;
+            }
+        } unset($key, $input);
 
+        foreach ($validator->getOptionalInputs() as $key => $input) {
+            if (isset($data[$key])) {
                 try {
                     $clean_out[$key] = $input->setValue($data[$key])
                         ->evaluate();
                     unset($data[$key]);
-                    $resolved[$key] = true;
                 }
                 catch (UnexpectedValueException $e) {
                     $invalid[] = $key;
                 }
-            } unset($key, $input); // getURIInputs
+            }
+            else {
+                // Somehow, there should be a concept of "use default
+                // value" (null unless overridden) so that optional inputs
+                // can correctly be resolved as dependencies
+                $clean_out[$key] = null;
+                unset($data[$key]); // in case of literal null value
+            }
+        } unset($key, $input);
+
+        if (!$validator instanceof URIValidationInterface) {
+            continue;
+        }
+        foreach ($validator->getURIInputs() as $key => $input) {
+            if (!isset($data[$key]) && !array_key_exists($key, $data)) {
+                $missing[] = $key;
+                continue;
+            }
+
+            try {
+                $clean_out[$key] = $input->setValue($data[$key])
+                    ->evaluate();
+                unset($data[$key]);
+                $resolved[$key] = true;
+            }
+            catch (UnexpectedValueException $e) {
+                $invalid[] = $key;
+            }
+        } unset($key, $input); // getURIInputs
 
 
-        } while ($has_dependencies);
 
         if ($missing) {
             throw new InputException(InputException::MISSING_VALUES, $missing);

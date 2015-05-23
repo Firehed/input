@@ -25,7 +25,6 @@ abstract class InputObject {
     private $value;
     private $valueWasSet = false; // false-like values can be valid, so explicitly track if the setter has been called
     private $isValid;
-    private $dependencies = [];
 
     // No-op, only here so parent::__construct won't fatal
     public function __construct() { } // __construct
@@ -70,34 +69,6 @@ abstract class InputObject {
         }
         return $this->isValid;
     } // isValid
-
-    /**
-     * @param string Key by which dependency will be accessible
-     * @param Firehed\Input\Object\InputObject the dependency
-     * @return this
-     */
-    final public function addDependency($key, InputObject $dep) {
-        // Todo: sanity check to prevent circular deps?
-        // $dep !== this
-        // this.dependencies.each(dep not in each's deps=
-        $this->dependencies[$key] = $dep;
-        return $this;
-    } // addDependency
-
-    /**
-     * @return bool
-     */
-    final public function hasUnresolvedDependencies() {
-        foreach ($this->dependencies as $dependency) {
-            if (!$dependency->valueWasSet) {
-                return true;
-            }
-            if (!$dependency->isValid()) {
-                return true;
-            }
-        }
-        return false;
-    } // hasUnresolvedDependencies
 
     /**
      * @return mixed

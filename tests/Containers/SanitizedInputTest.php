@@ -182,7 +182,4 @@ class SanitizedInputTest extends \PHPUnit_Framework_TestCase {
             "'short' should have defaulted to null");
     } // testMissingOptionalParametersAreSetToNull
 
-
-
-
 }
