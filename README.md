@@ -66,7 +66,8 @@ A basic example follows:
 
     use Firehed\Input\Containers\SafeInput;
     use Firehed\Input\Objects as O;
-    class Endpoint implements ValidationInterface {
+    class Endpoint
+        implements ValidationInterface, SanitizerProviderInterface {
 
         public function getOptionalInputs() {
             return [
