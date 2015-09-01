@@ -7,6 +7,7 @@ use BadMethodCallException;
 use UnexpectedValueException;
 
 use Firehed\Input\Interfaces\SanitizerProviderInterface;
+use Firehed\Input\Exceptions\InputException;
 
 class ParsedInput extends RawInput implements \ArrayAccess {
 
