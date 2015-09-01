@@ -9,12 +9,11 @@ use BadMethodCallException;
  *
  *   $safe_input = new RawInput($raw_data)
  *     ->parse($parser)
- *     ->sanitize([$sanitizer_one, $sanitizer_two])
  *     ->validate($validator);
  */
-class SafeInput extends SanitizedInput {
+class SafeInput extends ParsedInput {
 
-    public function __construct(SanitizedInput $valid) {
+    public function __construct(ParsedInput $valid) {
         if (!$valid->isValidated()) {
             throw new BadMethodCallException;
         }

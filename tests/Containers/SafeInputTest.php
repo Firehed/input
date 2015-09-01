@@ -8,7 +8,7 @@ namespace Firehed\Input\Containers;
 class SafeInputTest extends \PHPUnit_Framework_TestCase {
 
     private function getSafeInput(array $data) {
-        $mock = $this->getMockBuilder('Firehed\Input\Containers\SanitizedInput')
+        $mock = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
             ->disableOriginalConstructor()
             ->setMethods(['getData', 'isValidated'])
             ->getMock();
@@ -32,14 +32,14 @@ class SafeInputTest extends \PHPUnit_Framework_TestCase {
      * @covers ::__construct
      * @expectedException BadMethodCallException
      */
-    public function testConstructThrowsWithUnsanitizedInput() {
-        $valid = $this->getMockBuilder('Firehed\Input\Containers\SanitizedInput')
+    public function testConstructThrowsWithUnvalidatedInput() {
+        $valid = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
             ->disableOriginalConstructor()
             ->getMock();
         $valid->expects($this->atLeastOnce())
             ->method('isValidated')
             ->will($this->returnValue(false));
         new SafeInput($valid);
-    } // testConstructThrowsWithUnsanitizedInput
+    } // testConstructThrowsWithUnvalidatedInput
 
 }

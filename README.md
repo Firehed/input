@@ -20,20 +20,14 @@ benefit it provides.
 
 Data handling steps
 -----
-Raw input is transformed into safe data in three primary steps:
+Raw input is transformed into safe data in two primary steps:
 
 * Parsing
-* Sanitization
 * Validation
 
 Parsing is responsible for transforming the raw input string into an associative
 array. If your application is structured to do so, this step can be skipped
 entirely.
-
-Sanitization is a semi-optional step that can modify the data before
-access or storage. However, it's generally accepted that sanitization should be
-done in a context-sensitive manner, so it is recommended to skip the step here
-and perform it as-needed in the output side.
 
 Validation is the most useful part of the library - taking a defined set of
 optional and required parameters and their types, and comparing the input
@@ -62,12 +56,11 @@ A basic example follows:
     <?php
     // This would be in its own file
     use Firehed\Input\Interfaces\ValidationInterface;
-    use Firehed\Input\Interfaces\SanitizerProviderInterface;
 
     use Firehed\Input\Containers\SafeInput;
     use Firehed\Input\Objects as O;
     class Endpoint
-        implements ValidationInterface, SanitizerProviderInterface {
+        implements ValidationInterface {
 
         public function getOptionalInputs() {
             return [
@@ -79,13 +72,6 @@ A basic example follows:
             return [
                 'foo' => new O\Text(),
             ];
-        }
-
-        // It's strongly recommended to NOT handle data sanitization here: use prepared
-        // statements (likely handled by an ORM) to protect against SQLI, and use
-        // context-sensitive sanitization on the output side to guard against XSS, etc.
-        public function getSanitizationFilters() {
-            return [];
         }
 
         public function execute(SafeInput $i) {
@@ -113,7 +99,6 @@ A basic example follows:
     try {
         $input = (new RawInput("foo=world"))
             ->parse($parser)
-            ->sanitize($endpoint)
             ->validate($endpoint);
         $endpoint->execute($input);
     } catch (Firehed\Input\Exceptions\InputException $e) {

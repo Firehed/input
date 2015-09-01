@@ -3,15 +3,11 @@
 namespace Firehed\Input\Containers;
 
 use Firehed\Input\Objects\InputObject;
-use Firehed\Input\Interfaces\SanitizerProviderInterface;
 
 /**
  * @coversDefaultClass Firehed\Input\Containers\ParsedInput
  */
-class ParsedInputTest extends \PHPUnit_Framework_TestCase
-    implements SanitizerProviderInterface {
-
-    private $filters = [];
+class ParsedInputTest extends \PHPUnit_Framework_TestCase {
 
     // ----(Constructor)--------------------------------------------------------
 
@@ -23,48 +19,6 @@ class ParsedInputTest extends \PHPUnit_Framework_TestCase
             new ParsedInput([]),
             'Construct failed');
     } // testConstructWorks
-
-    // ----(Sanitize)-----------------------------------------------------------
-    /**
-     * @covers ::sanitize
-     * @expectedException InvalidArgumentException
-     */
-    public function testSanitizeRejectsNonSanitizers() {
-        $parsed = new ParsedInput([]);
-        $this->filters = ['this is not an object'];
-        $parsed->sanitize($this);
-    } // testSanitizeRejectsNonSanitizers
-
-    /**
-     * @covers ::sanitize
-     */
-    public function testSanitize() {
-        $unsanitized = ['dirty' => true];
-        $sanitized = ['dirty' => false];
-        $sanitizer = $this->getMock('Firehed\Input\Interfaces\SanitizerInterface');
-        $sanitizer->expects($this->once())
-            ->method('sanitize')
-            ->with($unsanitized)
-            ->will($this->returnValue($sanitized));
-        $parsed = new ParsedInput($unsanitized);
-        // Sanity check
-        $this->assertFalse($parsed->isSanitized(),
-            "ValidInput should not be sanitized");
-        $this->assertTrue($parsed['dirty'],
-            "Bad data was in ValidInput object");
-
-        $this->filters = [$sanitizer];
-        $ret = $parsed->sanitize($this);
-        $this->assertInstanceOf('Firehed\Input\Containers\SanitizedInput',
-            $ret,
-            'A SanitizedInput object should be returned');
-        $this->assertTrue($parsed->isSanitized(),
-            "ValidInput should be sanitized");
-        $this->assertFalse($ret['dirty'],
-            "Return value should be using new sanitized data");
-    } // testSanitize
-
-
 
     // ----(ArrayAccess)--------------------------------------------------------
 
@@ -134,9 +88,150 @@ class ParsedInputTest extends \PHPUnit_Framework_TestCase
         $obj['foo'] = 'bar';
     } // testSetThrows
 
-    // ----(SanitizerProviderInterface)----------------------------------------
-    public function getSanitizationFilters() {
-        return $this->filters;
-    } // getSanitizationFilters
+    // ----(Validation:Unexpected Parameters)----------------------------------
+    /**
+     * @covers ::validate
+     * @expectedException Firehed\Input\Exceptions\InputException
+     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::UNEXPECTED_VALUES
+     */
+    public function testUnexpectedParametersAreCaught() {
+        $parsed = new ParsedInput(['foo' => 'bar']);
+        $parsed->validate($this->getValidation());
+    } // testUnexpectedParametersAreCaught
+
+    // ----(Validation:Required Parameters)------------------------------------
+    /**
+     * @covers ::validate
+     */
+    public function testValidRequiredParametersAreReturned() {
+        $desc = 'I am a short description';
+        $this->addRequired('short', $this->getMockIO(true, $desc));
+
+        $parsed = new ParsedInput(['short' => $desc]);
+        $ret = $parsed->validate($this->getValidation());
+
+        $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $ret);
+        $this->assertSame($desc, $ret['short'],
+            'The wrong value exists in the parsed input');
+    } // testValidRequiredParametersAreReturned
+
+   /**
+     * @covers ::validate
+     * @expectedException Firehed\Input\Exceptions\InputException
+     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::INVALID_VALUES
+     */
+    public function testInvalidRequiredParametersAreCaught() {
+        $this->addRequired('short', $this->getMockIO(false));
+
+        $parsed = new ParsedInput(['short' => 123]);
+        $parsed->validate($this->getValidation());
+    } // testInvalidRequiredParametersAreCaught
+
+    /**
+     * @covers ::validate
+     * @expectedException Firehed\Input\Exceptions\InputException
+     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::MISSING_VALUES
+     */
+    public function testMissingRequiredParametersAreCaught() {
+        $this->addRequired('short',
+            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject'));
+
+        $parsed = new ParsedInput([]);
+        $parsed->validate($this->getValidation());
+    } // testMissingRequiredParametersAreCaught
+
+
+
+
+     // ----(Validation:Optional Parameters)------------------------------------
+
+    /**
+     * @covers ::validate
+     */
+    public function testValidOptionalParametersAreReturned() {
+        $desc = 'I am a short description';
+        $this->addOptional('short', $this->getMockIO(true, $desc));
+
+        $parsed = new ParsedInput(['short' => $desc]);
+        $ret = $parsed->validate($this->getValidation());
+
+        $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $ret);
+        $this->assertSame($desc, $ret['short'],
+            'The wrong value exists in the parsed input');
+    } // testValidOptionalParametersAreReturned
+
+    /**
+     * @covers ::validate
+     * @expectedException Firehed\Input\Exceptions\InputException
+     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::INVALID_VALUES
+     */
+    public function testInvalidOptionalParametersAreCaught() {
+        $this->addOptional('short', $this->getMockIO(false));
+        $parsed = new ParsedInput(['short' => 123]);
+        $parsed->validate($this->getValidation());
+    } // testInvalidOptionalParametersAreCaught
+
+    /**
+     * @covers ::validate
+     */
+    public function testMissingOptionalParametersAreSetToNull() {
+        $this->addOptional('short',
+            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject'));
+
+        $parsed = new ParsedInput([]);
+        $ret = $parsed->validate($this->getValidation());
+        $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $ret);
+        $this->assertNull($ret['short'],
+            "'short' should have defaulted to null");
+    } // testMissingOptionalParametersAreSetToNull
+
+
+
+
+    // ----(Helpers)-----------------------------------------------------------
+
+    private $required = [];
+    private $optional = [];
+
+    private function getValidation() {
+        $validation = $this->getMock('Firehed\Input\Interfaces\ValidationInterface');
+        $validation->expects($this->atLeastOnce())
+            ->method('getRequiredInputs')
+            ->will($this->returnValue($this->required));
+
+        $validation->expects($this->atLeastOnce())
+            ->method('getOptionalInputs')
+            ->will($this->returnValue($this->optional));
+
+        return $validation;
+    } // getValidation
+
+    private function addRequired($key, InputObject $type) {
+        $this->required[$key] = $type;
+    } // addRequired
+
+    private function addOptional($key, InputObject $type) {
+        $this->optional[$key] = $type;
+    } // addOptional
+
+    private function getMockIO($valid, $ret = null) {
+        $mock = $this->getMockBuilder('Firehed\Input\Objects\InputObject')
+            ->setMethods(['evaluate'])
+            ->getMockForAbstractClass();
+
+        if ($valid) {
+            $mock->expects($this->atLeastOnce())
+                ->method('evaluate')
+                ->will($this->returnValue($ret));
+        }
+        else {
+            $mock->expects($this->atLeastOnce())
+                ->method('evaluate')
+                ->will($this->throwException(new \UnexpectedValueException));
+        }
+        return $mock;
+    } // getMockIO
+
+
 
 }

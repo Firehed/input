@@ -10,7 +10,6 @@ class RawInput {
 
     private $is_parsed = false;
     private $is_validated = false;
-    private $is_sanitized = false;
 
     public function __construct($raw) {
         $this->data = $raw;
@@ -40,9 +39,6 @@ class RawInput {
     public function isValidated() {
         return $this->is_validated;
     } // isValidated
-    public function isSanitized() {
-        return $this->is_sanitized;
-    } // isSanitized
 
     final protected function setIsParsed($bool) {
         $this->is_parsed = (bool)$bool;
@@ -52,9 +48,5 @@ class RawInput {
         $this->is_validated = (bool)$bool;
         return $this;
     } // setIsValidated
-    final protected function setIsSanitized($bool) {
-        $this->is_sanitized = (bool)$bool;
-        return $this;
-    } // setIsSanitized
 
 }

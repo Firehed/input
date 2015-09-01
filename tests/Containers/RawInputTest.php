@@ -35,7 +35,6 @@ class RawInputTest extends \PHPUnit_Framework_TestCase {
             'RawInput::parse() should return a ParsedInput object');
         $this->assertTrue($raw->isParsed(), 'isParsed should be true');
         $this->assertFalse($raw->isValidated(), 'isValid should be false');
-        $this->assertFalse($raw->isSanitized(), 'isSanitized should be false');
     } // testParse
 
 }
