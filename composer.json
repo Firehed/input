@@ -13,17 +13,10 @@
             "Firehed\\Input\\": "src/"
         }
     },
-    "repositories": [
-        {
-            "type":"vcs",
-            "url":"git@git.ericstern.com:arctools.git"
-        }
-
-    ],
     "require": {
-        "firehed/arctools": "*@dev"
     },
     "require-dev": {
+        "firehed/arctools": "*@dev",
         "phpunit/phpunit": "~4.3"
     }
 }

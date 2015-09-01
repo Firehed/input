@@ -1,41 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "79a97e0dc8f1e1858aa3c55939a2c161",
-    "packages": [
-        {
-            "name": "firehed/arctools",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@git.ericstern.com:arctools.git",
-                "reference": "6ab7f4a6d356ed45fae2c2fd955bceadfc818217"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Firehed\\Arctools\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Eric Stern",
-                    "email": "eric@ericstern.com"
-                }
-            ],
-            "description": "Easily integrate with Arcanist and libphutil",
-            "time": "2014-10-15 22:04:06"
-        }
-    ],
+    "hash": "ac04ced35bf3ff9c78d5dff10cccb705",
+    "packages": [],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
@@ -90,6 +60,42 @@
                 "instantiate"
             ],
             "time": "2014-10-13 12:58:55"
+        },
+        {
+            "name": "firehed/arctools",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Firehed/arctools.git",
+                "reference": "f3245b28e97233ffb04c6a495c8c1d8bffc0a0a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Firehed/arctools/zipball/f3245b28e97233ffb04c6a495c8c1d8bffc0a0a0",
+                "reference": "f3245b28e97233ffb04c6a495c8c1d8bffc0a0a0",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firehed\\Arctools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Stern",
+                    "email": "eric@ericstern.com"
+                }
+            ],
+            "description": "Easily integrate with Arcanist and libphutil",
+            "time": "2015-08-18 21:00:14"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -787,6 +793,7 @@
         "firehed/arctools": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }
