@@ -18,5 +18,8 @@
     "require-dev": {
         "firehed/arctools": "*@dev",
         "phpunit/phpunit": "~4.3"
+    },
+    "suggest": {
+        "firehed/inputobjects": "A collection of common InputObjects covering typical use cases"
     }
 }
