@@ -2,9 +2,9 @@
 
 namespace Firehed\Input\Exceptions;
 
-use Exception;
+use UnexpectedValueException;
 
-class InputException extends Exception {
+class InputException extends UnexpectedValueException {
 
     const PARSE_ERROR = 1;
     const FORMAT_ERROR = 2;
