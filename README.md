@@ -108,10 +108,12 @@ A basic example follows:
         echo $e;
     }
 
+Development
+-----
+PHP7 support (STH, return types, etc) has been added in the 2.0 line. The 1.0 line will remain compatible with PHP5.
 
 
 Coming soon
 -----
 
 * Non-`NULL` default values for optional parameters
-* Full PHP7 and/or HackLang support
