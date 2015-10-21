@@ -7,7 +7,7 @@ use Firehed\Input\Interfaces\ParserInterface;
 
 class JSON implements ParserInterface {
 
-    public function parse($raw_input) {
+    public function parse(string $raw_input): array {
         if (!strlen($raw_input)) {
             return [];
         }
@@ -22,7 +22,7 @@ class JSON implements ParserInterface {
         return $data;
     } // parse
 
-    public function getSupportedMimeTypes() {
+    public function getSupportedMimeTypes(): array {
         return [
             'application/json',
         ];

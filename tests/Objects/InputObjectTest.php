@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Objects;
 
 /**
@@ -78,7 +80,7 @@ class InputObjectTest extends \PHPUnit_Framework_TestCase {
 class InputObjectTestFixture extends InputObject {
 
     const MAGIC_FAIL = '198sjs $ a2/';
-    public function validate($value) {
+    public function validate($value): bool {
         return $value !== self::MAGIC_FAIL;
     } // validate
 }

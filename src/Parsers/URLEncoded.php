@@ -7,7 +7,7 @@ use Firehed\Input\Interfaces\ParserInterface;
 
 class URLEncoded implements ParserInterface {
 
-    public function parse($raw_input) {
+    public function parse(string $raw_input): array {
         if (!strlen($raw_input)) {
             return [];
         }
@@ -19,7 +19,7 @@ class URLEncoded implements ParserInterface {
         return $out;
     } // parse
 
-    public function getSupportedMimeTypes() {
+    public function getSupportedMimeTypes(): array {
         return [
             'application/x-www-form-urlencoded',
         ];

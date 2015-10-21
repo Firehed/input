@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Containers;
 
 use DomainException;
@@ -20,7 +22,7 @@ class ParsedInput extends RawInput implements \ArrayAccess {
      * @return this
      * @throws BadMethodCallException
      */
-    public function addData(ParsedInput $add) {
+    public function addData(ParsedInput $add): self {
         if ($this->isValidated()) {
             throw new BadMethodCallException(
                 "Data cannot be added after validation is performed");
@@ -35,11 +37,11 @@ class ParsedInput extends RawInput implements \ArrayAccess {
     } // addData
 
     /**
-     * @param Firehed\Input\Interfaces\ValidationInterface Validation requirements
-     * @return Firehed\Input\Containers\ValidInput
-     * @throws Firehed\Input\Exceptions\InputException
+     * @param ValidationInterface Validation requirements
+     * @return SafeInput
+     * @throws InputException
      */
-    public function validate(ValidationInterface $validator) {
+    public function validate(ValidationInterface $validator): SafeInput {
 
         $data = $this->getData();
         $clean_out = [];
@@ -105,7 +107,7 @@ class ParsedInput extends RawInput implements \ArrayAccess {
      *
      * @return array
      */
-    public function asArray() {
+    public function asArray(): array {
         return $this->getData();
     } // asArray
 

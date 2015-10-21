@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Objects;
 
 /**
@@ -42,9 +44,9 @@ abstract class InputObject {
 
     /**
      * @param mixed value to validate
-     * @return this
+     * @return self
      */
-    final public function setValue($value) {
+    final public function setValue($value): self {
         $this->isValid = null;
         $this->value = $value;
         $this->valueWasSet = true;
@@ -54,12 +56,12 @@ abstract class InputObject {
     /**
      * @return bool
      */
-    abstract protected function validate($value);
+    abstract protected function validate($value): bool;
 
     /**
      * @return bool
      */
-    final public function isValid() {
+    final public function isValid(): bool {
         if (null === $this->isValid) {
             if (!$this->valueWasSet) {
                 throw new \BadMethodCallException("Value has not been set");

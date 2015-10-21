@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Interfaces;
 
 interface ValidationInterface {
@@ -7,11 +9,11 @@ interface ValidationInterface {
     /**
      * @return array<string, Objects\InputObject>
      */
-    public function getRequiredInputs();
+    public function getRequiredInputs(): array;
 
     /**
      * @return array<string, Objects\InputObject>
      */
-    public function getOptionalInputs();
+    public function getOptionalInputs(): array;
 
 }
