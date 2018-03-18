@@ -43,4 +43,18 @@ class InputException extends UnexpectedValueException {
         parent::__construct($msg, $code);
     } // __construct
 
+    public function getMissing(): array
+    {
+        return $this->missing;
+    }
+
+    public function getInvalid(): array
+    {
+        return $this->invalid;
+    }
+
+    public function getUnexpected(): array
+    {
+        return $this->unexpected;
+    }
 }
