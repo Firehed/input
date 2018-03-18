@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Firehed\Input\Exceptions;
 
+use LogicException;
+use TypeError;
+
 /**
  * @coversDefaultClass Firehed\Input\Exceptions\InputException
  */
@@ -30,10 +33,28 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase {
 
     /**
      * @covers ::__construct
-     * @expectedException LogicException
      */
-    public function testInvalidConstruct() {
-        new InputException('this is not a defined value');
+    public function testInvalidConstructWithInt()
+    {
+        try {
+            new InputException(999999);
+        } catch (LogicException $e) {
+            $this->assertTrue(true, 'test passed');
+        }
+    } // testInvalidConstruct
+
+    /**
+     * @covers ::__construct
+     */
+    public function testInvalidConstructWithString()
+    {
+        try {
+            new InputException('this is not a defined value');
+        } catch (TypeError $e) {
+            $this->assertTrue(true, 'test passed');
+        } catch (LogicException $e) {
+            $this->assertTrue(true, 'test passed');
+        }
     } // testInvalidConstruct
 
     /**
@@ -74,5 +95,23 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase {
         } else {
             $this->assertSame([], $ex->getUnexpected());
         }
+    }
+
+    /**
+     * @covers ::getInvalid
+     * @covers ::getMissing
+     * @covers ::getUnexpected
+     */
+    public function testMultipleErrors()
+    {
+        $errors = [
+            'invalid' => ['invalid_key'],
+            'missing' => ['missing_key'],
+            'unexpected' => ['unexpected_key'],
+        ];
+        $ex = new InputException(InputException::MULTIPLE_VALUE_ERRORS, $errors);
+        $this->assertSame($errors['invalid'], $ex->getInvalid(), 'Invalid wrong');
+        $this->assertSame($errors['missing'], $ex->getMissing(), 'Missing wrong');
+        $this->assertSame($errors['unexpected'], $ex->getUnexpected(), 'Unexpected wrong');
     }
 }
