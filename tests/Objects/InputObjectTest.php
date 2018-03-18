@@ -65,6 +65,24 @@ class InputObjectTest extends \PHPUnit\Framework\TestCase {
         $this->expectException(BadMethodCallException::class);
         $this->io->evaluate();
     }
+
+    /** @covers ::getDefaultValue */
+    public function testDefaultDefaultValueIsNull()
+    {
+        $this->assertNull($this->io->getDefaultValue());
+    }
+
+    /**
+     * @covers ::getDefaultValue
+     * @covers ::setDefaultValue
+     */
+    public function testSetDefaultValueWorksAndReturnsSelf()
+    {
+        $default = 'some default';
+        $this->assertNull($this->io->getDefaultValue());
+        $this->assertSame($this->io, $this->io->setDefaultValue($default));
+        $this->assertSame($default, $this->io->getDefaultValue());
+    }
 }
 
 class InputObjectTestFixture extends InputObject {

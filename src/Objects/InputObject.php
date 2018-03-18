@@ -43,6 +43,20 @@ abstract class InputObject
     {
         return $this->defaultValue;
     }
+
+    /**
+     * Set a default value, which will be provided only during optional input
+     * value validation
+     *
+     * @param mixed $value The default value
+     * @return $this
+     */
+    public function setDefaultValue($value): self
+    {
+        $this->defaultValue = $value;
+        return $this;
+    }
+
     /**
      * Protected because this should only be called by children during
      * `evaluate`
