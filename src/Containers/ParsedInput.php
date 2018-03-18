@@ -106,6 +106,16 @@ class ParsedInput extends RawInput implements \ArrayAccess {
 
         $unexpected = array_merge($unexpected, array_keys($data));
 
+        // This is a not-beautiful way of expressing "if at least two error
+        // arrays are nonempty", since this should retain the more specific
+        // exception code when only one type of error is present.
+        if (($missing && ($invalid || $unexpected)) || ($invalid && $unexpected)) {
+            throw new InputException(
+                InputException::MULTIPLE_VALUE_ERRORS,
+                compact('invalid', 'missing', 'unexpected')
+            );
+        }
+
         if ($missing) {
             throw new InputException(InputException::MISSING_VALUES, $missing);
         }

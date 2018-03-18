@@ -256,6 +256,17 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
                 ['struct.b'],
                 true,
             ],
+            [
+                new InputException(InputException::MULTIPLE_VALUE_ERRORS, [
+                    'invalid' => ['a'],
+                    'missing' => ['c'],
+                    'unexpected' => ['b'],
+                ]),
+                ['struct.a'],
+                ['struct.c'],
+                ['struct.b'],
+                true,
+            ],
             // Optional inputs
             [
                 new InputException(InputException::INVALID_VALUES, ['a']),
@@ -282,6 +293,17 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
                 new InputException(InputException::UNEXPECTED_VALUES, ['b']),
                 [],
                 [],
+                ['struct.b'],
+                false,
+            ],
+            [
+                new InputException(InputException::MULTIPLE_VALUE_ERRORS, [
+                    'invalid' => ['a'],
+                    'missing' => ['c'],
+                    'unexpected' => ['b'],
+                ]),
+                ['struct.a'],
+                ['struct.c'],
                 ['struct.b'],
                 false,
             ],
