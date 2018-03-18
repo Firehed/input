@@ -18,6 +18,6 @@
     },
     "require-dev": {
         "firehed/arctools": "*@dev",
-        "phpunit/phpunit": "^7.0"
+        "phpunit/phpunit": "^6.0 | ^7.0"
     }
 }
