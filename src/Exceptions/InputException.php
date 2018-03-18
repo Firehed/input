@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Firehed\Input\Exceptions;
 
@@ -11,12 +12,13 @@ class InputException extends UnexpectedValueException {
     const MISSING_VALUES = 3;
     const INVALID_VALUES = 4;
     const UNEXPECTED_VALUES = 5;
+    const MULTIPLE_VALUE_ERRORS = 6;
 
     private $missing = [];
     private $invalid = [];
     private $unexpected = [];
 
-    public function __construct($code, array $errors = []) {
+    public function __construct(int $code, array $errors = []) {
         switch ($code) {
         case self::PARSE_ERROR:
             $msg = 'Input could not be parsed';
@@ -35,6 +37,12 @@ class InputException extends UnexpectedValueException {
         case self::UNEXPECTED_VALUES:
             $msg = 'Unexpected parameter';
             $this->unexpected = $errors;
+            break;
+        case self::MULTIPLE_VALUE_ERRORS:
+            $msg = 'Multiple validation errors';
+            $this->missing = $errors['missing'] ?? [];
+            $this->invalid = $errors['invalid'] ?? [];
+            $this->unexpected = $errors['unexpected'] ?? [];
             break;
         default:
             throw new \LogicException("Invalid exception code");
