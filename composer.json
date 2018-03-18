@@ -14,10 +14,11 @@
         }
     },
     "require": {
-        "php": ">=7"
+        "php": ">=7.1"
     },
     "require-dev": {
         "firehed/arctools": "*@dev",
-        "phpunit/phpunit": "^5.0"
+        "php-coveralls/php-coveralls": "^2.0",
+        "phpunit/phpunit": "^7.0"
     }
 }

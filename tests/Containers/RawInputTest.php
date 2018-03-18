@@ -7,7 +7,7 @@ namespace Firehed\Input\Containers;
  * @covers ::<protected>
  * @covers ::<private>
  */
-class RawInputTest extends \PHPUnit_Framework_TestCase {
+class RawInputTest extends \PHPUnit\Framework\TestCase {
 
     /**
      * @covers ::__construct
@@ -23,7 +23,7 @@ class RawInputTest extends \PHPUnit_Framework_TestCase {
      */
     public function testParse() {
         $raw_data = md5(rand());
-        $mock = $this->getMock('Firehed\Input\Interfaces\ParserInterface');
+        $mock = $this->createMock('Firehed\Input\Interfaces\ParserInterface');
         $mock->expects($this->once())
             ->method('parse')
             ->with($raw_data)

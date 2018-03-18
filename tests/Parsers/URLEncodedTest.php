@@ -5,7 +5,7 @@ namespace Firehed\Input\Parsers;
 /**
  * @coversDefaultClass Firehed\Input\Parsers\URLEncoded
  */
-class URLEncodedTest extends \PHPUnit_Framework_TestCase {
+class URLEncodedTest extends \PHPUnit\Framework\TestCase {
 
     public function validURLEncoded() {
         return [

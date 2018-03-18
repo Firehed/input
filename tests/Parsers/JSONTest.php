@@ -5,7 +5,7 @@ namespace Firehed\Input\Parsers;
 /**
  * @coversDefaultClass Firehed\Input\Parsers\JSON
  */
-class JSONTest extends \PHPUnit_Framework_TestCase {
+class JSONTest extends \PHPUnit\Framework\TestCase {
 
     public function validJSON() {
         return [

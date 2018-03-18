@@ -7,7 +7,7 @@ use Firehed\Input\Objects\InputObject;
 /**
  * @coversDefaultClass Firehed\Input\Containers\ParsedInput
  */
-class ParsedInputTest extends \PHPUnit_Framework_TestCase {
+class ParsedInputTest extends \PHPUnit\Framework\TestCase {
 
     // ----(Constructor)--------------------------------------------------------
 
@@ -194,7 +194,7 @@ class ParsedInputTest extends \PHPUnit_Framework_TestCase {
     private $optional = [];
 
     private function getValidation() {
-        $validation = $this->getMock('Firehed\Input\Interfaces\ValidationInterface');
+        $validation = $this->createMock('Firehed\Input\Interfaces\ValidationInterface');
         $validation->expects($this->atLeastOnce())
             ->method('getRequiredInputs')
             ->will($this->returnValue($this->required));
