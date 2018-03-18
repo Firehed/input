@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Firehed\Input\Objects;
 
+use BadMethodCallException;
+use UnexpectedValueException;
+
 /**
  * @coversDefaultClass Firehed\Input\Objects\InputObject
  * @covers ::<protected>
@@ -38,12 +41,8 @@ class InputObjectTest extends \PHPUnit\Framework\TestCase {
 
     /** @covers ::isValid */
     public function testIsValidNoValueThrows() {
-        try {
-            $this->io->isValid();
-            $this->fail("isValid should have thrown an exception");
-        } catch (\BadMethodCallException $e) {
-            return;
-        }
+        $this->expectException(BadMethodCallException::class);
+        $this->io->isValid();
     }
 
     /** @covers ::evaluate */
@@ -57,23 +56,14 @@ class InputObjectTest extends \PHPUnit\Framework\TestCase {
     /** @covers ::evaluate */
     public function testEvaluateInvalidValue() {
         $this->io->setValue(InputObjectTestFixture::MAGIC_FAIL);
-        try {
-            $this->io->evaluate();
-            $this->fail("evaluate should have thrown an exception");
-        }
-        catch (\UnexpectedValueException $e) {
-            return;
-        }
+        $this->expectException(UnexpectedValueException::class);
+        $this->io->evaluate();
     }
 
     /** @covers ::evaluate */
     public function testEvaluateNoValue() {
-        try {
-            $this->io->evaluate();
-            $this->fail("evaluate should have thrown an exception");
-        } catch (\BadMethodCallException $e) {
-            return;
-        }
+        $this->expectException(BadMethodCallException::class);
+        $this->io->evaluate();
     }
 }
 
