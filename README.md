@@ -56,62 +56,66 @@ A basic example follows:
 
 `some_controller_file.php`
 
-    <?php
-    // This would be in its own file
-    use Firehed\Input\Interfaces\ValidationInterface;
+```php
+<?php
+// This would be in its own file
+use Firehed\Input\Interfaces\ValidationInterface;
 
-    use Firehed\Input\Containers\SafeInput;
-    use Firehed\Input\Objects as O;
-    class Endpoint
-        implements ValidationInterface {
+use Firehed\Input\Containers\SafeInput;
+use Firehed\Input\Objects as O;
+class Endpoint
+    implements ValidationInterface {
 
-        public function getOptionalInputs() {
-            return [
-                'bar' => new O\Text(),
-                'baz' => (new O\Text())->setDefaultValue('my baz'),
-            ];
-        }
-
-        public function getRequiredInputs() {
-            return [
-                'foo' => new O\Text(),
-            ];
-        }
-
-        public function execute(SafeInput $i) {
-            // ... do some magic
-            // $i['foo'] will be a string
-            // $i['bar'] will be a string or null, since it was optional
-            // $i['baz'] will be a string or 'my baz', since it was an optional with a default value
-        }
+    public function getOptionalInputs() {
+        return [
+            'bar' => new O\Text(),
+            'baz' => (new O\Text())->setDefaultValue('my baz'),
+        ];
     }
+
+    public function getRequiredInputs() {
+        return [
+            'foo' => new O\Text(),
+        ];
+    }
+
+    public function execute(SafeInput $i) {
+        // ... do some magic
+        // $i['foo'] will be a string
+        // $i['bar'] will be a string or null, since it was optional
+        // $i['baz'] will be a string or 'my baz', since it was an optional with a default value
+    }
+}
+```
 
 `index.php`
 
-    <?php
-    // This is the core of your Front Controller
+```php
+<?php
+// This is the core of your Front Controller
 
-    use Firehed\Input\Containers\RawInput;
-    use Firehed\Input\Parsers\URLEncoded;
+use Firehed\Input\Containers\RawInput;
+use Firehed\Input\Parsers\URLEncoded;
 
-    // The endpoint should be detrmined by your router
-    $endpoint = new Endpoint();
+// The endpoint should be detrmined by your router
+$endpoint = new Endpoint();
 
-    // The parser should be determined by the Content-Type header
-    $parser = new URLEncoded();
+// The parser should be determined by the Content-Type header
+$parser = new URLEncoded();
 
 
-    try {
-        $input = (new RawInput("foo=world"))
-            ->parse($parser)
-            ->validate($endpoint);
-        $endpoint->execute($input);
-    } catch (Firehed\Input\Exceptions\InputException $e) {
-        // The input contained invalid data
-    } catch (Exception $e) {
-        // Do any logging, error responses, etc.
-        echo $e;
-    }
+try {
+    $input = (new RawInput("foo=world"))
+        ->parse($parser)
+        ->validate($endpoint);
+    $endpoint->execute($input);
+} catch (Firehed\Input\Exceptions\InputException $e) {
+    // The input contained invalid data
+} catch (Exception $e) {
+    // Do any logging, error responses, etc.
+    echo $e;
+}
+```
 
 Development
 -----
