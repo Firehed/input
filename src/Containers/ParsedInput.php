@@ -47,7 +47,7 @@ class ParsedInput extends RawInput implements \ArrayAccess {
         $clean_out = [];
         $missing = [];
         $invalid = [];
-
+        $unexpected = [];
 
         foreach ($validator->getRequiredInputs() as $key => $input) {
             if (!isset($data[$key]) && !array_key_exists($key, $data)) {
@@ -59,8 +59,18 @@ class ParsedInput extends RawInput implements \ArrayAccess {
                 $clean_out[$key] = $input->setValue($data[$key])
                     ->evaluate();
                 unset($data[$key]);
-            }
-            catch (UnexpectedValueException $e) {
+            } catch (InputException $e) {
+                $invalid = array_merge($invalid, array_map(function ($k) use ($key) {
+                    return $key . '.' . $k;
+                }, $e->getInvalid()));
+                $missing = array_merge($missing, array_map(function ($k) use ($key) {
+                    return $key . '.' . $k;
+                }, $e->getMissing()));
+                $unexpected = array_merge($unexpected, array_map(function ($k) use ($key) {
+                    return $key . '.' . $k;
+                }, $e->getUnexpected()));
+                unset($data[$key]);
+            } catch (UnexpectedValueException $e) {
                 $invalid[] = $key;
             }
         } unset($key, $input);
@@ -71,12 +81,21 @@ class ParsedInput extends RawInput implements \ArrayAccess {
                     $clean_out[$key] = $input->setValue($data[$key])
                         ->evaluate();
                     unset($data[$key]);
-                }
-                catch (UnexpectedValueException $e) {
+                } catch (InputException $e) {
+                    $invalid = array_merge($invalid, array_map(function ($k) use ($key) {
+                        return $key . '.' . $k;
+                    }, $e->getInvalid()));
+                    $missing = array_merge($missing, array_map(function ($k) use ($key) {
+                        return $key . '.' . $k;
+                    }, $e->getMissing()));
+                    $unexpected = array_merge($unexpected, array_map(function ($k) use ($key) {
+                        return $key . '.' . $k;
+                    }, $e->getUnexpected()));
+                    unset($data[$key]);
+                } catch (UnexpectedValueException $e) {
                     $invalid[] = $key;
                 }
-            }
-            else {
+            } else {
                 // Somehow, there should be a concept of "use default
                 // value" (null unless overridden) so that optional inputs
                 // can correctly be resolved as dependencies
@@ -85,14 +104,16 @@ class ParsedInput extends RawInput implements \ArrayAccess {
             }
         } unset($key, $input);
 
+        $unexpected = array_merge($unexpected, array_keys($data));
+
         if ($missing) {
             throw new InputException(InputException::MISSING_VALUES, $missing);
         }
         if ($invalid) {
             throw new InputException(InputException::INVALID_VALUES, $invalid);
         }
-        if ($data) {
-            throw new InputException(InputException::UNEXPECTED_VALUES, $data);
+        if ($unexpected) {
+            throw new InputException(InputException::UNEXPECTED_VALUES, $unexpected);
         }
 
         $this->setData($clean_out);

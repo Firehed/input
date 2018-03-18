@@ -2,6 +2,7 @@
 
 namespace Firehed\Input\Containers;
 
+use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Objects\InputObject;
 
 /**
@@ -186,7 +187,106 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
     } // testMissingOptionalParametersAreSetToNull
 
 
+    // ----(Validation:Nesting)-------------------------------------------------
 
+    /**
+     * @covers ::validate
+     * @dataProvider nestedValidationExceptions
+     */
+    public function testValidateHandlesInputExceptions(
+        InputException $ex,
+        array $invalid,
+        array $missing,
+        array $unexpected,
+        bool $required
+    ) {
+        $io = $this->createMock(InputObject::class);
+        $io->expects($this->atLeastOnce())
+            ->method('evaluate')
+            ->will($this->throwException($ex));
+        if ($required) {
+            $this->addRequired('struct', $io);
+            $msg = 'Required:';
+        } else {
+            $this->addOptional('struct', $io);
+            $msg = 'Optional:';
+        }
+        $parsed = new ParsedInput(['struct' => ['a' => 1, 'b' => 2]]);
+        try {
+            $ret = $parsed->validate($this->getValidation());
+            $this->fail('An inputException should have been thrown');
+        } catch (InputException $e) {
+            $this->assertSame($invalid, $e->getInvalid(), "$msg Invalid was wrong");
+            $this->assertSame($missing, $e->getMissing(), "$msg Missing was wrong");
+            $this->assertSame($unexpected, $e->getUnexpected(), "$msg Unexpected was wrong");
+        }
+    }
+
+
+    public function nestedValidationExceptions()
+    {
+
+        return [
+            // Required inputs
+            [
+                new InputException(InputException::INVALID_VALUES, ['a']),
+                ['struct.a'],
+                [],
+                [],
+                true,
+            ],
+            [
+                new InputException(InputException::MISSING_VALUES, ['c']),
+                [],
+                ['struct.c'],
+                [],
+                true,
+            ],
+            [
+                new InputException(InputException::MISSING_VALUES, ['c', 'd']),
+                [],
+                ['struct.c', 'struct.d'],
+                [],
+                true,
+            ],
+            [
+                new InputException(InputException::UNEXPECTED_VALUES, ['b']),
+                [],
+                [],
+                ['struct.b'],
+                true,
+            ],
+            // Optional inputs
+            [
+                new InputException(InputException::INVALID_VALUES, ['a']),
+                ['struct.a'],
+                [],
+                [],
+                false,
+            ],
+            [
+                new InputException(InputException::MISSING_VALUES, ['c']),
+                [],
+                ['struct.c'],
+                [],
+                false,
+            ],
+            [
+                new InputException(InputException::MISSING_VALUES, ['c', 'd']),
+                [],
+                ['struct.c', 'struct.d'],
+                [],
+                false,
+            ],
+            [
+                new InputException(InputException::UNEXPECTED_VALUES, ['b']),
+                [],
+                [],
+                ['struct.b'],
+                false,
+            ],
+        ];
+    }
 
     // ----(Helpers)-----------------------------------------------------------
 
