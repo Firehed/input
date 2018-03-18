@@ -58,7 +58,6 @@ class ParsedInput extends RawInput implements \ArrayAccess {
             try {
                 $clean_out[$key] = $input->setValue($data[$key])
                     ->evaluate();
-                unset($data[$key]);
             } catch (InputException $e) {
                 $invalid = array_merge($invalid, array_map(function ($k) use ($key) {
                     return $key . '.' . $k;
@@ -69,9 +68,10 @@ class ParsedInput extends RawInput implements \ArrayAccess {
                 $unexpected = array_merge($unexpected, array_map(function ($k) use ($key) {
                     return $key . '.' . $k;
                 }, $e->getUnexpected()));
-                unset($data[$key]);
             } catch (UnexpectedValueException $e) {
                 $invalid[] = $key;
+            } finally {
+                unset($data[$key]);
             }
         } unset($key, $input);
 
@@ -80,7 +80,6 @@ class ParsedInput extends RawInput implements \ArrayAccess {
                 try {
                     $clean_out[$key] = $input->setValue($data[$key])
                         ->evaluate();
-                    unset($data[$key]);
                 } catch (InputException $e) {
                     $invalid = array_merge($invalid, array_map(function ($k) use ($key) {
                         return $key . '.' . $k;
@@ -91,9 +90,10 @@ class ParsedInput extends RawInput implements \ArrayAccess {
                     $unexpected = array_merge($unexpected, array_map(function ($k) use ($key) {
                         return $key . '.' . $k;
                     }, $e->getUnexpected()));
-                    unset($data[$key]);
                 } catch (UnexpectedValueException $e) {
                     $invalid[] = $key;
+                } finally {
+                    unset($data[$key]);
                 }
             } else {
                 // Somehow, there should be a concept of "use default
