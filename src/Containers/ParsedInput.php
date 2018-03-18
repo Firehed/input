@@ -90,10 +90,7 @@ class ParsedInput extends RawInput implements \ArrayAccess {
                     unset($data[$key]);
                 }
             } else {
-                // Somehow, there should be a concept of "use default
-                // value" (null unless overridden) so that optional inputs
-                // can correctly be resolved as dependencies
-                $clean_out[$key] = null;
+                $clean_out[$key] = $input->getDefaultValue();
                 unset($data[$key]); // in case of literal null value
             }
         } unset($key, $input);
