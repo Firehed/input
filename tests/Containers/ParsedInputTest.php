@@ -194,7 +194,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
     private $optional = [];
 
     private function getValidation() {
-        $validation = $this->getMock('Firehed\Input\Interfaces\ValidationInterface');
+        $validation = $this->createMock('Firehed\Input\Interfaces\ValidationInterface');
         $validation->expects($this->atLeastOnce())
             ->method('getRequiredInputs')
             ->will($this->returnValue($this->required));
