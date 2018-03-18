@@ -59,15 +59,12 @@ class ParsedInput extends RawInput implements \ArrayAccess {
                 $clean_out[$key] = $input->setValue($data[$key])
                     ->evaluate();
             } catch (InputException $e) {
-                $invalid = array_merge($invalid, array_map(function ($k) use ($key) {
+                $prefix = function ($k) use ($key) {
                     return $key . '.' . $k;
-                }, $e->getInvalid()));
-                $missing = array_merge($missing, array_map(function ($k) use ($key) {
-                    return $key . '.' . $k;
-                }, $e->getMissing()));
-                $unexpected = array_merge($unexpected, array_map(function ($k) use ($key) {
-                    return $key . '.' . $k;
-                }, $e->getUnexpected()));
+                };
+                $invalid = array_merge($invalid, array_map($prefix, $e->getInvalid()));
+                $missing = array_merge($missing, array_map($prefix, $e->getMissing()));
+                $unexpected = array_merge($unexpected, array_map($prefix, $e->getUnexpected()));
             } catch (UnexpectedValueException $e) {
                 $invalid[] = $key;
             } finally {
@@ -81,15 +78,12 @@ class ParsedInput extends RawInput implements \ArrayAccess {
                     $clean_out[$key] = $input->setValue($data[$key])
                         ->evaluate();
                 } catch (InputException $e) {
-                    $invalid = array_merge($invalid, array_map(function ($k) use ($key) {
+                    $prefix = function ($k) use ($key) {
                         return $key . '.' . $k;
-                    }, $e->getInvalid()));
-                    $missing = array_merge($missing, array_map(function ($k) use ($key) {
-                        return $key . '.' . $k;
-                    }, $e->getMissing()));
-                    $unexpected = array_merge($unexpected, array_map(function ($k) use ($key) {
-                        return $key . '.' . $k;
-                    }, $e->getUnexpected()));
+                    };
+                    $invalid = array_merge($invalid, array_map($prefix, $e->getInvalid()));
+                    $missing = array_merge($missing, array_map($prefix, $e->getMissing()));
+                    $unexpected = array_merge($unexpected, array_map($prefix, $e->getUnexpected()));
                 } catch (UnexpectedValueException $e) {
                     $invalid[] = $key;
                 } finally {
