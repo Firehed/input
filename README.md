@@ -2,6 +2,9 @@ Input
 =====
 An input validation framework with a boring name
 
+[![Build Status](https://travis-ci.org/Firehed/input.svg?branch=master)](https://travis-ci.org/Firehed/input)
+[![Coverage Status](https://coveralls.io/repos/github/Firehed/input/badge.svg?branch=master)](https://coveralls.io/github/Firehed/input?branch=master)
+
 Concept
 -----
 Input validation is an important task in any web application, but remains an
