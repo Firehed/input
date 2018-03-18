@@ -19,6 +19,14 @@ class InputObjectTest extends \PHPUnit\Framework\TestCase {
         $this->io = new InputObjectTestFixture;
     }
 
+    /**
+     * @covers ::__construct
+     */
+    public function testConstruct()
+    {
+        $this->assertInstanceOf(InputObject::class, $this->io);
+    }
+
     /** @covers ::setValue */
     public function testSetValue() {
         $ret = $this->io->setValue(null);
