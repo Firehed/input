@@ -7,7 +7,7 @@ use Firehed\Input\Objects\InputObject;
 /**
  * @coversDefaultClass Firehed\Input\Containers\ParsedInput
  */
-class ParsedInputTest extends \PHPUnit_Framework_TestCase {
+class ParsedInputTest extends \PHPUnit\Framework\TestCase {
 
     // ----(Constructor)--------------------------------------------------------
 

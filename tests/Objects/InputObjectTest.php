@@ -9,7 +9,7 @@ namespace Firehed\Input\Objects;
  * @covers ::<protected>
  * @covers ::<private>
  */
-class InputObjectTest extends \PHPUnit_Framework_TestCase {
+class InputObjectTest extends \PHPUnit\Framework\TestCase {
 
     private $io;
     public function setUp() {

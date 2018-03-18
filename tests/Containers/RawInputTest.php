@@ -7,7 +7,7 @@ namespace Firehed\Input\Containers;
  * @covers ::<protected>
  * @covers ::<private>
  */
-class RawInputTest extends \PHPUnit_Framework_TestCase {
+class RawInputTest extends \PHPUnit\Framework\TestCase {
 
     /**
      * @covers ::__construct

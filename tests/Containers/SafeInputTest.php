@@ -5,7 +5,7 @@ namespace Firehed\Input\Containers;
 /**
  * @coversDefaultClass Firehed\Input\Containers\SafeInput
  */
-class SafeInputTest extends \PHPUnit_Framework_TestCase {
+class SafeInputTest extends \PHPUnit\Framework\TestCase {
 
     private function getSafeInput(array $data) {
         $mock = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')

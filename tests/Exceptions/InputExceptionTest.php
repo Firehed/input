@@ -5,7 +5,7 @@ namespace Firehed\Input\Exceptions;
 /**
  * @coversDefaultClass Firehed\Input\Exceptions\InputException
  */
-class InputExceptionTest extends \PHPUnit_Framework_TestCase {
+class InputExceptionTest extends \PHPUnit\Framework\TestCase {
 
     public function constants() {
         $rc = new \ReflectionClass('Firehed\Input\Exceptions\InputException');
