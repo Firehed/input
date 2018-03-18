@@ -141,8 +141,21 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         $parsed->validate($this->getValidation());
     } // testMissingRequiredParametersAreCaught
 
-
-
+    /**
+     * @covers ::validate
+     */
+    public function testRequiredParameterWithDefaultDoesntUseDefault()
+    {
+        $default = 'some default value';
+        $io = $this->createMock(InputObject::class);
+        $io->expects($this->never())
+            ->method('getDefaultValue');
+        $this->addRequired('short', $io);
+        $parsed = new ParsedInput([]);
+        $this->expectException(InputException::class);
+        $this->expectExceptionCode(InputException::MISSING_VALUES);
+        $parsed->validate($this->getValidation());
+    }
 
      // ----(Validation:Optional Parameters)------------------------------------
 
@@ -185,6 +198,23 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         $this->assertNull($ret['short'],
             "'short' should have defaulted to null");
     } // testMissingOptionalParametersAreSetToNull
+
+    /**
+     * @covers ::validate
+     */
+    public function testOptionalParametersWithDefaultsUseDefaults()
+    {
+        $default = 'some default value';
+        $io = $this->createMock(InputObject::class);
+        $io->expects($this->atLeastOnce())
+            ->method('getDefaultValue')
+            ->willReturn($default);
+        $this->addOptional('short', $io);
+        $parsed = new ParsedInput([]);
+        $ret = $parsed->validate($this->getValidation());
+        $this->assertInstanceOf(SafeInput::class, $ret);
+        $this->assertSame($default, $ret['short'], "'short' did not yield its default value");
+    }
 
 
     // ----(Validation:Nesting)-------------------------------------------------

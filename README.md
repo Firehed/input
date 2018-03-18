@@ -68,6 +68,7 @@ A basic example follows:
         public function getOptionalInputs() {
             return [
                 'bar' => new O\Text(),
+                'baz' => (new O\Text())->setDefaultValue('my baz'),
             ];
         }
 
@@ -81,6 +82,7 @@ A basic example follows:
             // ... do some magic
             // $i['foo'] will be a string
             // $i['bar'] will be a string or null, since it was optional
+            // $i['baz'] will be a string or 'my baz', since it was an optional with a default value
         }
     }
 
@@ -114,9 +116,3 @@ A basic example follows:
 Development
 -----
 PHP7 support (STH, return types, etc) has been added in the 2.0 line. The 1.0 line will remain compatible with PHP5.
-
-
-Coming soon
------
-
-* Non-`NULL` default values for optional parameters

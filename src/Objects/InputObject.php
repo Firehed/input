@@ -22,14 +22,40 @@ namespace Firehed\Input\Objects;
  *   }
  *   // have fun with $validated_value
  */
-abstract class InputObject {
+abstract class InputObject
+{
 
+    private $defaultValue;
     private $value;
     private $valueWasSet = false; // false-like values can be valid, so explicitly track if the setter has been called
     private $isValid;
 
-    // No-op, only here so parent::__construct won't fatal
-    public function __construct() { } // __construct
+    public function __construct()
+    {
+        // No-op, only here so parent::__construct won't fatal
+    } // __construct
+
+    /**
+     * Get the default value for the object
+     * @return mixed
+     */
+    public function getDefaultValue()
+    {
+        return $this->defaultValue;
+    }
+
+    /**
+     * Set a default value, which will be provided only during optional input
+     * value validation
+     *
+     * @param mixed $value The default value
+     * @return $this
+     */
+    public function setDefaultValue($value): self
+    {
+        $this->defaultValue = $value;
+        return $this;
+    }
 
     /**
      * Protected because this should only be called by children during
