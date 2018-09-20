@@ -73,7 +73,7 @@ class ParsedInput extends RawInput implements \ArrayAccess {
         } unset($key, $input);
 
         foreach ($validator->getOptionalInputs() as $key => $input) {
-            if (isset($data[$key])) {
+            if (array_key_exists($key, $data)) {
                 try {
                     $clean_out[$key] = $input->setValue($data[$key])
                         ->evaluate();

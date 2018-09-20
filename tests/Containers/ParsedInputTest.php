@@ -216,6 +216,36 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         $this->assertSame($default, $ret['short'], "'short' did not yield its default value");
     }
 
+    /**
+     * @covers ::validate
+     */
+    public function testOptionalParametersWithValidNullWorksWhenProvided()
+    {
+        $io = $this->getMockIO(true, null);
+        $io->expects($this->never())
+            ->method('getDefaultValue');
+        $this->addOptional('key', $io);
+        $parsed = new ParsedInput(['key' => null]);
+        $ret = $parsed->validate($this->getValidation());
+        $this->assertInstanceOf(SafeInput::class, $ret);
+        $this->assertNull($ret['key'], 'key should have been null literal');
+    }
+
+    /**
+     * @covers ::validate
+     */
+    public function testOptionalParametersWithValidNullWorksWhenNotProvided()
+    {
+        $io = $this->createMock(InputObject::class);
+        $io->expects($this->atLeastOnce())
+            ->method('getDefaultValue')
+            ->willReturn(false);
+        $this->addOptional('key', $io);
+        $parsed = new ParsedInput([]);
+        $ret = $parsed->validate($this->getValidation());
+        $this->assertInstanceOf(SafeInput::class, $ret);
+        $this->assertFalse($ret['key'], 'key should have been false literal');
+    }
 
     // ----(Validation:Nesting)-------------------------------------------------
 
@@ -358,17 +388,17 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         return $validation;
     } // getValidation
 
-    private function addRequired($key, InputObject $type) {
+    private function addRequired(string $key, InputObject $type) {
         $this->required[$key] = $type;
     } // addRequired
 
-    private function addOptional($key, InputObject $type) {
+    private function addOptional(string $key, InputObject $type) {
         $this->optional[$key] = $type;
     } // addOptional
 
-    private function getMockIO($valid, $ret = null) {
-        $mock = $this->getMockBuilder('Firehed\Input\Objects\InputObject')
-            ->setMethods(['evaluate'])
+    private function getMockIO(bool $valid, $ret = null) {
+        $mock = $this->getMockBuilder(InputObject::class)
+            ->setMethods(['evaluate', 'getDefaultValue'])
             ->getMockForAbstractClass();
 
         if ($valid) {
