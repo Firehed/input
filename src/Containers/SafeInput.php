@@ -17,7 +17,7 @@ class SafeInput extends ParsedInput {
         if (!$valid->isValidated()) {
             throw new BadMethodCallException;
         }
-        $this->setData($valid->getData());
+        parent::__construct($valid->getData());
     } // __construct
 
 }

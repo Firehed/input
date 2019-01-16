@@ -22,7 +22,7 @@ class RawInputTest extends \PHPUnit\Framework\TestCase {
      * @covers ::parse
      */
     public function testParse() {
-        $raw_data = md5(rand());
+        $raw_data = md5((string)rand());
         $mock = $this->createMock('Firehed\Input\Interfaces\ParserInterface');
         $mock->expects($this->once())
             ->method('parse')

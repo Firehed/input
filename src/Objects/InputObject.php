@@ -69,8 +69,8 @@ abstract class InputObject
     } // getValue
 
     /**
-     * @param mixed value to validate
-     * @return self
+     * @param mixed $value value to validate
+     * @return $this
      */
     final public function setValue($value): self {
         $this->isValid = null;
