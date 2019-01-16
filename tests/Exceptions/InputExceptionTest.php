@@ -44,20 +44,6 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase {
     } // testInvalidConstruct
 
     /**
-     * @covers ::__construct
-     */
-    public function testInvalidConstructWithString()
-    {
-        try {
-            new InputException('this is not a defined value');
-        } catch (TypeError $e) {
-            $this->assertTrue(true, 'test passed');
-        } catch (LogicException $e) {
-            $this->assertTrue(true, 'test passed');
-        }
-    } // testInvalidConstruct
-
-    /**
      * @covers ::getInvalid
      * @dataProvider constants
      */
