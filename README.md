@@ -4,6 +4,7 @@ An input validation framework with a boring name
 
 [![Build Status](https://travis-ci.org/Firehed/input.svg?branch=master)](https://travis-ci.org/Firehed/input)
 [![Coverage Status](https://coveralls.io/repos/github/Firehed/input/badge.svg?branch=master)](https://coveralls.io/github/Firehed/input?branch=master)
+[Changelog](CHANGELOG.md)
 
 Concept
 -----
@@ -116,7 +117,3 @@ try {
     echo $e;
 }
 ```
-
-Development
------
-PHP7 support (STH, return types, etc) has been added in the 2.0 line. The 1.0 line will remain compatible with PHP5.
