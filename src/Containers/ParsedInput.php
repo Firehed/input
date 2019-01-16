@@ -13,13 +13,13 @@ use Firehed\Input\Interfaces\ValidationInterface;
 class ParsedInput extends RawInput implements \ArrayAccess {
 
     public function __construct(array $data) {
-        $this->setData($data)
-            ->setIsParsed(true);
+        parent::__construct($data);
+        $this->setIsParsed(true);
     } // __construct
 
     /**
-     * @param array data to add
-     * @return this
+     * @param ParsedInput $add data to add
+     * @return $this
      * @throws BadMethodCallException
      */
     public function addData(ParsedInput $add): self {
@@ -37,7 +37,7 @@ class ParsedInput extends RawInput implements \ArrayAccess {
     } // addData
 
     /**
-     * @param ValidationInterface Validation requirements
+     * @param ValidationInterface $validator Validation requirements
      * @return SafeInput
      * @throws InputException
      */
