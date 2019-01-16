@@ -6,6 +6,8 @@ php:
   - '7.3'
 install:
   - composer install --no-interaction --no-progress --no-suggest --prefer-dist
-script: vendor/bin/phpunit --coverage-text --whitelist src/ tests/
+script:
+  - vendor/bin/phpunit --coverage-text --whitelist src/ tests/
+  - composer phpstan
 after_success:
   - travis_retry vendor/bin/php-coveralls
