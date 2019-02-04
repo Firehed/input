@@ -2,6 +2,8 @@
 
 namespace Firehed\Input\Parsers;
 
+use Firehed\Input\Exceptions\InputException;
+
 /**
  * @coversDefaultClass Firehed\Input\Parsers\URLEncoded
  */
@@ -38,11 +40,11 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase {
     /**
      * @covers ::parse
      * @dataProvider formatErrors
-     * @expectedException Firehed\Input\Exceptions\InputException
-     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::FORMAT_ERROR
      */
     public function testFormatError($data) {
         $parser = new URLEncoded;
+        $this->expectException(InputException::class);
+        $this->expectExceptionCode(InputException::FORMAT_ERROR);
         $parser->parse($data);
     } // testFormatError
 }
