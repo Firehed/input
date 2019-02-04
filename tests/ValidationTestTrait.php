@@ -20,16 +20,19 @@ trait ValidationTestTrait
     public function testGetRequiredInputs()
     {
         $inputs = $this->getValidation()->getRequiredInputs();
-        $this->assertInternalType('array',
+        $this->assertIsArray(
             $inputs,
-            'getRequiredInputs did not return an array');
+            'getRequiredInputs did not return an array'
+        );
         foreach ($inputs as $key => $type) {
-            $this->assertInternalType('string',
+            $this->assertIsString(
                 $key,
-                'getRequiredInputs contains an invalid key');
-            $this->assertInstanceOf('Firehed\Input\Objects\InputObject',
+                'getRequiredInputs contains an invalid key'
+            );
+            $this->assertInstanceOf(Objects\InputObject::class,
                 $type,
-                "getRequiredInputs[$key] is not an InputObject");
+                "getRequiredInputs[$key] is not an InputObject"
+            );
         }
     }
 
@@ -37,16 +40,20 @@ trait ValidationTestTrait
     public function testGetOptionalInputs()
     {
         $inputs = $this->getValidation()->getOptionalInputs();
-        $this->assertInternalType('array',
+        $this->assertIsArray(
             $inputs,
-            'getOptionalInputs did not return an array');
+            'getOptionalInputs did not return an array'
+        );
         foreach ($inputs as $key => $type) {
-            $this->assertInternalType('string',
+            $this->assertIsString(
                 $key,
-                'getOptionalInputs contains an invalid key');
-            $this->assertInstanceOf('Firehed\Input\Objects\InputObject',
+                'getOptionalInputs contains an invalid key'
+            );
+            $this->assertInstanceOf(
+                Objects\InputObject::class,
                 $type,
-                "getOptionalInputs[$key] is not an InputObject");
+                "getOptionalInputs[$key] is not an InputObject"
+            );
         }
     }
 
