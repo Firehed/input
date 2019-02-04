@@ -2,6 +2,8 @@
 
 namespace Firehed\Input\Parsers;
 
+use Firehed\Input\Exceptions\InputException;
+
 /**
  * @coversDefaultClass Firehed\Input\Parsers\JSON
  */
@@ -50,22 +52,22 @@ class JSONTest extends \PHPUnit\Framework\TestCase {
     /**
      * @covers ::parse
      * @dataProvider invalidJSON
-     * @expectedException Firehed\Input\Exceptions\InputException
-     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::PARSE_ERROR
      */
     public function testParseError($json) {
         $parser = new JSON;
+        $this->expectException(InputException::class);
+        $this->expectExceptionCode(InputException::PARSE_ERROR);
         $parser->parse($json);
     } // testParseError
 
     /**
      * @covers ::parse
      * @dataProvider formatErrors
-     * @expectedException Firehed\Input\Exceptions\InputException
-     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::FORMAT_ERROR
      */
     public function testFormatError($json) {
         $parser = new JSON;
+        $this->expectException(InputException::class);
+        $this->expectExceptionCode(InputException::FORMAT_ERROR);
         $parser->parse($json);
     } // testFormatError
 }

@@ -2,8 +2,11 @@
 
 namespace Firehed\Input\Containers;
 
+use BadMethodCallException;
+use DomainException;
 use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Objects\InputObject;
+use UnexpectedValueException;
 
 /**
  * @coversDefaultClass Firehed\Input\Containers\ParsedInput
@@ -36,10 +39,10 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
 
     /**
      * @covers ::offsetGet
-     * @expectedException DomainException
      */
     public function testBadOffset() {
         $obj = new ParsedInput([]);
+        $this->expectException(DomainException::class);
         $data = $obj['foo'];
     } // testBadOffset
 
@@ -55,48 +58,48 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
 
     /**
      * @covers ::offsetExists
-     * @expectedException BadMethodCallException
      */
     public function testIssetThrows() {
         $obj = new ParsedInput([]);
+        $this->expectException(BadMethodCallException::class);
         isset($obj['foo']);
     } // testIssetThrows
 
     /**
      * @covers ::offsetExists
-     * @expectedException BadMethodCallException
      */
     public function testEmptyThrows() {
         $obj = new ParsedInput([]);
+        $this->expectException(BadMethodCallException::class);
         empty($obj['foo']);
     } // testEmptyThrows
 
     /**
      * @covers ::offsetUnset
-     * @expectedException BadMethodCallException
      */
     public function testUnsetThrows() {
         $obj = new ParsedInput([]);
+        $this->expectException(BadMethodCallException::class);
         unset($obj['foo']);
     } // testUnsetThrows
 
     /**
      * @covers ::offsetSet
-     * @expectedException BadMethodCallException
      */
     public function testSetThrows() {
         $obj = new ParsedInput([]);
+        $this->expectException(BadMethodCallException::class);
         $obj['foo'] = 'bar';
     } // testSetThrows
 
     // ----(Validation:Unexpected Parameters)----------------------------------
     /**
      * @covers ::validate
-     * @expectedException Firehed\Input\Exceptions\InputException
-     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::UNEXPECTED_VALUES
      */
     public function testUnexpectedParametersAreCaught() {
         $parsed = new ParsedInput(['foo' => 'bar']);
+        $this->expectException(InputException::class);
+        $this->expectExceptionCode(InputException::UNEXPECTED_VALUES);
         $parsed->validate($this->getValidation());
     } // testUnexpectedParametersAreCaught
 
@@ -118,26 +121,26 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
 
    /**
      * @covers ::validate
-     * @expectedException Firehed\Input\Exceptions\InputException
-     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::INVALID_VALUES
      */
     public function testInvalidRequiredParametersAreCaught() {
         $this->addRequired('short', $this->getMockIO(false));
 
         $parsed = new ParsedInput(['short' => 123]);
+        $this->expectException(InputException::class);
+        $this->expectExceptionCode(InputException::INVALID_VALUES);
         $parsed->validate($this->getValidation());
     } // testInvalidRequiredParametersAreCaught
 
     /**
      * @covers ::validate
-     * @expectedException Firehed\Input\Exceptions\InputException
-     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::MISSING_VALUES
      */
     public function testMissingRequiredParametersAreCaught() {
         $this->addRequired('short',
             $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject'));
 
         $parsed = new ParsedInput([]);
+        $this->expectException(InputException::class);
+        $this->expectExceptionCode(InputException::MISSING_VALUES);
         $parsed->validate($this->getValidation());
     } // testMissingRequiredParametersAreCaught
 
@@ -176,12 +179,12 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
 
     /**
      * @covers ::validate
-     * @expectedException Firehed\Input\Exceptions\InputException
-     * @expectedExceptionCode Firehed\Input\Exceptions\InputException::INVALID_VALUES
      */
     public function testInvalidOptionalParametersAreCaught() {
         $this->addOptional('short', $this->getMockIO(false));
         $parsed = new ParsedInput(['short' => 123]);
+        $this->expectException(InputException::class);
+        $this->expectExceptionCode(InputException::INVALID_VALUES);
         $parsed->validate($this->getValidation());
     } // testInvalidOptionalParametersAreCaught
 
@@ -409,7 +412,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         else {
             $mock->expects($this->atLeastOnce())
                 ->method('evaluate')
-                ->will($this->throwException(new \UnexpectedValueException));
+                ->will($this->throwException(new UnexpectedValueException));
         }
         return $mock;
     } // getMockIO

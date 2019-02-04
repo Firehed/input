@@ -2,6 +2,8 @@
 
 namespace Firehed\Input\Containers;
 
+use BadMethodCallException;
+
 /**
  * @coversDefaultClass Firehed\Input\Containers\SafeInput
  */
@@ -30,7 +32,6 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase {
 
     /**
      * @covers ::__construct
-     * @expectedException BadMethodCallException
      */
     public function testConstructThrowsWithUnvalidatedInput() {
         $valid = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
@@ -39,6 +40,7 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase {
         $valid->expects($this->atLeastOnce())
             ->method('isValidated')
             ->will($this->returnValue(false));
+        $this->expectException(BadMethodCallException::class);
         new SafeInput($valid);
     } // testConstructThrowsWithUnvalidatedInput
 
