@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [Unreleased]
+### Summary
+This release focuses on supporting newer versions of PHP and minimizing external dependencies.
+
+### Added
+- Test suite: PHP 7.4
+
+### Changed (Internal)
+- Migrated from Travis to Github Actions
+- Migrated from Coveralls to Codecov
+
+### Removed
+- Test suite: PHP 7.1
+
 ## [2.1.5] - 2019-02-04
 ### Summary
 - More tests changes to improve compatibility with PHPUnit 8
