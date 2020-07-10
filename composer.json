@@ -20,7 +20,6 @@
         "php": ">=7.0"
     },
     "require-dev": {
-        "php-coveralls/php-coveralls": "^2.0",
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-phpunit": "^0.11",
         "phpunit/phpunit": "^7"
