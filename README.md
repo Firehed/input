@@ -2,8 +2,9 @@ Input
 =====
 An input validation framework with a boring name
 
-[![Build Status](https://travis-ci.org/Firehed/input.svg?branch=master)](https://travis-ci.org/Firehed/input)
-[![Coverage Status](https://coveralls.io/repos/github/Firehed/input/badge.svg?branch=master)](https://coveralls.io/github/Firehed/input?branch=master)
+[![Build Status](https://github.com/Firehed/input/workflows/tests/badge.svg)](https://github.com/Firehed/input/actions)
+[![Coverage Status](https://codecov.io/gh/Firehed/input/branch/master/graph/badge.svg)](https://codecov.io/gh/Firehed/input)
+
 [Changelog](CHANGELOG.md)
 
 Concept
