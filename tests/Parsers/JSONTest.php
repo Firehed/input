@@ -5,29 +5,41 @@ namespace Firehed\Input\Parsers;
 use Firehed\Input\Exceptions\InputException;
 
 /**
- * @coversDefaultClass Firehed\Input\Parsers\JSON
+ * @covers Firehed\Input\Parsers\JSON
  */
-class JSONTest extends \PHPUnit\Framework\TestCase {
-
-    public function validJSON() {
+class JSONTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @return array{string, mixed[]}[]
+     */
+    public function validJSON()
+    {
         return [
             ['{}', []],
             ['[]', []],
             ['{"foo":"bar"}', ['foo' => 'bar']],
             ['', []], // Cast empty bodies to an empty array
         ];
-    } // validJSON
+    }
 
-    public function invalidJSON() {
+    /**
+     * @return array{string}[]
+     */
+    public function invalidJSON()
+    {
         return [
             ["['123':123]"],
             ['["12"=>"abc"]'],
             ["{'123':123}"],
             ['{"12"=>"abc"}'],
         ];
-    } // invalidJSON
+    }
 
-    public function formatErrors() {
+    /**
+     * @return array{string}[]
+     */
+    public function formatErrors()
+    {
         return [
             ['true'],
             ['false'],
@@ -35,39 +47,44 @@ class JSONTest extends \PHPUnit\Framework\TestCase {
             ['1'],
             ['"1"'],
         ];
-    } // formatErrors
-    /**
-     * @covers ::parse
-     * @dataProvider validJSON
-     */
-    public function testParse($json, $expected) {
-        $parser = new JSON;
-
-        $ret = $parser->parse($json);
-
-        $this->assertEquals($expected, $ret,
-            'Parser returned wrong value from JSON');
     }
 
     /**
-     * @covers ::parse
+     * @dataProvider validJSON
+     * @param mixed $expected
+     */
+    public function testParse(string $json, $expected): void
+    {
+        $parser = new JSON();
+
+        $ret = $parser->parse($json);
+
+        $this->assertEquals(
+            $expected,
+            $ret,
+            'Parser returned wrong value from JSON'
+        );
+    }
+
+    /**
      * @dataProvider invalidJSON
      */
-    public function testParseError($json) {
-        $parser = new JSON;
+    public function testParseError(string $json): void
+    {
+        $parser = new JSON();
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::PARSE_ERROR);
         $parser->parse($json);
-    } // testParseError
+    }
 
     /**
-     * @covers ::parse
      * @dataProvider formatErrors
      */
-    public function testFormatError($json) {
-        $parser = new JSON;
+    public function testFormatError(string $json): void
+    {
+        $parser = new JSON();
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::FORMAT_ERROR);
         $parser->parse($json);
-    } // testFormatError
+    }
 }

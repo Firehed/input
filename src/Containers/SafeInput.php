@@ -11,13 +11,14 @@ use BadMethodCallException;
  *     ->parse($parser)
  *     ->validate($validator);
  */
-class SafeInput extends ParsedInput {
+class SafeInput extends ParsedInput
+{
 
-    public function __construct(ParsedInput $valid) {
+    public function __construct(ParsedInput $valid)
+    {
         if (!$valid->isValidated()) {
-            throw new BadMethodCallException;
+            throw new BadMethodCallException();
         }
         parent::__construct($valid->getData());
-    } // __construct
-
+    }
 }

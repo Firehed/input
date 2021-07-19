@@ -5,12 +5,16 @@ namespace Firehed\Input\Containers;
 use BadMethodCallException;
 
 /**
- * @coversDefaultClass Firehed\Input\Containers\SafeInput
+ * @covers Firehed\Input\Containers\SafeInput
  */
-class SafeInputTest extends \PHPUnit\Framework\TestCase {
-
-    private function getSafeInput(array $data) {
-        $mock = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
+class SafeInputTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @param mixed[] $data
+     */
+    private function getSafeInput(array $data): SafeInput
+    {
+        $mock = $this->getMockBuilder(ParsedInput::class)
             ->disableOriginalConstructor()
             ->setMethods(['getData', 'isValidated'])
             ->getMock();
@@ -21,20 +25,16 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase {
             ->method('isValidated')
             ->will($this->returnValue(true));
         return new SafeInput($mock);
-    } // getSafeInput
+    }
 
-    /**
-     * @covers ::__construct
-     */
-    public function testConstruct() {
-        $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $this->getSafeInput([]));
-    } // testConstruct
+    public function testConstruct(): void
+    {
+        $this->assertInstanceOf(SafeInput::class, $this->getSafeInput([]));
+    }
 
-    /**
-     * @covers ::__construct
-     */
-    public function testConstructThrowsWithUnvalidatedInput() {
-        $valid = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
+    public function testConstructThrowsWithUnvalidatedInput(): void
+    {
+        $valid = $this->getMockBuilder(ParsedInput::class)
             ->disableOriginalConstructor()
             ->getMock();
         $valid->expects($this->atLeastOnce())
@@ -42,6 +42,5 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase {
             ->will($this->returnValue(false));
         $this->expectException(BadMethodCallException::class);
         new SafeInput($valid);
-    } // testConstructThrowsWithUnvalidatedInput
-
+    }
 }

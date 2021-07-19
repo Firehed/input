@@ -29,7 +29,8 @@ trait ValidationTestTrait
                 $key,
                 'getRequiredInputs contains an invalid key'
             );
-            $this->assertInstanceOf(Objects\InputObject::class,
+            $this->assertInstanceOf(
+                Objects\InputObject::class,
                 $type,
                 "getRequiredInputs[$key] is not an InputObject"
             );
@@ -56,5 +57,4 @@ trait ValidationTestTrait
             );
         }
     }
-
 }

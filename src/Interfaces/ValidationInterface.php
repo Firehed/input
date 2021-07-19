@@ -6,7 +6,8 @@ namespace Firehed\Input\Interfaces;
 
 use Firehed\Input\Objects\InputObject;
 
-interface ValidationInterface {
+interface ValidationInterface
+{
 
     /**
      * @return array<string, InputObject>
@@ -17,5 +18,4 @@ interface ValidationInterface {
      * @return array<string, InputObject>
      */
     public function getOptionalInputs(): array;
-
 }

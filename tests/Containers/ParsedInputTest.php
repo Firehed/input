@@ -5,109 +5,98 @@ namespace Firehed\Input\Containers;
 use BadMethodCallException;
 use DomainException;
 use Firehed\Input\Exceptions\InputException;
+use Firehed\Input\Interfaces\ValidationInterface;
 use Firehed\Input\Objects\InputObject;
 use UnexpectedValueException;
 
 /**
- * @coversDefaultClass Firehed\Input\Containers\ParsedInput
+ * @covers Firehed\Input\Containers\ParsedInput
  */
-class ParsedInputTest extends \PHPUnit\Framework\TestCase {
+class ParsedInputTest extends \PHPUnit\Framework\TestCase
+{
 
     // ----(Constructor)--------------------------------------------------------
 
-    /**
-     * @covers ::__construct
-     */
-    public function testConstructWorks() {
-        $this->assertInstanceOf('Firehed\Input\Containers\ParsedInput',
+    public function testConstructWorks(): void
+    {
+        $this->assertInstanceOf(
+            'Firehed\Input\Containers\ParsedInput',
             new ParsedInput([]),
-            'Construct failed');
-    } // testConstructWorks
+            'Construct failed'
+        );
+    }
 
     // ----(ArrayAccess)--------------------------------------------------------
 
-    /**
-     * @covers ::offsetGet
-     */
-    public function testGoodOffset() {
+    public function testGoodOffset(): void
+    {
         $array = ['foo' => 'bar'];
         $obj = new ParsedInput($array);
-        $this->assertSame('bar',
+        $this->assertSame(
+            'bar',
             $obj['foo'],
-            'The value of the parsed input was not the same as the input');
-    } // testGoodOffset
+            'The value of the parsed input was not the same as the input'
+        );
+    }
 
-    /**
-     * @covers ::offsetGet
-     */
-    public function testBadOffset() {
+    public function testBadOffset(): void
+    {
         $obj = new ParsedInput([]);
         $this->expectException(DomainException::class);
         $data = $obj['foo'];
-    } // testBadOffset
+    }
 
-    /**
-     * @covers ::offsetGet
-     */
-    public function testAccessOfExpectedNullValue() {
+    public function testAccessOfExpectedNullValue(): void
+    {
         // isset() returns false on null, so assert there's no weirdness
         $obj = new ParsedInput(['foo' => null]);
         $this->assertNull($obj['foo'], 'The wrong value was returned');
-    } // testAccessOfExpectedNullValue
+    }
 
-
-    /**
-     * @covers ::offsetExists
-     */
-    public function testIssetThrows() {
+    public function testIssetThrows(): void
+    {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
+        // @phpstan-ignore-next-line
         isset($obj['foo']);
-    } // testIssetThrows
+    }
 
-    /**
-     * @covers ::offsetExists
-     */
-    public function testEmptyThrows() {
+    public function testEmptyThrows(): void
+    {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
+        // @phpstan-ignore-next-line
         empty($obj['foo']);
-    } // testEmptyThrows
+    }
 
-    /**
-     * @covers ::offsetUnset
-     */
-    public function testUnsetThrows() {
+    public function testUnsetThrows(): void
+    {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
         unset($obj['foo']);
-    } // testUnsetThrows
+    }
 
-    /**
-     * @covers ::offsetSet
-     */
-    public function testSetThrows() {
+    public function testSetThrows(): void
+    {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
         $obj['foo'] = 'bar';
-    } // testSetThrows
+    }
 
     // ----(Validation:Unexpected Parameters)----------------------------------
-    /**
-     * @covers ::validate
-     */
-    public function testUnexpectedParametersAreCaught() {
+
+    public function testUnexpectedParametersAreCaught(): void
+    {
         $parsed = new ParsedInput(['foo' => 'bar']);
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::UNEXPECTED_VALUES);
         $parsed->validate($this->getValidation());
-    } // testUnexpectedParametersAreCaught
+    }
 
     // ----(Validation:Required Parameters)------------------------------------
-    /**
-     * @covers ::validate
-     */
-    public function testValidRequiredParametersAreReturned() {
+
+    public function testValidRequiredParametersAreReturned(): void
+    {
         $desc = 'I am a short description';
         $this->addRequired('short', $this->getMockIO(true, $desc));
 
@@ -115,39 +104,37 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         $ret = $parsed->validate($this->getValidation());
 
         $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $ret);
-        $this->assertSame($desc, $ret['short'],
-            'The wrong value exists in the parsed input');
-    } // testValidRequiredParametersAreReturned
+        $this->assertSame(
+            $desc,
+            $ret['short'],
+            'The wrong value exists in the parsed input'
+        );
+    }
 
-   /**
-     * @covers ::validate
-     */
-    public function testInvalidRequiredParametersAreCaught() {
+    public function testInvalidRequiredParametersAreCaught(): void
+    {
         $this->addRequired('short', $this->getMockIO(false));
 
         $parsed = new ParsedInput(['short' => 123]);
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::INVALID_VALUES);
         $parsed->validate($this->getValidation());
-    } // testInvalidRequiredParametersAreCaught
+    }
 
-    /**
-     * @covers ::validate
-     */
-    public function testMissingRequiredParametersAreCaught() {
-        $this->addRequired('short',
-            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject'));
+    public function testMissingRequiredParametersAreCaught(): void
+    {
+        $this->addRequired(
+            'short',
+            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject')
+        );
 
         $parsed = new ParsedInput([]);
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::MISSING_VALUES);
         $parsed->validate($this->getValidation());
-    } // testMissingRequiredParametersAreCaught
+    }
 
-    /**
-     * @covers ::validate
-     */
-    public function testRequiredParameterWithDefaultDoesntUseDefault()
+    public function testRequiredParameterWithDefaultDoesntUseDefault(): void
     {
         $default = 'some default value';
         $io = $this->createMock(InputObject::class);
@@ -162,10 +149,8 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
 
      // ----(Validation:Optional Parameters)------------------------------------
 
-    /**
-     * @covers ::validate
-     */
-    public function testValidOptionalParametersAreReturned() {
+    public function testValidOptionalParametersAreReturned(): void
+    {
         $desc = 'I am a short description';
         $this->addOptional('short', $this->getMockIO(true, $desc));
 
@@ -173,39 +158,39 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         $ret = $parsed->validate($this->getValidation());
 
         $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $ret);
-        $this->assertSame($desc, $ret['short'],
-            'The wrong value exists in the parsed input');
-    } // testValidOptionalParametersAreReturned
+        $this->assertSame(
+            $desc,
+            $ret['short'],
+            'The wrong value exists in the parsed input'
+        );
+    }
 
-    /**
-     * @covers ::validate
-     */
-    public function testInvalidOptionalParametersAreCaught() {
+    public function testInvalidOptionalParametersAreCaught(): void
+    {
         $this->addOptional('short', $this->getMockIO(false));
         $parsed = new ParsedInput(['short' => 123]);
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::INVALID_VALUES);
         $parsed->validate($this->getValidation());
-    } // testInvalidOptionalParametersAreCaught
+    }
 
-    /**
-     * @covers ::validate
-     */
-    public function testMissingOptionalParametersAreSetToNull() {
-        $this->addOptional('short',
-            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject'));
+    public function testMissingOptionalParametersAreSetToNull(): void
+    {
+        $this->addOptional(
+            'short',
+            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject')
+        );
 
         $parsed = new ParsedInput([]);
         $ret = $parsed->validate($this->getValidation());
         $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $ret);
-        $this->assertNull($ret['short'],
-            "'short' should have defaulted to null");
-    } // testMissingOptionalParametersAreSetToNull
+        $this->assertNull(
+            $ret['short'],
+            "'short' should have defaulted to null"
+        );
+    }
 
-    /**
-     * @covers ::validate
-     */
-    public function testOptionalParametersWithDefaultsUseDefaults()
+    public function testOptionalParametersWithDefaultsUseDefaults(): void
     {
         $default = 'some default value';
         $io = $this->createMock(InputObject::class);
@@ -219,10 +204,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         $this->assertSame($default, $ret['short'], "'short' did not yield its default value");
     }
 
-    /**
-     * @covers ::validate
-     */
-    public function testOptionalParametersWithValidNullWorksWhenProvided()
+    public function testOptionalParametersWithValidNullWorksWhenProvided(): void
     {
         $io = $this->getMockIO(true, null);
         $io->expects($this->never())
@@ -234,10 +216,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         $this->assertNull($ret['key'], 'key should have been null literal');
     }
 
-    /**
-     * @covers ::validate
-     */
-    public function testOptionalParametersWithValidNullWorksWhenNotProvided()
+    public function testOptionalParametersWithValidNullWorksWhenNotProvided(): void
     {
         $io = $this->createMock(InputObject::class);
         $io->expects($this->atLeastOnce())
@@ -253,7 +232,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
     // ----(Validation:Nesting)-------------------------------------------------
 
     /**
-     * @covers ::validate
      * @dataProvider nestedValidationExceptions
      */
     public function testValidateHandlesInputExceptions(
@@ -262,7 +240,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         array $missing,
         array $unexpected,
         bool $required
-    ) {
+    ): void {
         $io = $this->createMock(InputObject::class);
         $io->expects($this->atLeastOnce())
             ->method('evaluate')
@@ -285,10 +263,8 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
         }
     }
 
-
     public function nestedValidationExceptions()
     {
-
         return [
             // Required inputs
             [
@@ -375,11 +351,14 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
 
     // ----(Helpers)-----------------------------------------------------------
 
+    /** @var array<string, InputObject> */
     private $required = [];
+    /** @var array<string, InputObject> */
     private $optional = [];
 
-    private function getValidation() {
-        $validation = $this->createMock('Firehed\Input\Interfaces\ValidationInterface');
+    private function getValidation(): ValidationInterface
+    {
+        $validation = $this->createMock(ValidationInterface::class);
         $validation->expects($this->atLeastOnce())
             ->method('getRequiredInputs')
             ->will($this->returnValue($this->required));
@@ -389,17 +368,24 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
             ->will($this->returnValue($this->optional));
 
         return $validation;
-    } // getValidation
+    }
 
-    private function addRequired(string $key, InputObject $type) {
+    private function addRequired(string $key, InputObject $type): void
+    {
         $this->required[$key] = $type;
-    } // addRequired
+    }
 
-    private function addOptional(string $key, InputObject $type) {
+    private function addOptional(string $key, InputObject $type): void
+    {
         $this->optional[$key] = $type;
-    } // addOptional
+    }
 
-    private function getMockIO(bool $valid, $ret = null) {
+    /**
+     * @param mixed $ret
+     * @return InputObject & \PHPUnit\Framework\MockObject\MockObject
+     */
+    private function getMockIO(bool $valid, $ret = null): InputObject
+    {
         $mock = $this->getMockBuilder(InputObject::class)
             ->setMethods(['evaluate', 'getDefaultValue'])
             ->getMockForAbstractClass();
@@ -408,15 +394,11 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase {
             $mock->expects($this->atLeastOnce())
                 ->method('evaluate')
                 ->will($this->returnValue($ret));
-        }
-        else {
+        } else {
             $mock->expects($this->atLeastOnce())
                 ->method('evaluate')
-                ->will($this->throwException(new UnexpectedValueException));
+                ->will($this->throwException(new UnexpectedValueException()));
         }
         return $mock;
-    } // getMockIO
-
-
-
+    }
 }

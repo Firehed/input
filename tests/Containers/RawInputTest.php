@@ -3,25 +3,22 @@
 namespace Firehed\Input\Containers;
 
 /**
- * @coversDefaultClass Firehed\Input\Containers\RawInput
- * @covers ::<protected>
- * @covers ::<private>
+ * @covers Firehed\Input\Containers\RawInput
  */
-class RawInputTest extends \PHPUnit\Framework\TestCase {
+class RawInputTest extends \PHPUnit\Framework\TestCase
+{
 
-    /**
-     * @covers ::__construct
-     */
-    public function testConstruct() {
-        $this->assertInstanceOf('Firehed\Input\Containers\RawInput',
+    public function testConstruct(): void
+    {
+        $this->assertInstanceOf(
+            'Firehed\Input\Containers\RawInput',
             new RawInput('some raw data'),
-            "Construct failed");
-    } // testConstruct
+            "Construct failed"
+        );
+    }
 
-    /**
-     * @covers ::parse
-     */
-    public function testParse() {
+    public function testParse(): void
+    {
         $raw_data = md5((string)rand());
         $mock = $this->createMock('Firehed\Input\Interfaces\ParserInterface');
         $mock->expects($this->once())
@@ -30,11 +27,12 @@ class RawInputTest extends \PHPUnit\Framework\TestCase {
             ->will($this->returnValue((array)$raw_data));
         $raw = new RawInput($raw_data);
         $parsed = $raw->parse($mock);
-        $this->assertInstanceOf('Firehed\Input\Containers\ParsedInput',
+        $this->assertInstanceOf(
+            'Firehed\Input\Containers\ParsedInput',
             $parsed,
-            'RawInput::parse() should return a ParsedInput object');
+            'RawInput::parse() should return a ParsedInput object'
+        );
         $this->assertTrue($raw->isParsed(), 'isParsed should be true');
         $this->assertFalse($raw->isValidated(), 'isValid should be false');
-    } // testParse
-
+    }
 }

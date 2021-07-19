@@ -1,0 +1,27 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Firehed\\\\Input\\\\Exceptions\\\\InputException\\:\\:__construct\\(\\) has parameter \\$errors with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Exceptions/InputException.php
+
+		-
+			message: "#^Method Firehed\\\\Input\\\\Containers\\\\ParsedInputTest\\:\\:nestedValidationExceptions\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: tests/Containers/ParsedInputTest.php
+
+		-
+			message: "#^Method Firehed\\\\Input\\\\Containers\\\\ParsedInputTest\\:\\:testValidateHandlesInputExceptions\\(\\) has parameter \\$invalid with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Containers/ParsedInputTest.php
+
+		-
+			message: "#^Method Firehed\\\\Input\\\\Containers\\\\ParsedInputTest\\:\\:testValidateHandlesInputExceptions\\(\\) has parameter \\$missing with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Containers/ParsedInputTest.php
+
+		-
+			message: "#^Method Firehed\\\\Input\\\\Containers\\\\ParsedInputTest\\:\\:testValidateHandlesInputExceptions\\(\\) has parameter \\$unexpected with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Containers/ParsedInputTest.php
+

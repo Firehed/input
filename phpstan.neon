@@ -1,6 +1,10 @@
 includes:
+    - phpstan-baseline.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
 parameters:
     excludes_analyse:
-        - %rootDir%/../../../vendor
-    level: 7
+        - vendor
+    level: max
+    paths:
+        - src
+        - tests

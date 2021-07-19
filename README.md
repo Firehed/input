@@ -2,8 +2,10 @@ Input
 =====
 An input validation framework with a boring name
 
-[![Build Status](https://github.com/Firehed/input/workflows/tests/badge.svg)](https://github.com/Firehed/input/actions)
-[![Coverage Status](https://codecov.io/gh/Firehed/input/branch/master/graph/badge.svg)](https://codecov.io/gh/Firehed/input)
+[![Test](https://github.com/Firehed/input/actions/workflows/test.yml/badge.svg)](https://github.com/Firehed/input/actions/workflows/test.yml)
+[![Static analysis](https://github.com/Firehed/input/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/Firehed/input/actions/workflows/static-analysis.yml)
+[![Lint](https://github.com/Firehed/input/actions/workflows/lint.yml/badge.svg)](https://github.com/Firehed/input/actions/workflows/lint.yml)
+[![codecov](https://codecov.io/gh/Firehed/input/branch/master/graph/badge.svg?token=gTzlnli3QV)](https://codecov.io/gh/Firehed/input)
 
 [Changelog](CHANGELOG.md)
 

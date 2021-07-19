@@ -5,9 +5,11 @@ namespace Firehed\Input\Parsers;
 use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Interfaces\ParserInterface;
 
-class URLEncoded implements ParserInterface {
+class URLEncoded implements ParserInterface
+{
 
-    public function parse(string $raw_input): array {
+    public function parse(string $raw_input): array
+    {
         if (!strlen($raw_input)) {
             return [];
         }
@@ -17,12 +19,12 @@ class URLEncoded implements ParserInterface {
             throw new InputException(InputException::FORMAT_ERROR);
         }
         return $out;
-    } // parse
+    }
 
-    public function getSupportedMimeTypes(): array {
+    public function getSupportedMimeTypes(): array
+    {
         return [
             'application/x-www-form-urlencoded',
         ];
-    } // getSupportedMimeTypes
-
+    }
 }

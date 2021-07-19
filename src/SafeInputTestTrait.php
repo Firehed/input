@@ -25,5 +25,4 @@ trait SafeInputTestTrait
             ->will($this->returnValue(true));
         return new Containers\SafeInput($PI);
     }
-
 }
