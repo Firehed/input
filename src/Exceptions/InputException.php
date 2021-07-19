@@ -30,9 +30,6 @@ class InputException extends UnexpectedValueException
      */
     private $unexpected = [];
 
-    /**
-     * @param array<string> $errors
-     */
     public function __construct(int $code, array $errors = [])
     {
         switch ($code) {

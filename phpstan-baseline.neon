@@ -1,27 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#2 \\$errors of class Firehed\\\\Input\\\\Exceptions\\\\InputException constructor expects array\\<string\\>, array\\<int\\|string\\> given\\.$#"
-			count: 1
-			path: src/Containers/ParsedInput.php
-
-		-
-			message: "#^Parameter \\#2 \\$errors of class Firehed\\\\Input\\\\Exceptions\\\\InputException constructor expects array\\<string\\>, array\\<string, array\\<int\\|string\\>\\> given\\.$#"
-			count: 1
-			path: src/Containers/ParsedInput.php
-
-		-
-			message: "#^Property Firehed\\\\Input\\\\Exceptions\\\\InputException\\:\\:\\$invalid \\(array\\<string\\>\\) does not accept array\\|string\\.$#"
-			count: 1
-			path: src/Exceptions/InputException.php
-
-		-
-			message: "#^Property Firehed\\\\Input\\\\Exceptions\\\\InputException\\:\\:\\$missing \\(array\\<string\\>\\) does not accept array\\|string\\.$#"
-			count: 1
-			path: src/Exceptions/InputException.php
-
-		-
-			message: "#^Property Firehed\\\\Input\\\\Exceptions\\\\InputException\\:\\:\\$unexpected \\(array\\<string\\>\\) does not accept array\\|string\\.$#"
+			message: "#^Method Firehed\\\\Input\\\\Exceptions\\\\InputException\\:\\:__construct\\(\\) has parameter \\$errors with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Exceptions/InputException.php
 
@@ -44,14 +24,4 @@ parameters:
 			message: "#^Method Firehed\\\\Input\\\\Containers\\\\ParsedInputTest\\:\\:testValidateHandlesInputExceptions\\(\\) has parameter \\$unexpected with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/Containers/ParsedInputTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$errors of class Firehed\\\\Input\\\\Exceptions\\\\InputException constructor expects array\\<string\\>, array\\<string, array\\<int, string\\>\\> given\\.$#"
-			count: 2
-			path: tests/Containers/ParsedInputTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$errors of class Firehed\\\\Input\\\\Exceptions\\\\InputException constructor expects array\\<string\\>, array\\<string, array\\<int, string\\>\\> given\\.$#"
-			count: 1
-			path: tests/Exceptions/InputExceptionTest.php
 
