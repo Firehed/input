@@ -18,7 +18,7 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase
             ['a[]=b&a[]=c', ['a' => ['b', 'c']]],
             ['', []], // Cast empty body to empty array
         ];
-    } // validURLEncoded
+    }
 
     /**
      * @return string[][]
@@ -28,7 +28,7 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase
         return [
             ['&'],
         ];
-    } // formatErrors
+    }
 
     /**
      * @covers ::parse
@@ -57,5 +57,5 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::FORMAT_ERROR);
         $parser->parse($data);
-    } // testFormatError
+    }
 }

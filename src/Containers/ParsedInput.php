@@ -17,7 +17,7 @@ class ParsedInput extends RawInput implements \ArrayAccess
     {
         parent::__construct($data);
         $this->setIsParsed(true);
-    } // __construct
+    }
 
     /**
      * @param ParsedInput $add data to add
@@ -39,7 +39,7 @@ class ParsedInput extends RawInput implements \ArrayAccess
 
         $this->setData(array_merge($add->getData(), $this->getData()));
         return $this;
-    } // addData
+    }
 
     /**
      * @param ValidationInterface $validator Validation requirements
@@ -138,7 +138,7 @@ class ParsedInput extends RawInput implements \ArrayAccess
     public function asArray(): array
     {
         return $this->getData();
-    } // asArray
+    }
 
    // ----(ArrayAccess)-------------------------------------------------------
 
@@ -151,7 +151,7 @@ class ParsedInput extends RawInput implements \ArrayAccess
             "ParsedInput is already validated, and contains all expected " .
             "keys. Use standard binary comparitors on the values."
         );
-    } // offsetExists
+    }
 
     /**
      * Invoked by array access of the object
@@ -171,7 +171,7 @@ class ParsedInput extends RawInput implements \ArrayAccess
             "the input is already validated, this means there is a bug in " .
             "the code. Most likely, there is a typo in the key."
         );
-    } // offsetGet
+    }
 
     /**
      * Invoked by setting an array value on the object
@@ -179,7 +179,7 @@ class ParsedInput extends RawInput implements \ArrayAccess
     public function offsetSet($offset, $value)
     {
         throw new BadMethodCallException("ParsedInput is read-only");
-    } // offsetSet
+    }
 
     /**
      * Invoked via `unset`
@@ -187,5 +187,5 @@ class ParsedInput extends RawInput implements \ArrayAccess
     public function offsetUnset($offset)
     {
         throw new BadMethodCallException("ParsedInput is read-only");
-    } // offsetUnset
+    }
 }

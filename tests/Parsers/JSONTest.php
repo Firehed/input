@@ -18,7 +18,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
             ['{"foo":"bar"}', ['foo' => 'bar']],
             ['', []], // Cast empty bodies to an empty array
         ];
-    } // validJSON
+    }
 
     public function invalidJSON()
     {
@@ -28,7 +28,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
             ["{'123':123}"],
             ['{"12"=>"abc"}'],
         ];
-    } // invalidJSON
+    }
 
     public function formatErrors()
     {
@@ -39,7 +39,8 @@ class JSONTest extends \PHPUnit\Framework\TestCase
             ['1'],
             ['"1"'],
         ];
-    } // formatErrors
+    }
+
     /**
      * @covers ::parse
      * @dataProvider validJSON
@@ -67,7 +68,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::PARSE_ERROR);
         $parser->parse($json);
-    } // testParseError
+    }
 
     /**
      * @covers ::parse
@@ -79,5 +80,5 @@ class JSONTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::FORMAT_ERROR);
         $parser->parse($json);
-    } // testFormatError
+    }
 }

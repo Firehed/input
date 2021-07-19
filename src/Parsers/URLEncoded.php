@@ -19,12 +19,12 @@ class URLEncoded implements ParserInterface
             throw new InputException(InputException::FORMAT_ERROR);
         }
         return $out;
-    } // parse
+    }
 
     public function getSupportedMimeTypes(): array
     {
         return [
             'application/x-www-form-urlencoded',
         ];
-    } // getSupportedMimeTypes
+    }
 }

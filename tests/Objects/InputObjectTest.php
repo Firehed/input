@@ -115,5 +115,5 @@ class InputObjectTestFixture extends InputObject
     public function validate($value): bool
     {
         return $value !== self::MAGIC_FAIL;
-    } // validate
+    }
 }

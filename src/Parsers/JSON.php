@@ -22,12 +22,12 @@ class JSON implements ParserInterface
             throw new InputException(InputException::FORMAT_ERROR);
         }
         return $data;
-    } // parse
+    }
 
     public function getSupportedMimeTypes(): array
     {
         return [
             'application/json',
         ];
-    } // getSupportedMimeTypes
+    }
 }

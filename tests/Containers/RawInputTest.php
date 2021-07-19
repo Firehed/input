@@ -20,7 +20,7 @@ class RawInputTest extends \PHPUnit\Framework\TestCase
             new RawInput('some raw data'),
             "Construct failed"
         );
-    } // testConstruct
+    }
 
     /**
      * @covers ::parse
@@ -42,5 +42,5 @@ class RawInputTest extends \PHPUnit\Framework\TestCase
         );
         $this->assertTrue($raw->isParsed(), 'isParsed should be true');
         $this->assertFalse($raw->isValidated(), 'isValid should be false');
-    } // testParse
+    }
 }

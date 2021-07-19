@@ -20,5 +20,5 @@ class SafeInput extends ParsedInput
             throw new BadMethodCallException();
         }
         parent::__construct($valid->getData());
-    } // __construct
+    }
 }

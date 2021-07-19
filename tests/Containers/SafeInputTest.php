@@ -23,7 +23,7 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase
             ->method('isValidated')
             ->will($this->returnValue(true));
         return new SafeInput($mock);
-    } // getSafeInput
+    }
 
     /**
      * @covers ::__construct
@@ -31,7 +31,7 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase
     public function testConstruct()
     {
         $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $this->getSafeInput([]));
-    } // testConstruct
+    }
 
     /**
      * @covers ::__construct
@@ -46,5 +46,5 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue(false));
         $this->expectException(BadMethodCallException::class);
         new SafeInput($valid);
-    } // testConstructThrowsWithUnvalidatedInput
+    }
 }

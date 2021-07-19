@@ -26,7 +26,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
             new ParsedInput([]),
             'Construct failed'
         );
-    } // testConstructWorks
+    }
 
     // ----(ArrayAccess)--------------------------------------------------------
 
@@ -42,7 +42,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
             $obj['foo'],
             'The value of the parsed input was not the same as the input'
         );
-    } // testGoodOffset
+    }
 
     /**
      * @covers ::offsetGet
@@ -52,7 +52,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $obj = new ParsedInput([]);
         $this->expectException(DomainException::class);
         $data = $obj['foo'];
-    } // testBadOffset
+    }
 
     /**
      * @covers ::offsetGet
@@ -62,7 +62,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         // isset() returns false on null, so assert there's no weirdness
         $obj = new ParsedInput(['foo' => null]);
         $this->assertNull($obj['foo'], 'The wrong value was returned');
-    } // testAccessOfExpectedNullValue
+    }
 
 
     /**
@@ -73,7 +73,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
         isset($obj['foo']);
-    } // testIssetThrows
+    }
 
     /**
      * @covers ::offsetExists
@@ -83,7 +83,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
         empty($obj['foo']);
-    } // testEmptyThrows
+    }
 
     /**
      * @covers ::offsetUnset
@@ -93,7 +93,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
         unset($obj['foo']);
-    } // testUnsetThrows
+    }
 
     /**
      * @covers ::offsetSet
@@ -103,7 +103,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
         $obj['foo'] = 'bar';
-    } // testSetThrows
+    }
 
     // ----(Validation:Unexpected Parameters)----------------------------------
     /**
@@ -115,7 +115,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::UNEXPECTED_VALUES);
         $parsed->validate($this->getValidation());
-    } // testUnexpectedParametersAreCaught
+    }
 
     // ----(Validation:Required Parameters)------------------------------------
     /**
@@ -135,7 +135,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
             $ret['short'],
             'The wrong value exists in the parsed input'
         );
-    } // testValidRequiredParametersAreReturned
+    }
 
    /**
      * @covers ::validate
@@ -148,7 +148,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::INVALID_VALUES);
         $parsed->validate($this->getValidation());
-    } // testInvalidRequiredParametersAreCaught
+    }
 
     /**
      * @covers ::validate
@@ -164,7 +164,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::MISSING_VALUES);
         $parsed->validate($this->getValidation());
-    } // testMissingRequiredParametersAreCaught
+    }
 
     /**
      * @covers ::validate
@@ -201,7 +201,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
             $ret['short'],
             'The wrong value exists in the parsed input'
         );
-    } // testValidOptionalParametersAreReturned
+    }
 
     /**
      * @covers ::validate
@@ -213,7 +213,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::INVALID_VALUES);
         $parsed->validate($this->getValidation());
-    } // testInvalidOptionalParametersAreCaught
+    }
 
     /**
      * @covers ::validate
@@ -232,7 +232,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
             $ret['short'],
             "'short' should have defaulted to null"
         );
-    } // testMissingOptionalParametersAreSetToNull
+    }
 
     /**
      * @covers ::validate
@@ -422,17 +422,17 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
             ->will($this->returnValue($this->optional));
 
         return $validation;
-    } // getValidation
+    }
 
     private function addRequired(string $key, InputObject $type)
     {
         $this->required[$key] = $type;
-    } // addRequired
+    }
 
     private function addOptional(string $key, InputObject $type)
     {
         $this->optional[$key] = $type;
-    } // addOptional
+    }
 
     private function getMockIO(bool $valid, $ret = null)
     {
@@ -450,5 +450,5 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
                 ->will($this->throwException(new UnexpectedValueException()));
         }
         return $mock;
-    } // getMockIO
+    }
 }

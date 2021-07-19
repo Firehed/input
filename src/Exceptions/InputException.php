@@ -9,12 +9,12 @@ use UnexpectedValueException;
 class InputException extends UnexpectedValueException
 {
 
-    const PARSE_ERROR = 1;
-    const FORMAT_ERROR = 2;
-    const MISSING_VALUES = 3;
-    const INVALID_VALUES = 4;
-    const UNEXPECTED_VALUES = 5;
-    const MULTIPLE_VALUE_ERRORS = 6;
+    public const PARSE_ERROR = 1;
+    public const FORMAT_ERROR = 2;
+    public const MISSING_VALUES = 3;
+    public const INVALID_VALUES = 4;
+    public const UNEXPECTED_VALUES = 5;
+    public const MULTIPLE_VALUE_ERRORS = 6;
 
     private $missing = [];
     private $invalid = [];
@@ -52,7 +52,7 @@ class InputException extends UnexpectedValueException
             break;
         }
         parent::__construct($msg, $code);
-    } // __construct
+    }
 
     public function getMissing(): array
     {

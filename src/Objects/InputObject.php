@@ -33,7 +33,7 @@ abstract class InputObject
     public function __construct()
     {
         // No-op, only here so parent::__construct won't fatal
-    } // __construct
+    }
 
     /**
      * Get the default value for the object
@@ -67,7 +67,7 @@ abstract class InputObject
             throw new \UnexpectedValueException("Value is invalid");
         }
         return $this->value;
-    } // getValue
+    }
 
     /**
      * @param mixed $value value to validate
@@ -79,7 +79,7 @@ abstract class InputObject
         $this->value = $value;
         $this->valueWasSet = true;
         return $this;
-    } // setValue
+    }
 
     /**
      * @return bool
@@ -99,7 +99,7 @@ abstract class InputObject
             $this->isValid = $this->validate($this->value);
         }
         return $this->isValid;
-    } // isValid
+    }
 
     /**
      * @return mixed
@@ -107,5 +107,5 @@ abstract class InputObject
     public function evaluate()
     {
         return $this->getValue();
-    } // evaluate
+    }
 }

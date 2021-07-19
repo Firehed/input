@@ -12,7 +12,6 @@ use TypeError;
  */
 class InputExceptionTest extends \PHPUnit\Framework\TestCase
 {
-
     public function constants()
     {
         $rc = new \ReflectionClass('Firehed\Input\Exceptions\InputException');
@@ -22,7 +21,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
             $out[] = [$v, $k];
         }
         return $out;
-    } // constants
+    }
 
     /**
      * @covers ::__construct
@@ -35,7 +34,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
             new InputException($constant),
             sprintf("%s was not handled", $name)
         );
-    } // testConstruct
+    }
 
     /**
      * @covers ::__construct
@@ -47,7 +46,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
         } catch (LogicException $e) {
             $this->assertTrue(true, 'test passed');
         }
-    } // testInvalidConstruct
+    }
 
     /**
      * @covers ::getInvalid
@@ -62,6 +61,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
             $this->assertSame([], $ex->getInvalid());
         }
     }
+
     /**
      * @covers ::getMissing
      * @dataProvider constants
@@ -75,6 +75,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
             $this->assertSame([], $ex->getMissing());
         }
     }
+
     /**
      * @covers ::getUnexpected
      * @dataProvider constants
