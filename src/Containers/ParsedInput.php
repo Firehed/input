@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace Firehed\Input\Containers;
 
+use ArrayAccess;
 use DomainException;
 use BadMethodCallException;
 use UnexpectedValueException;
 use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Interfaces\ValidationInterface;
 
-class ParsedInput extends RawInput implements \ArrayAccess
+/**
+ * @implements ArrayAccess<array-key, mixed>
+ */
+class ParsedInput extends RawInput implements ArrayAccess
 {
-
+    /**
+     * @param array<array-key-, mixed> $data
+     */
     public function __construct(array $data)
     {
         parent::__construct($data);
@@ -133,7 +139,7 @@ class ParsedInput extends RawInput implements \ArrayAccess
      * Return the data as an array (this loses the metadata around
      * parsing and validating)
      *
-     * @return array
+     * @return array<mixed>
      */
     public function asArray(): array
     {

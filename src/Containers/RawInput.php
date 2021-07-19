@@ -8,12 +8,16 @@ use Firehed\Input\Interfaces\ParserInterface;
 
 class RawInput
 {
-
+    /** @var mixed */
     private $data;
-
+    /** @var bool */
     private $is_parsed = false;
+    /** @var bool */
     private $is_validated = false;
 
+    /**
+     * @param mixed $raw
+     */
     public function __construct($raw)
     {
         $this->data = $raw;
@@ -26,12 +30,18 @@ class RawInput
         return new ParsedInput($this->getData());
     }
 
-    // Not final so it can be mocked; do not extend
+    /**
+     * Not final so it can be mocked; do not extend
+     * @return mixed
+     */
     protected function getData()
     {
         return $this->data;
     }
 
+    /**
+     * @param mixed[] $data
+     */
     final protected function setData(array $data): self
     {
         $this->data = $data;
@@ -44,7 +54,8 @@ class RawInput
     {
         return $this->is_parsed;
     }
-    public function isValidated()
+
+    public function isValidated(): bool
     {
         return $this->is_validated;
     }
@@ -54,6 +65,7 @@ class RawInput
         $this->is_parsed = $bool;
         return $this;
     }
+
     final protected function setIsValidated(bool $bool): self
     {
         $this->is_validated = $bool;
