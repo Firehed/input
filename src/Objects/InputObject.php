@@ -21,8 +21,6 @@ namespace Firehed\Input\Objects;
  *     // you are using it wrong
  *   }
  *   // have fun with $validated_value
- *
- * @template ValidatedType
  */
 abstract class InputObject
 {
