@@ -3,16 +3,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.2.0] - Unreleased
 ### Summary
 This release focuses on supporting newer versions of PHP and minimizing external dependencies.
 
+This will probably be the last version in the 2.x line.
+The next major version will only support PHP 8.
+
 ### Added
-- Test suite: PHP 7.4
+- Test suite: PHP 7.4, 8.0
+- Type information has been added in numerous places.
 
 ### Changed (Internal)
 - Migrated from Travis to Github Actions
 - Migrated from Coveralls to Codecov
+- Tests are no longer exported. Test traits for client code have been moved to `src` so they will still be available in releases.
+- Code style updated to PSR-12
 
 ### Removed
 - Test suite: PHP 7.1
