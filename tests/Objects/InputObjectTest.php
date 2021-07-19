@@ -107,13 +107,3 @@ class InputObjectTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($default, $this->io->getDefaultValue());
     }
 }
-
-class InputObjectTestFixture extends InputObject
-{
-
-    const MAGIC_FAIL = '198sjs $ a2/';
-    public function validate($value): bool
-    {
-        return $value !== self::MAGIC_FAIL;
-    }
-}
