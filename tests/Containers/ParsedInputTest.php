@@ -5,6 +5,7 @@ namespace Firehed\Input\Containers;
 use BadMethodCallException;
 use DomainException;
 use Firehed\Input\Exceptions\InputException;
+use Firehed\Input\Interfaces\ValidationInterface;
 use Firehed\Input\Objects\InputObject;
 use UnexpectedValueException;
 
@@ -319,7 +320,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-
     public function nestedValidationExceptions()
     {
         return [
@@ -408,12 +408,14 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
 
     // ----(Helpers)-----------------------------------------------------------
 
+    /** @var array<string, InputObject> */
     private $required = [];
+    /** @var array<string, InputObject> */
     private $optional = [];
 
-    private function getValidation()
+    private function getValidation(): ValidationInterface
     {
-        $validation = $this->createMock('Firehed\Input\Interfaces\ValidationInterface');
+        $validation = $this->createMock(ValidationInterface::class);
         $validation->expects($this->atLeastOnce())
             ->method('getRequiredInputs')
             ->will($this->returnValue($this->required));
@@ -425,17 +427,21 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         return $validation;
     }
 
-    private function addRequired(string $key, InputObject $type)
+    private function addRequired(string $key, InputObject $type): void
     {
         $this->required[$key] = $type;
     }
 
-    private function addOptional(string $key, InputObject $type)
+    private function addOptional(string $key, InputObject $type): void
     {
         $this->optional[$key] = $type;
     }
 
-    private function getMockIO(bool $valid, $ret = null)
+    /**
+     * @param mixed $ret
+     * @return InputObject & \PHPUnit\Framework\MockObject\MockObject
+     */
+    private function getMockIO(bool $valid, $ret = null): InputObject
     {
         $mock = $this->getMockBuilder(InputObject::class)
             ->setMethods(['evaluate', 'getDefaultValue'])
