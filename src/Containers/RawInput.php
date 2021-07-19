@@ -8,12 +8,9 @@ use Firehed\Input\Interfaces\ParserInterface;
 
 class RawInput
 {
-    /** @var mixed */
-    private $data;
-    /** @var bool */
-    private $is_parsed = false;
-    /** @var bool */
-    private $is_validated = false;
+    private mixed $data;
+    private bool $isParsed = false;
+    private bool $isValidated = false;
 
     /**
      * @param mixed $raw
@@ -52,23 +49,23 @@ class RawInput
     // mocked during unit tests
     public function isParsed(): bool
     {
-        return $this->is_parsed;
+        return $this->isParsed;
     }
 
     public function isValidated(): bool
     {
-        return $this->is_validated;
+        return $this->isValidated;
     }
 
     final protected function setIsParsed(bool $bool): self
     {
-        $this->is_parsed = $bool;
+        $this->isParsed = $bool;
         return $this;
     }
 
     final protected function setIsValidated(bool $bool): self
     {
-        $this->is_validated = $bool;
+        $this->isValidated = $bool;
         return $this;
     }
 }
