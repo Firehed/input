@@ -13,7 +13,7 @@ class RawInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf(
             'Firehed\Input\Containers\RawInput',
@@ -25,7 +25,7 @@ class RawInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::parse
      */
-    public function testParse()
+    public function testParse(): void
     {
         $raw_data = md5((string)rand());
         $mock = $this->createMock('Firehed\Input\Interfaces\ParserInterface');

@@ -45,7 +45,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
      * @covers ::parse
      * @dataProvider validJSON
      */
-    public function testParse($json, $expected)
+    public function testParse($json, $expected): void
     {
         $parser = new JSON();
 
@@ -62,7 +62,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
      * @covers ::parse
      * @dataProvider invalidJSON
      */
-    public function testParseError($json)
+    public function testParseError($json): void
     {
         $parser = new JSON();
         $this->expectException(InputException::class);
@@ -74,7 +74,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
      * @covers ::parse
      * @dataProvider formatErrors
      */
-    public function testFormatError($json)
+    public function testFormatError($json): void
     {
         $parser = new JSON();
         $this->expectException(InputException::class);

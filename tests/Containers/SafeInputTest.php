@@ -28,7 +28,7 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $this->getSafeInput([]));
     }
@@ -36,7 +36,7 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstructThrowsWithUnvalidatedInput()
+    public function testConstructThrowsWithUnvalidatedInput(): void
     {
         $valid = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
             ->disableOriginalConstructor()

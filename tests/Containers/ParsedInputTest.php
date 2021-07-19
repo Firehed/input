@@ -19,7 +19,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::__construct
      */
-    public function testConstructWorks()
+    public function testConstructWorks(): void
     {
         $this->assertInstanceOf(
             'Firehed\Input\Containers\ParsedInput',
@@ -33,7 +33,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::offsetGet
      */
-    public function testGoodOffset()
+    public function testGoodOffset(): void
     {
         $array = ['foo' => 'bar'];
         $obj = new ParsedInput($array);
@@ -47,7 +47,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::offsetGet
      */
-    public function testBadOffset()
+    public function testBadOffset(): void
     {
         $obj = new ParsedInput([]);
         $this->expectException(DomainException::class);
@@ -57,7 +57,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::offsetGet
      */
-    public function testAccessOfExpectedNullValue()
+    public function testAccessOfExpectedNullValue(): void
     {
         // isset() returns false on null, so assert there's no weirdness
         $obj = new ParsedInput(['foo' => null]);
@@ -68,7 +68,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::offsetExists
      */
-    public function testIssetThrows()
+    public function testIssetThrows(): void
     {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
@@ -78,7 +78,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::offsetExists
      */
-    public function testEmptyThrows()
+    public function testEmptyThrows(): void
     {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
@@ -88,7 +88,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::offsetUnset
      */
-    public function testUnsetThrows()
+    public function testUnsetThrows(): void
     {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
@@ -98,7 +98,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::offsetSet
      */
-    public function testSetThrows()
+    public function testSetThrows(): void
     {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
@@ -109,7 +109,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testUnexpectedParametersAreCaught()
+    public function testUnexpectedParametersAreCaught(): void
     {
         $parsed = new ParsedInput(['foo' => 'bar']);
         $this->expectException(InputException::class);
@@ -121,7 +121,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testValidRequiredParametersAreReturned()
+    public function testValidRequiredParametersAreReturned(): void
     {
         $desc = 'I am a short description';
         $this->addRequired('short', $this->getMockIO(true, $desc));
@@ -140,7 +140,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
    /**
      * @covers ::validate
      */
-    public function testInvalidRequiredParametersAreCaught()
+    public function testInvalidRequiredParametersAreCaught(): void
     {
         $this->addRequired('short', $this->getMockIO(false));
 
@@ -153,7 +153,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testMissingRequiredParametersAreCaught()
+    public function testMissingRequiredParametersAreCaught(): void
     {
         $this->addRequired(
             'short',
@@ -169,7 +169,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testRequiredParameterWithDefaultDoesntUseDefault()
+    public function testRequiredParameterWithDefaultDoesntUseDefault(): void
     {
         $default = 'some default value';
         $io = $this->createMock(InputObject::class);
@@ -187,7 +187,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testValidOptionalParametersAreReturned()
+    public function testValidOptionalParametersAreReturned(): void
     {
         $desc = 'I am a short description';
         $this->addOptional('short', $this->getMockIO(true, $desc));
@@ -206,7 +206,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testInvalidOptionalParametersAreCaught()
+    public function testInvalidOptionalParametersAreCaught(): void
     {
         $this->addOptional('short', $this->getMockIO(false));
         $parsed = new ParsedInput(['short' => 123]);
@@ -218,7 +218,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testMissingOptionalParametersAreSetToNull()
+    public function testMissingOptionalParametersAreSetToNull(): void
     {
         $this->addOptional(
             'short',
@@ -237,7 +237,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testOptionalParametersWithDefaultsUseDefaults()
+    public function testOptionalParametersWithDefaultsUseDefaults(): void
     {
         $default = 'some default value';
         $io = $this->createMock(InputObject::class);
@@ -254,7 +254,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testOptionalParametersWithValidNullWorksWhenProvided()
+    public function testOptionalParametersWithValidNullWorksWhenProvided(): void
     {
         $io = $this->getMockIO(true, null);
         $io->expects($this->never())
@@ -269,7 +269,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::validate
      */
-    public function testOptionalParametersWithValidNullWorksWhenNotProvided()
+    public function testOptionalParametersWithValidNullWorksWhenNotProvided(): void
     {
         $io = $this->createMock(InputObject::class);
         $io->expects($this->atLeastOnce())
@@ -294,7 +294,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         array $missing,
         array $unexpected,
         bool $required
-    ) {
+    ): void {
         $io = $this->createMock(InputObject::class);
         $io->expects($this->atLeastOnce())
             ->method('evaluate')

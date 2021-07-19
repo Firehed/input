@@ -27,7 +27,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
      * @covers ::__construct
      * @dataProvider constants
      */
-    public function testConstruct($constant, $name)
+    public function testConstruct($constant, $name): void
     {
         $this->assertInstanceOf(
             'Firehed\Input\Exceptions\InputException',
@@ -39,7 +39,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::__construct
      */
-    public function testInvalidConstructWithInt()
+    public function testInvalidConstructWithInt(): void
     {
         try {
             new InputException(999999);
@@ -52,7 +52,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
      * @covers ::getInvalid
      * @dataProvider constants
      */
-    public function testGetInvalid(int $constant)
+    public function testGetInvalid(int $constant): void
     {
         $ex = new InputException($constant, ['foo']);
         if ($constant === InputException::INVALID_VALUES) {
@@ -66,7 +66,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
      * @covers ::getMissing
      * @dataProvider constants
      */
-    public function testGetMissing(int $constant)
+    public function testGetMissing(int $constant): void
     {
         $ex = new InputException($constant, ['foo']);
         if ($constant === InputException::MISSING_VALUES) {
@@ -80,7 +80,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
      * @covers ::getUnexpected
      * @dataProvider constants
      */
-    public function testGetUnexpected(int $constant)
+    public function testGetUnexpected(int $constant): void
     {
         $ex = new InputException($constant, ['foo']);
         if ($constant === InputException::UNEXPECTED_VALUES) {
@@ -95,7 +95,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
      * @covers ::getMissing
      * @covers ::getUnexpected
      */
-    public function testMultipleErrors()
+    public function testMultipleErrors(): void
     {
         $errors = [
             'invalid' => ['invalid_key'],
