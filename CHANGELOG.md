@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - Unreleased
+### Summary
+This release now requires PHP 8
+
 ## [2.2.0] - 2021-07-19
 ### Summary
 This release focuses on supporting newer versions of PHP and minimizing external dependencies.
