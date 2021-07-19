@@ -9,7 +9,9 @@ use Firehed\Input\Exceptions\InputException;
  */
 class JSONTest extends \PHPUnit\Framework\TestCase
 {
-
+    /**
+     * @return array{string, mixed[]}[]
+     */
     public function validJSON()
     {
         return [
@@ -20,6 +22,9 @@ class JSONTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /**
+     * @return array{string}[]
+     */
     public function invalidJSON()
     {
         return [
@@ -30,6 +35,9 @@ class JSONTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
+    /**
+     * @return array{string}[]
+     */
     public function formatErrors()
     {
         return [
@@ -44,8 +52,9 @@ class JSONTest extends \PHPUnit\Framework\TestCase
     /**
      * @covers ::parse
      * @dataProvider validJSON
+     * @param mixed $expected
      */
-    public function testParse($json, $expected): void
+    public function testParse(string $json, $expected): void
     {
         $parser = new JSON();
 
@@ -62,7 +71,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
      * @covers ::parse
      * @dataProvider invalidJSON
      */
-    public function testParseError($json): void
+    public function testParseError(string $json): void
     {
         $parser = new JSON();
         $this->expectException(InputException::class);
@@ -74,7 +83,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
      * @covers ::parse
      * @dataProvider formatErrors
      */
-    public function testFormatError($json): void
+    public function testFormatError(string $json): void
     {
         $parser = new JSON();
         $this->expectException(InputException::class);

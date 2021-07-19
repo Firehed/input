@@ -5,11 +5,13 @@ namespace Firehed\Input\Parsers;
 use Firehed\Input\Exceptions\InputException;
 
 /**
- * @coversDefaultClass Firehed\Input\Parsers\URLEncoded
+ * @covers Firehed\Input\Parsers\URLEncoded
  */
 class URLEncodedTest extends \PHPUnit\Framework\TestCase
 {
-
+    /**
+     * @return array{string, mixed}[]
+     */
     public function validURLEncoded(): array
     {
         return [
@@ -31,10 +33,10 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers ::parse
      * @dataProvider validURLEncoded
+     * @param mixed $expected
      */
-    public function testParse($data, $expected): void
+    public function testParse(string $data, $expected): void
     {
         $parser = new URLEncoded();
 
@@ -48,10 +50,9 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers ::parse
      * @dataProvider formatErrors
      */
-    public function testFormatError($data): void
+    public function testFormatError(string $data): void
     {
         $parser = new URLEncoded();
         $this->expectException(InputException::class);
