@@ -82,7 +82,7 @@ abstract class InputObject
     }
 
     /**
-     * @return bool
+     * @param mixed $value
      */
     abstract protected function validate($value): bool;
 
