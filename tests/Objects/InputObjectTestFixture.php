@@ -8,7 +8,7 @@ class InputObjectTestFixture extends InputObject
 {
     public const MAGIC_FAIL = '198sjs $ a2/';
 
-    public function validate($value): bool
+    public function validate(mixed $value): bool
     {
         return $value !== self::MAGIC_FAIL;
     }
