@@ -9,10 +9,12 @@ use BadMethodCallException;
  */
 class SafeInputTest extends \PHPUnit\Framework\TestCase
 {
-
-    private function getSafeInput(array $data)
+    /**
+     * @param mixed[] $data
+     */
+    private function getSafeInput(array $data): SafeInput
     {
-        $mock = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
+        $mock = $this->getMockBuilder(ParsedInput::class)
             ->disableOriginalConstructor()
             ->setMethods(['getData', 'isValidated'])
             ->getMock();
@@ -30,7 +32,7 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstruct(): void
     {
-        $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $this->getSafeInput([]));
+        $this->assertInstanceOf(SafeInput::class, $this->getSafeInput([]));
     }
 
     /**
@@ -38,7 +40,7 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstructThrowsWithUnvalidatedInput(): void
     {
-        $valid = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
+        $valid = $this->getMockBuilder(ParsedInput::class)
             ->disableOriginalConstructor()
             ->getMock();
         $valid->expects($this->atLeastOnce())

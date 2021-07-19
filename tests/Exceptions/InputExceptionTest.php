@@ -5,40 +5,41 @@ declare(strict_types=1);
 namespace Firehed\Input\Exceptions;
 
 use LogicException;
+use ReflectionClass;
 use TypeError;
 
 /**
- * @coversDefaultClass Firehed\Input\Exceptions\InputException
+ * @covers Firehed\Input\Exceptions\InputException
  */
 class InputExceptionTest extends \PHPUnit\Framework\TestCase
 {
-    public function constants()
+    /**
+     * @return array{int, string}[]
+     */
+    public function constants(): array
     {
-        $rc = new \ReflectionClass('Firehed\Input\Exceptions\InputException');
+        $rc = new ReflectionClass(InputException::class);
         $constants = $rc->getConstants();
         $out = [];
         foreach ($constants as $k => $v) {
+            assert(is_int($v));
             $out[] = [$v, $k];
         }
         return $out;
     }
 
     /**
-     * @covers ::__construct
      * @dataProvider constants
      */
-    public function testConstruct($constant, $name): void
+    public function testConstruct(int $constant, string $name): void
     {
         $this->assertInstanceOf(
-            'Firehed\Input\Exceptions\InputException',
+            InputException::class,
             new InputException($constant),
             sprintf("%s was not handled", $name)
         );
     }
 
-    /**
-     * @covers ::__construct
-     */
     public function testInvalidConstructWithInt(): void
     {
         try {
@@ -49,7 +50,6 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers ::getInvalid
      * @dataProvider constants
      */
     public function testGetInvalid(int $constant): void
@@ -63,7 +63,6 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers ::getMissing
      * @dataProvider constants
      */
     public function testGetMissing(int $constant): void
@@ -77,7 +76,6 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers ::getUnexpected
      * @dataProvider constants
      */
     public function testGetUnexpected(int $constant): void
@@ -90,11 +88,6 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @covers ::getInvalid
-     * @covers ::getMissing
-     * @covers ::getUnexpected
-     */
     public function testMultipleErrors(): void
     {
         $errors = [
