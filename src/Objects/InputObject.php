@@ -61,7 +61,8 @@ abstract class InputObject
      * Protected because this should only be called by children during
      * `evaluate`
      */
-    final protected function getValue() {
+    final protected function getValue()
+    {
         if (!$this->isValid()) {
             throw new \UnexpectedValueException("Value is invalid");
         }
@@ -72,7 +73,8 @@ abstract class InputObject
      * @param mixed $value value to validate
      * @return $this
      */
-    final public function setValue($value): self {
+    final public function setValue($value): self
+    {
         $this->isValid = null;
         $this->value = $value;
         $this->valueWasSet = true;
@@ -87,7 +89,8 @@ abstract class InputObject
     /**
      * @return bool
      */
-    final public function isValid(): bool {
+    final public function isValid(): bool
+    {
         if (null === $this->isValid) {
             if (!$this->valueWasSet) {
                 throw new \BadMethodCallException("Value has not been set");
@@ -101,8 +104,8 @@ abstract class InputObject
     /**
      * @return mixed
      */
-    public function evaluate() {
+    public function evaluate()
+    {
         return $this->getValue();
     } // evaluate
-
 }

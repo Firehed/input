@@ -10,9 +10,11 @@ use UnexpectedValueException;
 use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Interfaces\ValidationInterface;
 
-class ParsedInput extends RawInput implements \ArrayAccess {
+class ParsedInput extends RawInput implements \ArrayAccess
+{
 
-    public function __construct(array $data) {
+    public function __construct(array $data)
+    {
         parent::__construct($data);
         $this->setIsParsed(true);
     } // __construct
@@ -22,14 +24,17 @@ class ParsedInput extends RawInput implements \ArrayAccess {
      * @return $this
      * @throws BadMethodCallException
      */
-    public function addData(ParsedInput $add): self {
+    public function addData(ParsedInput $add): self
+    {
         if ($this->isValidated()) {
             throw new BadMethodCallException(
-                "Data cannot be added after validation is performed");
+                "Data cannot be added after validation is performed"
+            );
         }
         if ($add->isValidated()) {
             throw new BadMethodCallException(
-                "Data cannot be added after validation is performed");
+                "Data cannot be added after validation is performed"
+            );
         }
 
         $this->setData(array_merge($add->getData(), $this->getData()));
@@ -41,7 +46,8 @@ class ParsedInput extends RawInput implements \ArrayAccess {
      * @return SafeInput
      * @throws InputException
      */
-    public function validate(ValidationInterface $validator): SafeInput {
+    public function validate(ValidationInterface $validator): SafeInput
+    {
 
         $data = $this->getData();
         $clean_out = [];
@@ -129,7 +135,8 @@ class ParsedInput extends RawInput implements \ArrayAccess {
      *
      * @return array
      */
-    public function asArray(): array {
+    public function asArray(): array
+    {
         return $this->getData();
     } // asArray
 
@@ -138,40 +145,47 @@ class ParsedInput extends RawInput implements \ArrayAccess {
     /**
      * Invoked via `isset` and `empty`
      */
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         throw new BadMethodCallException(
-            "ParsedInput is already validated, and contains all expected ".
-            "keys. Use standard binary comparitors on the values.");
+            "ParsedInput is already validated, and contains all expected " .
+            "keys. Use standard binary comparitors on the values."
+        );
     } // offsetExists
 
     /**
      * Invoked by array access of the object
      * @return mixed
      */
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         $data = $this->getData();
-        if (isset($data[$offset]) ||
-            array_key_exists($offset, $data)) {
+        if (
+            isset($data[$offset]) ||
+            array_key_exists($offset, $data)
+        ) {
             return $data[$offset];
         }
         throw new DomainException(
-            "You are trying to access a value which does not exist. Because ".
-            "the input is already validated, this means there is a bug in ".
-            "the code. Most likely, there is a typo in the key.");
+            "You are trying to access a value which does not exist. Because " .
+            "the input is already validated, this means there is a bug in " .
+            "the code. Most likely, there is a typo in the key."
+        );
     } // offsetGet
 
     /**
      * Invoked by setting an array value on the object
      */
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         throw new BadMethodCallException("ParsedInput is read-only");
     } // offsetSet
 
     /**
      * Invoked via `unset`
      */
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         throw new BadMethodCallException("ParsedInput is read-only");
     } // offsetUnset
-
 }

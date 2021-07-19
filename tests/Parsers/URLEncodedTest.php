@@ -7,9 +7,11 @@ use Firehed\Input\Exceptions\InputException;
 /**
  * @coversDefaultClass Firehed\Input\Parsers\URLEncoded
  */
-class URLEncodedTest extends \PHPUnit\Framework\TestCase {
+class URLEncodedTest extends \PHPUnit\Framework\TestCase
+{
 
-    public function validURLEncoded() {
+    public function validURLEncoded(): array
+    {
         return [
             ['foo=bar', ['foo' => 'bar']],
             ['a=b&c=d', ['a' => 'b', 'c' => 'd']],
@@ -18,7 +20,11 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase {
         ];
     } // validURLEncoded
 
-    public function formatErrors() {
+    /**
+     * @return string[][]
+     */
+    public function formatErrors(): array
+    {
         return [
             ['&'],
         ];
@@ -28,21 +34,26 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase {
      * @covers ::parse
      * @dataProvider validURLEncoded
      */
-    public function testParse($data, $expected) {
-        $parser = new URLEncoded;
+    public function testParse($data, $expected): void
+    {
+        $parser = new URLEncoded();
 
         $ret = $parser->parse($data);
 
-        $this->assertEquals($expected, $ret,
-            'Parser returned wrong value from URLEncoded');
+        $this->assertEquals(
+            $expected,
+            $ret,
+            'Parser returned wrong value from URLEncoded'
+        );
     }
 
     /**
      * @covers ::parse
      * @dataProvider formatErrors
      */
-    public function testFormatError($data) {
-        $parser = new URLEncoded;
+    public function testFormatError($data): void
+    {
+        $parser = new URLEncoded();
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::FORMAT_ERROR);
         $parser->parse($data);

@@ -7,9 +7,11 @@ use Firehed\Input\Exceptions\InputException;
 /**
  * @coversDefaultClass Firehed\Input\Parsers\JSON
  */
-class JSONTest extends \PHPUnit\Framework\TestCase {
+class JSONTest extends \PHPUnit\Framework\TestCase
+{
 
-    public function validJSON() {
+    public function validJSON()
+    {
         return [
             ['{}', []],
             ['[]', []],
@@ -18,7 +20,8 @@ class JSONTest extends \PHPUnit\Framework\TestCase {
         ];
     } // validJSON
 
-    public function invalidJSON() {
+    public function invalidJSON()
+    {
         return [
             ["['123':123]"],
             ['["12"=>"abc"]'],
@@ -27,7 +30,8 @@ class JSONTest extends \PHPUnit\Framework\TestCase {
         ];
     } // invalidJSON
 
-    public function formatErrors() {
+    public function formatErrors()
+    {
         return [
             ['true'],
             ['false'],
@@ -40,21 +44,26 @@ class JSONTest extends \PHPUnit\Framework\TestCase {
      * @covers ::parse
      * @dataProvider validJSON
      */
-    public function testParse($json, $expected) {
-        $parser = new JSON;
+    public function testParse($json, $expected)
+    {
+        $parser = new JSON();
 
         $ret = $parser->parse($json);
 
-        $this->assertEquals($expected, $ret,
-            'Parser returned wrong value from JSON');
+        $this->assertEquals(
+            $expected,
+            $ret,
+            'Parser returned wrong value from JSON'
+        );
     }
 
     /**
      * @covers ::parse
      * @dataProvider invalidJSON
      */
-    public function testParseError($json) {
-        $parser = new JSON;
+    public function testParseError($json)
+    {
+        $parser = new JSON();
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::PARSE_ERROR);
         $parser->parse($json);
@@ -64,8 +73,9 @@ class JSONTest extends \PHPUnit\Framework\TestCase {
      * @covers ::parse
      * @dataProvider formatErrors
      */
-    public function testFormatError($json) {
-        $parser = new JSON;
+    public function testFormatError($json)
+    {
+        $parser = new JSON();
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::FORMAT_ERROR);
         $parser->parse($json);

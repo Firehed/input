@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Firehed\Input\Exceptions;
@@ -9,9 +10,11 @@ use TypeError;
 /**
  * @coversDefaultClass Firehed\Input\Exceptions\InputException
  */
-class InputExceptionTest extends \PHPUnit\Framework\TestCase {
+class InputExceptionTest extends \PHPUnit\Framework\TestCase
+{
 
-    public function constants() {
+    public function constants()
+    {
         $rc = new \ReflectionClass('Firehed\Input\Exceptions\InputException');
         $constants = $rc->getConstants();
         $out = [];
@@ -25,10 +28,13 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase {
      * @covers ::__construct
      * @dataProvider constants
      */
-    public function testConstruct($constant, $name) {
-        $this->assertInstanceOf('Firehed\Input\Exceptions\InputException',
+    public function testConstruct($constant, $name)
+    {
+        $this->assertInstanceOf(
+            'Firehed\Input\Exceptions\InputException',
             new InputException($constant),
-            sprintf("%s was not handled", $name));
+            sprintf("%s was not handled", $name)
+        );
     } // testConstruct
 
     /**

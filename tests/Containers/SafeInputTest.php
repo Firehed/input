@@ -7,9 +7,11 @@ use BadMethodCallException;
 /**
  * @coversDefaultClass Firehed\Input\Containers\SafeInput
  */
-class SafeInputTest extends \PHPUnit\Framework\TestCase {
+class SafeInputTest extends \PHPUnit\Framework\TestCase
+{
 
-    private function getSafeInput(array $data) {
+    private function getSafeInput(array $data)
+    {
         $mock = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
             ->disableOriginalConstructor()
             ->setMethods(['getData', 'isValidated'])
@@ -26,14 +28,16 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase {
     /**
      * @covers ::__construct
      */
-    public function testConstruct() {
+    public function testConstruct()
+    {
         $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $this->getSafeInput([]));
     } // testConstruct
 
     /**
      * @covers ::__construct
      */
-    public function testConstructThrowsWithUnvalidatedInput() {
+    public function testConstructThrowsWithUnvalidatedInput()
+    {
         $valid = $this->getMockBuilder('Firehed\Input\Containers\ParsedInput')
             ->disableOriginalConstructor()
             ->getMock();
@@ -43,5 +47,4 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase {
         $this->expectException(BadMethodCallException::class);
         new SafeInput($valid);
     } // testConstructThrowsWithUnvalidatedInput
-
 }

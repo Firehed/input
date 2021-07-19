@@ -6,7 +6,8 @@ namespace Firehed\Input\Interfaces;
 
 use Firehed\Input\Exceptions\InputException;
 
-interface ParserInterface {
+interface ParserInterface
+{
 
     /**
      * @param string $raw_input Unparsed, unvalidated input
@@ -19,5 +20,4 @@ interface ParserInterface {
      * @return array<string> Supported mime types
      */
     public function getSupportedMimeTypes(): array;
-
 }
