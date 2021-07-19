@@ -27,18 +27,14 @@ namespace Firehed\Input\Objects;
 abstract class InputObject
 {
     private mixed $defaultValue = null;
-    private mixed $value;
-
-    /**
-     * false-like values can be valid, so explicitly track if the setter has been called
-     */
-    // private bool $valueWasSet = false;
 
     /**
      * isValid tracks both a) if the value has been validated, and b) if it's
      * actually valid.
      */
     private ?bool $isValid = null;
+
+    private mixed $value;
 
     /**
      * Extending classes must implement the `validate` method, accepting the
