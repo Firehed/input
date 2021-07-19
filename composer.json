@@ -10,7 +10,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Firehed\\Input\\": ["src/", "tests/"]
+            "Firehed\\Input\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Firehed\\Input\\": "tests"
         }
     },
     "config": {
