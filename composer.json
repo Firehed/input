@@ -27,9 +27,13 @@
     "scripts": {
         "test": [
             "@phpunit",
-            "@phpstan"
+            "@phpstan",
+            "@phpcs"
         ],
-        "phpstan": "phpstan analyse --no-progress .",
-        "phpunit": "phpunit --coverage-text"
+        "autofix": "phpcbf",
+        "phpunit": "phpunit",
+        "phpstan": "phpstan analyse",
+        "phpstan-baseline": "phpstan analyse --generate-baseline",
+        "phpcs": "phpcs"
     }
 }
