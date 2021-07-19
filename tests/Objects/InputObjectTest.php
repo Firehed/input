@@ -15,7 +15,7 @@ use UnexpectedValueException;
 class InputObjectTest extends \PHPUnit\Framework\TestCase {
 
     private $io;
-    public function setUp() {
+    public function setUp(): void {
         $this->io = new InputObjectTestFixture;
     }
 
