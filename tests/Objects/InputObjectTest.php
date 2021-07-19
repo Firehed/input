@@ -13,8 +13,7 @@ use UnexpectedValueException;
  */
 class InputObjectTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var InputObject */
-    private $io;
+    private InputObject $io;
 
     public function setUp(): void
     {
