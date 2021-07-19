@@ -24,10 +24,13 @@ namespace Firehed\Input\Objects;
  */
 abstract class InputObject
 {
-
+    /** @var mixed */
     private $defaultValue;
+    /** @var mixed */
     private $value;
+    /** @var bool */
     private $valueWasSet = false; // false-like values can be valid, so explicitly track if the setter has been called
+    /** @var ?bool */
     private $isValid;
 
     public function __construct()
@@ -60,6 +63,8 @@ abstract class InputObject
     /**
      * Protected because this should only be called by children during
      * `evaluate`
+     *
+     * @return mixed
      */
     final protected function getValue()
     {

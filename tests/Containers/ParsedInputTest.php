@@ -72,6 +72,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
+        // @phpstan-ignore-next-line
         isset($obj['foo']);
     }
 
@@ -82,6 +83,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     {
         $obj = new ParsedInput([]);
         $this->expectException(BadMethodCallException::class);
+        // @phpstan-ignore-next-line
         empty($obj['foo']);
     }
 
@@ -320,7 +322,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
 
     public function nestedValidationExceptions()
     {
-
         return [
             // Required inputs
             [
