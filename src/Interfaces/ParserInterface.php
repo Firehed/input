@@ -11,7 +11,7 @@ interface ParserInterface
 
     /**
      * @param string $raw_input Unparsed, unvalidated input
-     * @return array Parsed, unvalidated input
+     * @return array<mixed> Parsed, unvalidated input
      * @throws InputException
      */
     public function parse(string $raw_input): array;

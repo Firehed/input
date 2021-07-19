@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Firehed\Input\Exceptions;
 
+use LogicException;
 use UnexpectedValueException;
 
 class InputException extends UnexpectedValueException
@@ -16,10 +17,22 @@ class InputException extends UnexpectedValueException
     public const UNEXPECTED_VALUES = 5;
     public const MULTIPLE_VALUE_ERRORS = 6;
 
+    /**
+     * @var string[]
+     */
     private $missing = [];
+    /**
+     * @var string[]
+     */
     private $invalid = [];
+    /**
+     * @var string[]
+     */
     private $unexpected = [];
 
+    /**
+     * @param array<string> $errors
+     */
     public function __construct(int $code, array $errors = [])
     {
         switch ($code) {
@@ -48,22 +61,30 @@ class InputException extends UnexpectedValueException
                 $this->unexpected = $errors['unexpected'] ?? [];
                 break;
             default:
-                throw new \LogicException("Invalid exception code");
-            break;
+                throw new LogicException("Invalid exception code");
         }
         parent::__construct($msg, $code);
     }
 
+    /**
+     * @return string[]
+     */
     public function getMissing(): array
     {
         return $this->missing;
     }
 
+    /**
+     * @return string[]
+     */
     public function getInvalid(): array
     {
         return $this->invalid;
     }
 
+    /**
+     * @return string[]
+     */
     public function getUnexpected(): array
     {
         return $this->unexpected;
