@@ -10,16 +10,13 @@ use Firehed\Input\Objects\InputObject;
 use UnexpectedValueException;
 
 /**
- * @coversDefaultClass Firehed\Input\Containers\ParsedInput
+ * @covers Firehed\Input\Containers\ParsedInput
  */
 class ParsedInputTest extends \PHPUnit\Framework\TestCase
 {
 
     // ----(Constructor)--------------------------------------------------------
 
-    /**
-     * @covers ::__construct
-     */
     public function testConstructWorks(): void
     {
         $this->assertInstanceOf(
@@ -31,9 +28,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
 
     // ----(ArrayAccess)--------------------------------------------------------
 
-    /**
-     * @covers ::offsetGet
-     */
     public function testGoodOffset(): void
     {
         $array = ['foo' => 'bar'];
@@ -45,9 +39,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @covers ::offsetGet
-     */
     public function testBadOffset(): void
     {
         $obj = new ParsedInput([]);
@@ -55,9 +46,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $data = $obj['foo'];
     }
 
-    /**
-     * @covers ::offsetGet
-     */
     public function testAccessOfExpectedNullValue(): void
     {
         // isset() returns false on null, so assert there's no weirdness
@@ -65,10 +53,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($obj['foo'], 'The wrong value was returned');
     }
 
-
-    /**
-     * @covers ::offsetExists
-     */
     public function testIssetThrows(): void
     {
         $obj = new ParsedInput([]);
@@ -77,9 +61,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         isset($obj['foo']);
     }
 
-    /**
-     * @covers ::offsetExists
-     */
     public function testEmptyThrows(): void
     {
         $obj = new ParsedInput([]);
@@ -88,9 +69,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         empty($obj['foo']);
     }
 
-    /**
-     * @covers ::offsetUnset
-     */
     public function testUnsetThrows(): void
     {
         $obj = new ParsedInput([]);
@@ -98,9 +76,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         unset($obj['foo']);
     }
 
-    /**
-     * @covers ::offsetSet
-     */
     public function testSetThrows(): void
     {
         $obj = new ParsedInput([]);
@@ -109,9 +84,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     // ----(Validation:Unexpected Parameters)----------------------------------
-    /**
-     * @covers ::validate
-     */
+
     public function testUnexpectedParametersAreCaught(): void
     {
         $parsed = new ParsedInput(['foo' => 'bar']);
@@ -121,9 +94,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     }
 
     // ----(Validation:Required Parameters)------------------------------------
-    /**
-     * @covers ::validate
-     */
+
     public function testValidRequiredParametersAreReturned(): void
     {
         $desc = 'I am a short description';
@@ -140,9 +111,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-   /**
-     * @covers ::validate
-     */
     public function testInvalidRequiredParametersAreCaught(): void
     {
         $this->addRequired('short', $this->getMockIO(false));
@@ -153,9 +121,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $parsed->validate($this->getValidation());
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testMissingRequiredParametersAreCaught(): void
     {
         $this->addRequired(
@@ -169,9 +134,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $parsed->validate($this->getValidation());
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testRequiredParameterWithDefaultDoesntUseDefault(): void
     {
         $default = 'some default value';
@@ -187,9 +149,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
 
      // ----(Validation:Optional Parameters)------------------------------------
 
-    /**
-     * @covers ::validate
-     */
     public function testValidOptionalParametersAreReturned(): void
     {
         $desc = 'I am a short description';
@@ -206,9 +165,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testInvalidOptionalParametersAreCaught(): void
     {
         $this->addOptional('short', $this->getMockIO(false));
@@ -218,9 +174,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $parsed->validate($this->getValidation());
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testMissingOptionalParametersAreSetToNull(): void
     {
         $this->addOptional(
@@ -237,9 +190,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testOptionalParametersWithDefaultsUseDefaults(): void
     {
         $default = 'some default value';
@@ -254,9 +204,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($default, $ret['short'], "'short' did not yield its default value");
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testOptionalParametersWithValidNullWorksWhenProvided(): void
     {
         $io = $this->getMockIO(true, null);
@@ -269,9 +216,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($ret['key'], 'key should have been null literal');
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testOptionalParametersWithValidNullWorksWhenNotProvided(): void
     {
         $io = $this->createMock(InputObject::class);
@@ -288,7 +232,6 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     // ----(Validation:Nesting)-------------------------------------------------
 
     /**
-     * @covers ::validate
      * @dataProvider nestedValidationExceptions
      */
     public function testValidateHandlesInputExceptions(

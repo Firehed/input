@@ -3,16 +3,11 @@
 namespace Firehed\Input\Containers;
 
 /**
- * @coversDefaultClass Firehed\Input\Containers\RawInput
- * @covers ::<protected>
- * @covers ::<private>
+ * @covers Firehed\Input\Containers\RawInput
  */
 class RawInputTest extends \PHPUnit\Framework\TestCase
 {
 
-    /**
-     * @covers ::__construct
-     */
     public function testConstruct(): void
     {
         $this->assertInstanceOf(
@@ -22,9 +17,6 @@ class RawInputTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @covers ::parse
-     */
     public function testParse(): void
     {
         $raw_data = md5((string)rand());

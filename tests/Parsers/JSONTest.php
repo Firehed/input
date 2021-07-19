@@ -5,7 +5,7 @@ namespace Firehed\Input\Parsers;
 use Firehed\Input\Exceptions\InputException;
 
 /**
- * @coversDefaultClass Firehed\Input\Parsers\JSON
+ * @covers Firehed\Input\Parsers\JSON
  */
 class JSONTest extends \PHPUnit\Framework\TestCase
 {
@@ -50,7 +50,6 @@ class JSONTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers ::parse
      * @dataProvider validJSON
      * @param mixed $expected
      */
@@ -68,7 +67,6 @@ class JSONTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers ::parse
      * @dataProvider invalidJSON
      */
     public function testParseError(string $json): void
@@ -80,7 +78,6 @@ class JSONTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers ::parse
      * @dataProvider formatErrors
      */
     public function testFormatError(string $json): void
