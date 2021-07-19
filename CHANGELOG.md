@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Summary
 This release now requires PHP 8
 
+Breaking changes:
+- Trying to validate or evaluate an InputObject before the value was set will now throw an `Error` instead of a `BadMethodCallException`.
+  If you encounter a property access before initialization error, this is the cause, and it indicates incorrect use of the library.
+
 ## [2.2.0] - 2021-07-19
 ### Summary
 This release focuses on supporting newer versions of PHP and minimizing external dependencies.

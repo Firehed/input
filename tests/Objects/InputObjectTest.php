@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Firehed\Input\Objects;
 
 use BadMethodCallException;
+use Error;
 use UnexpectedValueException;
 
 /**
@@ -50,7 +51,7 @@ class InputObjectTest extends \PHPUnit\Framework\TestCase
 
     public function testIsValidNoValueThrows(): void
     {
-        $this->expectException(BadMethodCallException::class);
+        $this->expectException(Error::class);
         $this->io->isValid();
     }
 
@@ -74,7 +75,7 @@ class InputObjectTest extends \PHPUnit\Framework\TestCase
 
     public function testEvaluateNoValue(): void
     {
-        $this->expectException(BadMethodCallException::class);
+        $this->expectException(Error::class);
         $this->io->evaluate();
     }
 

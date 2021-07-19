@@ -21,17 +21,31 @@ namespace Firehed\Input\Objects;
  *     // you are using it wrong
  *   }
  *   // have fun with $validated_value
+ *
+ * @template ValidatedType
  */
 abstract class InputObject
 {
-    /** @var mixed */
-    private $defaultValue;
-    /** @var mixed */
-    private $value;
-    /** @var bool */
-    private $valueWasSet = false; // false-like values can be valid, so explicitly track if the setter has been called
-    /** @var ?bool */
-    private $isValid;
+    private mixed $defaultValue = null;
+    private mixed $value;
+
+    /**
+     * false-like values can be valid, so explicitly track if the setter has been called
+     */
+    // private bool $valueWasSet = false;
+
+    /**
+     * isValid tracks both a) if the value has been validated, and b) if it's
+     * actually valid.
+     */
+    private ?bool $isValid = null;
+
+    /**
+     * Extending classes must implement the `validate` method, accepting the
+     * arbitrary value from the input being validated and returning a boolean
+     * indicating if the value is valid.
+     */
+    abstract protected function validate(mixed $value): bool;
 
     public function __construct()
     {
@@ -78,29 +92,16 @@ abstract class InputObject
      * @param mixed $value value to validate
      * @return $this
      */
-    final public function setValue($value): self
+    final public function setValue(mixed $value): self
     {
         $this->isValid = null;
         $this->value = $value;
-        $this->valueWasSet = true;
         return $this;
     }
 
-    /**
-     * @param mixed $value
-     */
-    abstract protected function validate($value): bool;
-
-    /**
-     * @return bool
-     */
     final public function isValid(): bool
     {
         if (null === $this->isValid) {
-            if (!$this->valueWasSet) {
-                throw new \BadMethodCallException("Value has not been set");
-            }
-
             $this->isValid = $this->validate($this->value);
         }
         return $this->isValid;
