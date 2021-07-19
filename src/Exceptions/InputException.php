@@ -20,15 +20,17 @@ class InputException extends UnexpectedValueException
     /**
      * @var string[]
      */
-    private $missing = [];
+    private array $missing = [];
+
     /**
      * @var string[]
      */
-    private $invalid = [];
+    private array $invalid = [];
+
     /**
      * @var string[]
      */
-    private $unexpected = [];
+    private array $unexpected = [];
 
     public function __construct(int $code, array $errors = [])
     {
