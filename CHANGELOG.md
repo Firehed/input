@@ -3,12 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.2.0] - Unreleased
+## [2.2.0] - 2021-07-19
 ### Summary
 This release focuses on supporting newer versions of PHP and minimizing external dependencies.
 
 This will probably be the last version in the 2.x line.
-The next major version will only support PHP 8.
+The next major version will only support PHP 8, and should further improve type information that's available in modern tooling.
 
 ### Added
 - Test suite: PHP 7.4, 8.0
