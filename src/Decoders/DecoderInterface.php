@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Firehed\Input\Parsers;
+namespace Firehed\Input\Decoders;
 
 use Firehed\Input\Exceptions\InputException;
 
-interface ParserInterface
+interface DecoderInterface
 {
     /**
      * @throws InputException
      */
-    public function parse(string $rawInput): mixed;
+    public function decode(string $rawInput): mixed;
 
     /**
      * @return string[] Supported mime types

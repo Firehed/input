@@ -1,12 +1,17 @@
 <?php
 
-namespace Firehed\Input\Parsers;
+declare(strict_types=1);
+
+namespace Firehed\Input\Decoders;
 
 use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Interfaces\ParserInterface;
 
-class URLEncoded implements ParserInterface
+class URLEncoded implements ParserInterface, DecoderInterface
 {
+    public function decode(string $rawInput): mixed
+    {
+    }
 
     public function parse(string $raw_input): array
     {

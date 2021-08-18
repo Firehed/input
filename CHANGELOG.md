@@ -13,6 +13,9 @@ Breaking changes:
 
 - `InputObject::validate(mixed $value): bool` now has the native parameter type; subclasses should do the same.
 
+- Interfaces\ParserInterface deprecated, moved to Decoders\DecoderInterface
+- JSON and URLEncoded moved to Decoders, implement both for BC but will drop old in next
+
 ## [2.2.0] - 2021-07-19
 ### Summary
 This release focuses on supporting newer versions of PHP and minimizing external dependencies.
