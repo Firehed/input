@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Firehed\Input\Containers;
 
 use Firehed\Input\Interfaces\ParserInterface;
+use Firehed\Input\Decoders\DecoderInterface;
 
 class RawInput
 {
@@ -18,6 +19,11 @@ class RawInput
     public function __construct($raw)
     {
         $this->data = $raw;
+    }
+
+    public function decode(DecoderInterface $decoder): DecodedInput
+    {
+        return new DecodedInput($this->data, $decoder);
     }
 
     public function parse(ParserInterface $parser): ParsedInput
