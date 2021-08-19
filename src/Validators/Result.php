@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Firehed\Input\Validators;
 
 /**
- * @template Success
+ * @template-covariant Success
  */
 class Result
 {
