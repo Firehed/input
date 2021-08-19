@@ -11,7 +11,7 @@ use function is_array;
 use function parse_str;
 use function strlen;
 
-class URLEncoded implements ParserInterface, DecoderInterface
+class URLEncoded implements DecoderInterface
 {
     public function decode(string $rawInput): mixed
     {
@@ -24,11 +24,6 @@ class URLEncoded implements ParserInterface, DecoderInterface
             throw new InputException(InputException::FORMAT_ERROR);
         }
         return $out;
-    }
-
-    public function parse(string $raw_input): array
-    {
-        return $this->decode($raw_input);
     }
 
     public function getSupportedMimeTypes(): array
