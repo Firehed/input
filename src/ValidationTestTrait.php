@@ -16,7 +16,6 @@ trait ValidationTestTrait
      */
     abstract protected function getValidation();
 
-    /** @covers ::getRequiredInputs */
     public function testGetRequiredInputs()
     {
         $inputs = $this->getValidation()->getRequiredInputs();
@@ -37,7 +36,6 @@ trait ValidationTestTrait
         }
     }
 
-    /** @covers ::getOptionalInputs */
     public function testGetOptionalInputs()
     {
         $inputs = $this->getValidation()->getOptionalInputs();
