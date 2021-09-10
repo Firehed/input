@@ -3,16 +3,6 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.0.0] - Unreleased
-### Summary
-This release now requires PHP 8
-
-Breaking changes:
-- Trying to validate or evaluate an InputObject before the value was set will now throw an `Error` instead of a `BadMethodCallException`.
-  If you encounter a property access before initialization error, this is the cause, and it indicates incorrect use of the library.
-
-- `InputObject::validate(mixed $value): bool` now has the native parameter type; subclasses should do the same.
-
 ## [2.2.0] - 2021-07-19
 ### Summary
 This release focuses on supporting newer versions of PHP and minimizing external dependencies.

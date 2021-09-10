@@ -17,7 +17,7 @@ use Firehed\Input\Interfaces\ValidationInterface;
 class ParsedInput extends RawInput implements ArrayAccess
 {
     /**
-     * @param array<array-key, mixed> $data
+     * @param array<array-key-, mixed> $data
      */
     public function __construct(array $data)
     {
