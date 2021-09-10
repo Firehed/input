@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - Unreleased
+### Summary
+Preparation for PHPUnit 10
+
+This release makes some adjustments to the exported test helper `ValidationTestTrait` based on upcoming changes to PHPUnit:
+- Removed `@covers ::getRequiredInputs` annotation from `testGetRequiredInputs`
+- Removed `@covers ::getOptionalInputs` annotation from `testGetOptionalInputs`
+
+This also adds some additional export-ignore entries for files that should not be distributed.
+
+While these changes should not impact any code at runtime, there could be regressions in code coverage reports as a result.
+Typically these can be fixed by adding `@covers Fully\Qualified\Class` to the test case's annotations.
+
 ## [2.2.0] - 2021-07-19
 ### Summary
 This release focuses on supporting newer versions of PHP and minimizing external dependencies.
