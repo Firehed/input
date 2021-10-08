@@ -188,7 +188,7 @@ class ParsedInput extends RawInput implements ArrayAccess
      *
      * @return never
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet($offset, $value)
     {
         throw new BadMethodCallException("ParsedInput is read-only");
     }
