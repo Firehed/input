@@ -163,8 +163,11 @@ class ParsedInput extends RawInput implements ArrayAccess
 
     /**
      * Invoked by array access of the object
+     *
+     * @return mixed
      */
-    public function offsetGet($offset): mixed
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
     {
         $data = $this->getData();
         if (
