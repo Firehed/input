@@ -32,9 +32,10 @@ class RawInput
 
     /**
      * Not final so it can be mocked; do not extend
+     * @internal
      * @return mixed
      */
-    protected function getData()
+    public function getData()
     {
         return $this->data;
     }

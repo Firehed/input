@@ -16,7 +16,7 @@ class SafeInputTest extends \PHPUnit\Framework\TestCase
     {
         $mock = $this->getMockBuilder(ParsedInput::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getData', 'isValidated'])
+            // ->setMethods(['getData', 'isValidated'])
             ->getMock();
         $mock->expects($this->any())
             ->method('getData')
