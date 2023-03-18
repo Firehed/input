@@ -15,7 +15,6 @@ use UnexpectedValueException;
  */
 class ParsedInputTest extends \PHPUnit\Framework\TestCase
 {
-
     // ----(Constructor)--------------------------------------------------------
 
     public function testConstructWorks(): void

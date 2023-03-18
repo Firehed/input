@@ -9,7 +9,6 @@ use UnexpectedValueException;
 
 class InputException extends UnexpectedValueException
 {
-
     public const PARSE_ERROR = 1;
     public const FORMAT_ERROR = 2;
     public const MISSING_VALUES = 3;

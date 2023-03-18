@@ -10,7 +10,6 @@ use Firehed\Input\Containers\ParsedInput;
  */
 class RawInputTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testConstruct(): void
     {
         $this->assertInstanceOf(
