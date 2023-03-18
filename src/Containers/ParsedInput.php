@@ -14,36 +14,47 @@ use Firehed\Input\Interfaces\ValidationInterface;
 /**
  * @implements ArrayAccess<array-key, mixed>
  */
-class ParsedInput extends RawInput implements ArrayAccess
+class ParsedInput implements ArrayAccess
 {
+    /** @var bool */
+    protected $isValidated = false;
+
+/**
+     * @var mixed[]
+     */
+    protected $data;
+
     /**
-     * @param array<array-key-, mixed> $data
+     * @param array<array-key, mixed> $data
+     *
+     * @api
      */
     public function __construct(array $data)
     {
-        parent::__construct($data);
-        $this->setIsParsed(true);
+        $this->data = $data;
     }
 
     /**
      * @param ParsedInput $add data to add
      * @return $this
      * @throws BadMethodCallException
+     *
+     * @api
      */
     public function addData(ParsedInput $add): self
     {
-        if ($this->isValidated()) {
+        if ($this->isValidated) {
             throw new BadMethodCallException(
                 "Data cannot be added after validation is performed"
             );
         }
-        if ($add->isValidated()) {
+        if ($add->isValidated) {
             throw new BadMethodCallException(
                 "Data cannot be added after validation is performed"
             );
         }
 
-        $this->setData(array_merge($add->getData(), $this->getData()));
+        $this->data = array_merge($add->data, $this->data);
         return $this;
     }
 
@@ -51,11 +62,13 @@ class ParsedInput extends RawInput implements ArrayAccess
      * @param ValidationInterface $validator Validation requirements
      * @return SafeInput
      * @throws InputException
+     *
+     * @api
      */
     public function validate(ValidationInterface $validator): SafeInput
     {
 
-        $data = $this->getData();
+        $data = $this->data;
         $clean_out = [];
         $missing = [];
         $invalid = [];
@@ -129,8 +142,8 @@ class ParsedInput extends RawInput implements ArrayAccess
             throw new InputException(InputException::UNEXPECTED_VALUES, $unexpected);
         }
 
-        $this->setData($clean_out);
-        $this->setIsValidated(true);
+        $this->data = $clean_out;
+        $this->isValidated = true;
 
         return new SafeInput($this);
     }
@@ -140,10 +153,12 @@ class ParsedInput extends RawInput implements ArrayAccess
      * parsing and validating)
      *
      * @return array<mixed>
+     *
+     * @api
      */
     public function asArray(): array
     {
-        return $this->getData();
+        return $this->data;
     }
 
    // ----(ArrayAccess)-------------------------------------------------------
@@ -152,6 +167,8 @@ class ParsedInput extends RawInput implements ArrayAccess
      * Invoked via `isset` and `empty`
      *
      * @return never
+     *
+     * @api
      */
     public function offsetExists($offset): bool
     {
@@ -165,16 +182,14 @@ class ParsedInput extends RawInput implements ArrayAccess
      * Invoked by array access of the object
      *
      * @return mixed
+     *
+     * @api
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        $data = $this->getData();
-        if (
-            isset($data[$offset]) ||
-            array_key_exists($offset, $data)
-        ) {
-            return $data[$offset];
+        if (array_key_exists($offset, $this->data)) {
+            return $this->data[$offset];
         }
         throw new DomainException(
             "You are trying to access a value which does not exist. Because " .
@@ -187,6 +202,8 @@ class ParsedInput extends RawInput implements ArrayAccess
      * Invoked by setting an array value on the object
      *
      * @return never
+     *
+     * @api
      */
     public function offsetSet($offset, $value): void
     {
@@ -197,6 +214,8 @@ class ParsedInput extends RawInput implements ArrayAccess
      * Invoked via `unset`
      *
      * @return never
+     *
+     * @api
      */
     public function offsetUnset($offset): void
     {

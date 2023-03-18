@@ -8,7 +8,6 @@ use Firehed\Input\Exceptions\InputException;
 
 interface ParserInterface
 {
-
     /**
      * @param string $raw_input Unparsed, unvalidated input
      * @return array<mixed> Parsed, unvalidated input

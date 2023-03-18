@@ -2,9 +2,9 @@ includes:
     - phpstan-baseline.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
 parameters:
-    excludes_analyse:
+    excludePaths:
         - vendor
     level: max
     paths:
-        - src
-        - tests
+        - .
+# vim: ft=yaml sw=4
