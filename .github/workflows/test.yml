@@ -25,6 +25,7 @@ jobs:
           - '7.4'
           - '8.0'
           - '8.1'
+          - '8.2'
         exclude:
             # PHPUnit prefer-lowest on 8.1 fails because the 8.x line doesn't
             # specifiy compatibility correctly. Doubt that'll get fixed.
