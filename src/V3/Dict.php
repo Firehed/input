@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 namespace Firehed\Input\V3;
 
+/**
+ * @template TKeys of array-key
+ * @template TValues
+ *
+ * @template TWrapped of array<TKeys, TValues>
+ *
+ * @implements Validator<TWrapped>
+ *
+ */
 class Dict implements Validator
 {
     /**
-     * @param array<string, Validator> $fields
+     * @param array<TKeys, Validator<TValues>> $fields
      */
     public function __construct(
         private array $fields,

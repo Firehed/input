@@ -13,8 +13,11 @@ class DictTest extends \PHPUnit\Framework\TestCase
     {
         $val = new Dict([
             'r1' => new Any(),
+            // '2' => new Email(),
         ]);
         $result = $val->validate([]);
+        $result = $result->unwrap();
+        \PHPStan\dumpType($result);
         $this->assertFalse($result->isOk());
         $this->markTestIncomplete('error message');
     }

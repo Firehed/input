@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Firehed\Input\V3;
 
 /**
- * @template T of enum
+ * @template T of \BackedEnum
  * @implements Validator<T>
  */
-#[PHP81Only]
 class Enum implements Validator
 {
     /**
@@ -16,9 +15,6 @@ class Enum implements Validator
      */
     public function __construct(private string $fqcn)
     {
-        if (version_compare(PHP_VERSION, '8.1.0', '<')) {
-            throw new \LogicException('The enum validator can only be used in PHP>=8.1 with native enum support');
-        }
         if (!enum_exists($fqcn)) {
             throw new \DomainException("$fqcn is not a native enum");
         }
