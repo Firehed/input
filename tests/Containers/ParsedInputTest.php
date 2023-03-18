@@ -234,6 +234,10 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider nestedValidationExceptions
+     *
+     * @param string[] $invalid
+     * @param string[] $missing
+     * @param string[] $unexpected
      */
     public function testValidateHandlesInputExceptions(
         InputException $ex,

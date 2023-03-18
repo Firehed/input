@@ -7,3 +7,4 @@ parameters:
     level: max
     paths:
         - .
+# vim: ft=yaml sw=4
