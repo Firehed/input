@@ -386,9 +386,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
      */
     private function getMockIO(bool $valid, $ret = null): InputObject
     {
-        $mock = $this->getMockBuilder(InputObject::class)
-            ->setMethods(['evaluate', 'getDefaultValue'])
-            ->getMockForAbstractClass();
+        $mock = $this->createMock(InputObject::class);
 
         if ($valid) {
             $mock->expects($this->atLeastOnce())
