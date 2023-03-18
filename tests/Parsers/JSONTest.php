@@ -12,7 +12,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array{string, mixed[]}[]
      */
-    public function validJSON()
+    public static function validJSON()
     {
         return [
             ['{}', []],
@@ -25,7 +25,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array{string}[]
      */
-    public function invalidJSON()
+    public static function invalidJSON()
     {
         return [
             ["['123':123]"],
@@ -38,7 +38,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array{string}[]
      */
-    public function formatErrors()
+    public static function formatErrors()
     {
         return [
             ['true'],

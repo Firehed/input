@@ -263,7 +263,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function nestedValidationExceptions()
+    public static function nestedValidationExceptions()
     {
         return [
             // Required inputs
