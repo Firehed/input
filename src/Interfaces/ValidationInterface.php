@@ -8,7 +8,6 @@ use Firehed\Input\Objects\InputObject;
 
 interface ValidationInterface
 {
-
     /**
      * @return array<string, InputObject>
      */

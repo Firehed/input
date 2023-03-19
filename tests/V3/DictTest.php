@@ -17,8 +17,8 @@ class DictTest extends \PHPUnit\Framework\TestCase
         ]);
         $result = $val->validate([]);
         $result = $result->unwrap();
-        \PHPStan\dumpType($result);
-        $this->assertFalse($result->isOk());
+        // \PHPStan\dumpType($result);
+        // $this->assertFalse($result->isOk());
         $this->markTestIncomplete('error message');
     }
 

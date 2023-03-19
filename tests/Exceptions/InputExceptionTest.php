@@ -16,7 +16,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array{int, string}[]
      */
-    public function constants(): array
+    public static function constants(): array
     {
         $rc = new ReflectionClass(InputException::class);
         $constants = $rc->getConstants();

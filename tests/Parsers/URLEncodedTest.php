@@ -12,7 +12,7 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array{string, mixed}[]
      */
-    public function validURLEncoded(): array
+    public static function validURLEncoded(): array
     {
         return [
             ['foo=bar', ['foo' => 'bar']],
@@ -25,7 +25,7 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase
     /**
      * @return string[][]
      */
-    public function formatErrors(): array
+    public static function formatErrors(): array
     {
         return [
             ['&'],

@@ -3,6 +3,7 @@
 namespace Firehed\Input\Containers;
 
 use BadMethodCallException;
+use Firehed\Input\Containers\SafeInput;
 use DomainException;
 use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Interfaces\ValidationInterface;
@@ -14,13 +15,12 @@ use UnexpectedValueException;
  */
 class ParsedInputTest extends \PHPUnit\Framework\TestCase
 {
-
     // ----(Constructor)--------------------------------------------------------
 
     public function testConstructWorks(): void
     {
         $this->assertInstanceOf(
-            'Firehed\Input\Containers\ParsedInput',
+            ParsedInput::class,
             new ParsedInput([]),
             'Construct failed'
         );
@@ -103,7 +103,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $parsed = new ParsedInput(['short' => $desc]);
         $ret = $parsed->validate($this->getValidation());
 
-        $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $ret);
+        $this->assertInstanceOf(SafeInput::class, $ret);
         $this->assertSame(
             $desc,
             $ret['short'],
@@ -125,7 +125,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     {
         $this->addRequired(
             'short',
-            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject')
+            $this->getMockForAbstractClass(InputObject::class)
         );
 
         $parsed = new ParsedInput([]);
@@ -157,7 +157,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $parsed = new ParsedInput(['short' => $desc]);
         $ret = $parsed->validate($this->getValidation());
 
-        $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $ret);
+        $this->assertInstanceOf(SafeInput::class, $ret);
         $this->assertSame(
             $desc,
             $ret['short'],
@@ -178,12 +178,12 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     {
         $this->addOptional(
             'short',
-            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject')
+            $this->getMockForAbstractClass(InputObject::class)
         );
 
         $parsed = new ParsedInput([]);
         $ret = $parsed->validate($this->getValidation());
-        $this->assertInstanceOf('Firehed\Input\Containers\SafeInput', $ret);
+        $this->assertInstanceOf(SafeInput::class, $ret);
         $this->assertNull(
             $ret['short'],
             "'short' should have defaulted to null"
@@ -233,6 +233,10 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider nestedValidationExceptions
+     *
+     * @param string[] $invalid
+     * @param string[] $missing
+     * @param string[] $unexpected
      */
     public function testValidateHandlesInputExceptions(
         InputException $ex,
@@ -263,7 +267,16 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function nestedValidationExceptions()
+    /**
+     * @return array{
+     *   InputException,
+     *   string[],
+     *   string[],
+     *   string[],
+     *   bool,
+     * }[]
+     */
+    public static function nestedValidationExceptions(): array
     {
         return [
             // Required inputs
@@ -386,9 +399,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
      */
     private function getMockIO(bool $valid, $ret = null): InputObject
     {
-        $mock = $this->getMockBuilder(InputObject::class)
-            ->setMethods(['evaluate', 'getDefaultValue'])
-            ->getMockForAbstractClass();
+        $mock = $this->createMock(InputObject::class);
 
         if ($valid) {
             $mock->expects($this->atLeastOnce())

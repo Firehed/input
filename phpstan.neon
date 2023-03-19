@@ -6,6 +6,5 @@ parameters:
         - vendor
     level: max
     paths:
-        - src
-        - tests
-# vim: ft=yaml
+        - .
+# vim: ft=yaml sw=4

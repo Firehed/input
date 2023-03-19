@@ -3,10 +3,10 @@
 namespace Firehed\Input\Parsers;
 
 use Firehed\Input\Exceptions\InputException;
-use Firehed\Input\Interfaces\ParserInterface;
 
 class URLEncoded implements ParserInterface
 {
+    use ParsePsrRequestTrait;
 
     public function parse(string $raw_input): array
     {

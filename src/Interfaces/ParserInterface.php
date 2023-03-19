@@ -6,9 +6,12 @@ namespace Firehed\Input\Interfaces;
 
 use Firehed\Input\Exceptions\InputException;
 
+/**
+ * @deprecated This will be removed in the next major version, and is being
+ * replaced by \Firehed\Input\Parsers\InputInterface
+ */
 interface ParserInterface
 {
-
     /**
      * @param string $raw_input Unparsed, unvalidated input
      * @return array<mixed> Parsed, unvalidated input

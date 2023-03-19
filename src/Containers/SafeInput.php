@@ -13,12 +13,11 @@ use BadMethodCallException;
  */
 class SafeInput extends ParsedInput
 {
-
     public function __construct(ParsedInput $valid)
     {
-        if (!$valid->isValidated()) {
+        if (!$valid->isValidated) {
             throw new BadMethodCallException();
         }
-        parent::__construct($valid->getData());
+        parent::__construct($valid->data);
     }
 }
