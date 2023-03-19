@@ -3,6 +3,10 @@
 namespace Firehed\Input\Parsers;
 
 use Firehed\Input\Exceptions\InputException;
+use Psr\Http\Message\{
+    ServerRequestInterface,
+    StreamInterface,
+};
 
 /**
  * @covers Firehed\Input\Parsers\JSON
@@ -86,5 +90,25 @@ class JSONTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InputException::class);
         $this->expectExceptionCode(InputException::FORMAT_ERROR);
         $parser->parse($json);
+    }
+
+    public function testParseServerRequestInterface(): void
+    {
+        $json = '{"a": "b"}';
+        $stream = $this->createMock(StreamInterface::class);
+        $stream->expects($this->once())
+            ->method('__toString')
+            ->willReturn($json);
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request->expects($this->once())
+            ->method('getBody')
+            ->willReturn($stream);
+        $request->expects($this->once())
+            ->method('withParsedBody')
+            ->with(['a' => 'b'])
+            ->willReturnSelf();
+
+        $parser = new JSON();
+        $parser->parseRequest($request);
     }
 }
