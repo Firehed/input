@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 Incremental support for v3 goals
 
 ### Added
+- Adds PHP 8.2 into CI
 - Adds `Firehed\Input\Parsers\ParserInterface` to replace the now-deprecated `Firehed\Input\Interfaces\ParserInterface`.
   This adds an additional method, `parseRequest(ServerRequestInterface): ServerRequestInterface` which will accept an unparsed PSR-7 ServerRequestInterface, read and parse its body, and set the result into the `parsedBody`.
   Going forward, this will be the recommended method of interacting with the parsers.
