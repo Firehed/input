@@ -13,7 +13,7 @@ namespace Firehed\Input\V3;
  *
  * @template Wrapped
  * @template Default
- * @implements Validator<Wrapped & Default>
+ * @implements Validator<Wrapped | Default>
  */
 class Nullable implements Validator
 {
