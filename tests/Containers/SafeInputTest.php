@@ -18,7 +18,7 @@ class SafeInputTest extends TestCase
     {
         $mock = $this->getMockBuilder(ParsedInput::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getData', 'isValidated'])
+            ->onlyMethods(['getData', 'isValidated'])
             ->getMock();
         $mock->expects($this->any())
             ->method('getData')

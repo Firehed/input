@@ -388,7 +388,7 @@ class ParsedInputTest extends TestCase
     private function getMockIO(bool $valid, $ret = null): InputObject
     {
         $mock = $this->getMockBuilder(InputObject::class)
-            ->setMethods(['evaluate', 'getDefaultValue'])
+            ->onlyMethods(['evaluate', 'getDefaultValue'])
             ->getMockForAbstractClass();
 
         if ($valid) {
