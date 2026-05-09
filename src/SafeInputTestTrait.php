@@ -4,7 +4,6 @@ namespace Firehed\Input;
 
 trait SafeInputTestTrait
 {
-
     /**
      * Transform an array of data to a SafeInput object. Intended for testing
      * consumers of validated input where testing the actual validation process

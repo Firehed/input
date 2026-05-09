@@ -17,7 +17,6 @@ use UnexpectedValueException;
 #[CoversClass(ParsedInput::class)]
 class ParsedInputTest extends TestCase
 {
-
     // ----(Constructor)--------------------------------------------------------
 
     public function testConstructWorks(): void

@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(RawInput::class)]
 class RawInputTest extends TestCase
 {
-
     public function testConstruct(): void
     {
         $this->assertInstanceOf(
