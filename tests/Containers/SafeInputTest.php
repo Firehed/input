@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Containers;
 
 use BadMethodCallException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Firehed\Input\Containers\SafeInput
- */
-class SafeInputTest extends \PHPUnit\Framework\TestCase
+#[CoversClass(SafeInput::class)]
+class SafeInputTest extends TestCase
 {
     /**
      * @param mixed[] $data

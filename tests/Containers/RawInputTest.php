@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Containers;
 
-/**
- * @covers Firehed\Input\Containers\RawInput
- */
-class RawInputTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
+
+#[CoversClass(RawInput::class)]
+class RawInputTest extends TestCase
 {
 
     public function testConstruct(): void

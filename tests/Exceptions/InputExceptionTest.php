@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace Firehed\Input\Exceptions;
 
 use LogicException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use TypeError;
 
-/**
- * @covers Firehed\Input\Exceptions\InputException
- */
-class InputExceptionTest extends \PHPUnit\Framework\TestCase
+#[CoversClass(InputException::class)]
+class InputExceptionTest extends TestCase
 {
     /**
      * @return array{int, string}[]
      */
-    public function constants(): array
+    public static function constants(): array
     {
         $rc = new ReflectionClass(InputException::class);
         $constants = $rc->getConstants();
@@ -28,9 +29,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
         return $out;
     }
 
-    /**
-     * @dataProvider constants
-     */
+    #[DataProvider('constants')]
     public function testConstruct(int $constant, string $name): void
     {
         $this->assertInstanceOf(
@@ -49,9 +48,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @dataProvider constants
-     */
+    #[DataProvider('constants')]
     public function testGetInvalid(int $constant): void
     {
         $ex = new InputException($constant, ['foo']);
@@ -62,9 +59,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @dataProvider constants
-     */
+    #[DataProvider('constants')]
     public function testGetMissing(int $constant): void
     {
         $ex = new InputException($constant, ['foo']);
@@ -75,9 +70,7 @@ class InputExceptionTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @dataProvider constants
-     */
+    #[DataProvider('constants')]
     public function testGetUnexpected(int $constant): void
     {
         $ex = new InputException($constant, ['foo']);

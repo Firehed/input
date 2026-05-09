@@ -1,18 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Parsers;
 
 use Firehed\Input\Exceptions\InputException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Firehed\Input\Parsers\URLEncoded
- */
-class URLEncodedTest extends \PHPUnit\Framework\TestCase
+#[CoversClass(URLEncoded::class)]
+class URLEncodedTest extends TestCase
 {
     /**
      * @return array{string, mixed}[]
      */
-    public function validURLEncoded(): array
+    public static function validURLEncoded(): array
     {
         return [
             ['foo=bar', ['foo' => 'bar']],
@@ -25,18 +28,15 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase
     /**
      * @return string[][]
      */
-    public function formatErrors(): array
+    public static function formatErrors(): array
     {
         return [
             ['&'],
         ];
     }
 
-    /**
-     * @dataProvider validURLEncoded
-     * @param mixed $expected
-     */
-    public function testParse(string $data, $expected): void
+    #[DataProvider('validURLEncoded')]
+    public function testParse(string $data, mixed $expected): void
     {
         $parser = new URLEncoded();
 
@@ -49,9 +49,7 @@ class URLEncodedTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @dataProvider formatErrors
-     */
+    #[DataProvider('formatErrors')]
     public function testFormatError(string $data): void
     {
         $parser = new URLEncoded();

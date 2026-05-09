@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Containers;
 
 use BadMethodCallException;
@@ -7,12 +9,13 @@ use DomainException;
 use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Interfaces\ValidationInterface;
 use Firehed\Input\Objects\InputObject;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 
-/**
- * @covers Firehed\Input\Containers\ParsedInput
- */
-class ParsedInputTest extends \PHPUnit\Framework\TestCase
+#[CoversClass(ParsedInput::class)]
+class ParsedInputTest extends TestCase
 {
 
     // ----(Constructor)--------------------------------------------------------
@@ -231,9 +234,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
 
     // ----(Validation:Nesting)-------------------------------------------------
 
-    /**
-     * @dataProvider nestedValidationExceptions
-     */
+    #[DataProvider('nestedValidationExceptions')]
     public function testValidateHandlesInputExceptions(
         InputException $ex,
         array $invalid,
@@ -263,7 +264,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function nestedValidationExceptions()
+    public static function nestedValidationExceptions(): array
     {
         return [
             // Required inputs
