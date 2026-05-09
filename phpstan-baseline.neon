@@ -127,6 +127,24 @@ parameters:
 			path: src/ValidationTestTrait.php
 
 		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Firehed\\\\Input\\\\Containers\\\\SafeInput'' and Firehed\\Input\\Containers\\SafeInput will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 3
+			path: tests/Containers/ParsedInputTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Firehed\\\\Input…'' and Firehed\\Input\\Containers\\SafeInput will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 3
+			path: tests/Containers/ParsedInputTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with arguments ''Firehed\\\\Input…'', Firehed\\Input\\Containers\\ParsedInput and ''Construct failed'' will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Containers/ParsedInputTest.php
+
+		-
 			message: '#^Method Firehed\\Input\\Containers\\ParsedInputTest\:\:nestedValidationExceptions\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -151,7 +169,37 @@ parameters:
 			path: tests/Containers/ParsedInputTest.php
 
 		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with arguments ''Firehed\\\\Input…'', Firehed\\Input\\Containers\\ParsedInput and ''RawInput\:\:parse\(\)…'' will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Containers/RawInputTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with arguments ''Firehed\\\\Input…'', Firehed\\Input\\Containers\\RawInput and ''Construct failed'' will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Containers/RawInputTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Firehed\\\\Input\\\\Containers\\\\SafeInput'' and Firehed\\Input\\Containers\\SafeInput will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Containers/SafeInputTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with arguments ''Firehed\\\\Input\\\\Exceptions\\\\InputException'', Firehed\\Input\\Exceptions\\InputException and non\-falsy\-string will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Exceptions/InputExceptionTest.php
+
+		-
 			message: '#^Dead catch \- LogicException is never thrown in the try block\.$#'
 			identifier: catch.neverThrown
 			count: 1
 			path: tests/Exceptions/InputExceptionTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Firehed\\\\Input\\\\Objects\\\\InputObject'' and Firehed\\Input\\Objects\\InputObject will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Objects/InputObjectTest.php
