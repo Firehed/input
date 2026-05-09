@@ -1,0 +1,7 @@
+# vim: ft=yaml
+parameters:
+    level: max
+    paths:
+        - .
+    excludePaths:
+        - vendor
