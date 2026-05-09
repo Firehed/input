@@ -245,7 +245,7 @@ class ParsedInputTest extends TestCase
         $io = $this->createMock(InputObject::class);
         $io->expects($this->atLeastOnce())
             ->method('evaluate')
-            ->will($this->throwException($ex));
+            ->willThrowException($ex);
         if ($required) {
             $this->addRequired('struct', $io);
             $msg = 'Required:';
@@ -398,7 +398,7 @@ class ParsedInputTest extends TestCase
         } else {
             $mock->expects($this->atLeastOnce())
                 ->method('evaluate')
-                ->will($this->throwException(new UnexpectedValueException()));
+                ->willThrowException(new UnexpectedValueException());
         }
         return $mock;
     }
