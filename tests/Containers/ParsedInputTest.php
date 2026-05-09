@@ -128,7 +128,7 @@ class ParsedInputTest extends TestCase
     {
         $this->addRequired(
             'short',
-            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject')
+            $this->createStub(InputObject::class)
         );
 
         $parsed = new ParsedInput([]);
@@ -181,7 +181,7 @@ class ParsedInputTest extends TestCase
     {
         $this->addOptional(
             'short',
-            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject')
+            $this->createStub(InputObject::class)
         );
 
         $parsed = new ParsedInput([]);
@@ -388,8 +388,8 @@ class ParsedInputTest extends TestCase
     private function getMockIO(bool $valid, $ret = null): InputObject
     {
         $mock = $this->getMockBuilder(InputObject::class)
-            ->onlyMethods(['evaluate', 'getDefaultValue'])
-            ->getMockForAbstractClass();
+            ->onlyMethods(['evaluate', 'getDefaultValue', 'validate'])
+            ->getMock();
 
         if ($valid) {
             $mock->expects($this->atLeastOnce())
