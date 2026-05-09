@@ -1,18 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Parsers;
 
 use Firehed\Input\Exceptions\InputException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Firehed\Input\Parsers\JSON
- */
-class JSONTest extends \PHPUnit\Framework\TestCase
+#[CoversClass(JSON::class)]
+class JSONTest extends TestCase
 {
     /**
      * @return array{string, mixed[]}[]
      */
-    public function validJSON()
+    public static function validJSON(): array
     {
         return [
             ['{}', []],
@@ -25,7 +28,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array{string}[]
      */
-    public function invalidJSON()
+    public static function invalidJSON(): array
     {
         return [
             ["['123':123]"],
@@ -38,7 +41,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array{string}[]
      */
-    public function formatErrors()
+    public static function formatErrors(): array
     {
         return [
             ['true'],
@@ -49,11 +52,8 @@ class JSONTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @dataProvider validJSON
-     * @param mixed $expected
-     */
-    public function testParse(string $json, $expected): void
+    #[DataProvider('validJSON')]
+    public function testParse(string $json, mixed $expected): void
     {
         $parser = new JSON();
 
@@ -66,9 +66,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @dataProvider invalidJSON
-     */
+    #[DataProvider('invalidJSON')]
     public function testParseError(string $json): void
     {
         $parser = new JSON();
@@ -77,9 +75,7 @@ class JSONTest extends \PHPUnit\Framework\TestCase
         $parser->parse($json);
     }
 
-    /**
-     * @dataProvider formatErrors
-     */
+    #[DataProvider('formatErrors')]
     public function testFormatError(string $json): void
     {
         $parser = new JSON();

@@ -13,7 +13,6 @@ use BadMethodCallException;
  */
 class SafeInput extends ParsedInput
 {
-
     public function __construct(ParsedInput $valid)
     {
         if (!$valid->isValidated()) {

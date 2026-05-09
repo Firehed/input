@@ -1,46 +1,46 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Containers;
 
 use BadMethodCallException;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @covers Firehed\Input\Containers\SafeInput
- */
-class SafeInputTest extends \PHPUnit\Framework\TestCase
+#[CoversClass(SafeInput::class)]
+class SafeInputTest extends TestCase
 {
     /**
      * @param mixed[] $data
      */
     private function getSafeInput(array $data): SafeInput
     {
-        $mock = $this->getMockBuilder(ParsedInput::class)
+        $stub = $this->getMockBuilder(ParsedInput::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getData', 'isValidated'])
+            ->onlyMethods(['getData', 'isValidated'])
             ->getMock();
-        $mock->expects($this->any())
-            ->method('getData')
-            ->will($this->returnValue($data));
-        $mock->expects($this->any())
-            ->method('isValidated')
-            ->will($this->returnValue(true));
-        return new SafeInput($mock);
+        $stub->method('getData')->willReturn($data);
+        $stub->method('isValidated')->willReturn(true);
+        return new SafeInput($stub);
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function testConstruct(): void
     {
         $this->assertInstanceOf(SafeInput::class, $this->getSafeInput([]));
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function testConstructThrowsWithUnvalidatedInput(): void
     {
-        $valid = $this->getMockBuilder(ParsedInput::class)
+        $stub = $this->getMockBuilder(ParsedInput::class)
             ->disableOriginalConstructor()
+            ->onlyMethods(['isValidated'])
             ->getMock();
-        $valid->expects($this->atLeastOnce())
-            ->method('isValidated')
-            ->will($this->returnValue(false));
+        $stub->method('isValidated')->willReturn(false);
         $this->expectException(BadMethodCallException::class);
-        new SafeInput($valid);
+        new SafeInput($stub);
     }
 }

@@ -151,7 +151,7 @@ class ParsedInput extends RawInput implements ArrayAccess
     /**
      * Invoked via `isset` and `empty`
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         throw new BadMethodCallException(
             "ParsedInput is already validated, and contains all expected " .
@@ -161,9 +161,8 @@ class ParsedInput extends RawInput implements ArrayAccess
 
     /**
      * Invoked by array access of the object
-     * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         $data = $this->getData();
         if (
@@ -182,7 +181,7 @@ class ParsedInput extends RawInput implements ArrayAccess
     /**
      * Invoked by setting an array value on the object
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): never
     {
         throw new BadMethodCallException("ParsedInput is read-only");
     }
@@ -190,7 +189,7 @@ class ParsedInput extends RawInput implements ArrayAccess
     /**
      * Invoked via `unset`
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): never
     {
         throw new BadMethodCallException("ParsedInput is read-only");
     }

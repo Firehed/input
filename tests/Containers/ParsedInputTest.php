@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Containers;
 
 use BadMethodCallException;
@@ -7,14 +9,14 @@ use DomainException;
 use Firehed\Input\Exceptions\InputException;
 use Firehed\Input\Interfaces\ValidationInterface;
 use Firehed\Input\Objects\InputObject;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 
-/**
- * @covers Firehed\Input\Containers\ParsedInput
- */
-class ParsedInputTest extends \PHPUnit\Framework\TestCase
+#[CoversClass(ParsedInput::class)]
+class ParsedInputTest extends TestCase
 {
-
     // ----(Constructor)--------------------------------------------------------
 
     public function testConstructWorks(): void
@@ -125,7 +127,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     {
         $this->addRequired(
             'short',
-            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject')
+            $this->createStub(InputObject::class)
         );
 
         $parsed = new ParsedInput([]);
@@ -178,7 +180,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     {
         $this->addOptional(
             'short',
-            $this->getMockForAbstractClass('Firehed\Input\Objects\InputObject')
+            $this->createStub(InputObject::class)
         );
 
         $parsed = new ParsedInput([]);
@@ -231,9 +233,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
 
     // ----(Validation:Nesting)-------------------------------------------------
 
-    /**
-     * @dataProvider nestedValidationExceptions
-     */
+    #[DataProvider('nestedValidationExceptions')]
     public function testValidateHandlesInputExceptions(
         InputException $ex,
         array $invalid,
@@ -244,7 +244,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $io = $this->createMock(InputObject::class);
         $io->expects($this->atLeastOnce())
             ->method('evaluate')
-            ->will($this->throwException($ex));
+            ->willThrowException($ex);
         if ($required) {
             $this->addRequired('struct', $io);
             $msg = 'Required:';
@@ -263,7 +263,7 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function nestedValidationExceptions()
+    public static function nestedValidationExceptions(): array
     {
         return [
             // Required inputs
@@ -361,11 +361,11 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
         $validation = $this->createMock(ValidationInterface::class);
         $validation->expects($this->atLeastOnce())
             ->method('getRequiredInputs')
-            ->will($this->returnValue($this->required));
+            ->willReturn($this->required);
 
         $validation->expects($this->atLeastOnce())
             ->method('getOptionalInputs')
-            ->will($this->returnValue($this->optional));
+            ->willReturn($this->optional);
 
         return $validation;
     }
@@ -387,17 +387,17 @@ class ParsedInputTest extends \PHPUnit\Framework\TestCase
     private function getMockIO(bool $valid, $ret = null): InputObject
     {
         $mock = $this->getMockBuilder(InputObject::class)
-            ->setMethods(['evaluate', 'getDefaultValue'])
-            ->getMockForAbstractClass();
+            ->onlyMethods(['evaluate', 'getDefaultValue', 'validate'])
+            ->getMock();
 
         if ($valid) {
             $mock->expects($this->atLeastOnce())
                 ->method('evaluate')
-                ->will($this->returnValue($ret));
+                ->willReturn($ret);
         } else {
             $mock->expects($this->atLeastOnce())
                 ->method('evaluate')
-                ->will($this->throwException(new UnexpectedValueException()));
+                ->willThrowException(new UnexpectedValueException());
         }
         return $mock;
     }

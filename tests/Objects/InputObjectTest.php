@@ -6,12 +6,12 @@ namespace Firehed\Input\Objects;
 
 use BadMethodCallException;
 use Error;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 
-/**
- * @covers Firehed\Input\Objects\InputObject
- */
-class InputObjectTest extends \PHPUnit\Framework\TestCase
+#[CoversClass(InputObject::class)]
+class InputObjectTest extends TestCase
 {
     private InputObject $io;
 

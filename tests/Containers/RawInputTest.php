@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Firehed\Input\Containers;
 
-/**
- * @covers Firehed\Input\Containers\RawInput
- */
-class RawInputTest extends \PHPUnit\Framework\TestCase
-{
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 
+#[CoversClass(RawInput::class)]
+class RawInputTest extends TestCase
+{
     public function testConstruct(): void
     {
         $this->assertInstanceOf(
@@ -24,7 +26,7 @@ class RawInputTest extends \PHPUnit\Framework\TestCase
         $mock->expects($this->once())
             ->method('parse')
             ->with($raw_data)
-            ->will($this->returnValue((array)$raw_data));
+            ->willReturn((array)$raw_data);
         $raw = new RawInput($raw_data);
         $parsed = $raw->parse($mock);
         $this->assertInstanceOf(
