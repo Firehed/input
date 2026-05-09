@@ -1,10 +1,10 @@
+# vim: ft=yaml
 includes:
     - phpstan-baseline.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
 parameters:
-    excludes_analyse:
-        - vendor
     level: max
     paths:
-        - src
-        - tests
+        - .
+    excludePaths:
+        - vendor
