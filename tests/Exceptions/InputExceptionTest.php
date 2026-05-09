@@ -49,7 +49,7 @@ class InputExceptionTest extends TestCase
     }
 
     #[DataProvider('constants')]
-    public function testGetInvalid(int $constant): void
+    public function testGetInvalid(int $constant, string $name): void
     {
         $ex = new InputException($constant, ['foo']);
         if ($constant === InputException::INVALID_VALUES) {
@@ -60,7 +60,7 @@ class InputExceptionTest extends TestCase
     }
 
     #[DataProvider('constants')]
-    public function testGetMissing(int $constant): void
+    public function testGetMissing(int $constant, string $name): void
     {
         $ex = new InputException($constant, ['foo']);
         if ($constant === InputException::MISSING_VALUES) {
@@ -71,7 +71,7 @@ class InputExceptionTest extends TestCase
     }
 
     #[DataProvider('constants')]
-    public function testGetUnexpected(int $constant): void
+    public function testGetUnexpected(int $constant, string $name): void
     {
         $ex = new InputException($constant, ['foo']);
         if ($constant === InputException::UNEXPECTED_VALUES) {
