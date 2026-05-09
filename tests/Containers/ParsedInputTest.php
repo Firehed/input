@@ -362,11 +362,11 @@ class ParsedInputTest extends TestCase
         $validation = $this->createMock(ValidationInterface::class);
         $validation->expects($this->atLeastOnce())
             ->method('getRequiredInputs')
-            ->will($this->returnValue($this->required));
+            ->willReturn($this->required);
 
         $validation->expects($this->atLeastOnce())
             ->method('getOptionalInputs')
-            ->will($this->returnValue($this->optional));
+            ->willReturn($this->optional);
 
         return $validation;
     }
@@ -394,7 +394,7 @@ class ParsedInputTest extends TestCase
         if ($valid) {
             $mock->expects($this->atLeastOnce())
                 ->method('evaluate')
-                ->will($this->returnValue($ret));
+                ->willReturn($ret);
         } else {
             $mock->expects($this->atLeastOnce())
                 ->method('evaluate')

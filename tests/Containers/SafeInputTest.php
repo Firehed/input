@@ -22,10 +22,10 @@ class SafeInputTest extends TestCase
             ->getMock();
         $mock->expects($this->any())
             ->method('getData')
-            ->will($this->returnValue($data));
+            ->willReturn($data);
         $mock->expects($this->any())
             ->method('isValidated')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
         return new SafeInput($mock);
     }
 
@@ -41,7 +41,7 @@ class SafeInputTest extends TestCase
             ->getMock();
         $valid->expects($this->atLeastOnce())
             ->method('isValidated')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
         $this->expectException(BadMethodCallException::class);
         new SafeInput($valid);
     }
